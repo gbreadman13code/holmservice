@@ -18,7 +18,7 @@ export const publicRoutes = [
     element: <MainLayout />,
     children: [
       {
-        path: '/',
+        path: '/holmservice/',
         element: <HomePage />
       },
       { path: 'news', element: <NewsPage /> },

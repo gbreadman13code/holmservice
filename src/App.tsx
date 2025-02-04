@@ -9,7 +9,7 @@ export const App = () => {
   return (
     <ThemeProvider>
       <ConfigProvider locale={ruRU}>
-        <RouterProvider router={router} />
+          <RouterProvider router={router} />
       </ConfigProvider>
     </ThemeProvider>
   );
