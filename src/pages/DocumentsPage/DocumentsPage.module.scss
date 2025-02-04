@@ -1,0 +1,16 @@
+.page {
+  .hero {
+    padding: 80px 0;
+    text-align: center;
+    background: var(--primary-color-bg);
+
+    h1 {
+      margin-bottom: 16px;
+    }
+  }
+
+  .subtitle {
+    font-size: 18px;
+    color: rgba(0, 0, 0, 0.65);
+  }
+} 

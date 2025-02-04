@@ -1,0 +1,78 @@
+.page {
+  .hero {
+    padding: 80px 0;
+    text-align: center;
+    background: var(--primary-color-bg);
+
+    h1 {
+      margin-bottom: 16px;
+    }
+  }
+
+  .content {
+    padding: 60px 0;
+
+    .terms {
+      max-width: 800px;
+      margin: 0 auto;
+      font-size: 16px;
+      line-height: 1.6;
+
+      h2 {
+        font-size: 24px;
+        font-weight: 500;
+        margin: 40px 0 24px;
+        color: rgba(0, 0, 0, 0.85);
+
+        &:first-child {
+          margin-top: 0;
+        }
+      }
+
+      h3 {
+        font-size: 20px;
+        font-weight: 500;
+        margin: 32px 0 16px;
+        color: rgba(0, 0, 0, 0.85);
+      }
+
+      h4 {
+        font-size: 16px;
+        font-weight: 500;
+        margin: 24px 0 16px;
+        color: rgba(0, 0, 0, 0.85);
+      }
+
+      p {
+        margin: 16px 0;
+        color: rgba(0, 0, 0, 0.65);
+      }
+
+      ul {
+        margin: 16px 0 16px 24px;
+        
+        li {
+          margin-bottom: 8px;
+          color: rgba(0, 0, 0, 0.65);
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+
+      ol {
+        margin: 16px 0 16px 24px;
+        
+        li {
+          margin-bottom: 8px;
+          color: rgba(0, 0, 0, 0.65);
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+} 

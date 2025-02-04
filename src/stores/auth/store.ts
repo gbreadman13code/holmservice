@@ -1,0 +1,174 @@
+import { makeAutoObservable, action, runInAction } from 'mobx';
+
+interface Address {
+  country: string;
+  city: string;
+  street: string;
+  house: string;
+  apartment: string;
+}
+
+interface User {
+  id: number;
+  account: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  addresses: Address[];
+}
+
+const MOCK_USERS = [
+  {
+    id: 1,
+    account: '123456789',
+    password: 'test123',
+    firstName: 'Иван',
+    lastName: 'Иванов',
+    email: 'ivanov@example.com',
+    addresses: [
+      {
+        country: 'Россия',
+        city: 'Красноярск',
+        street: 'Ленина',
+        house: '1',
+        apartment: '123'
+      },
+      {
+        country: 'Россия',
+        city: 'Красноярск',
+        street: 'Мира',
+        house: '10',
+        apartment: '45'
+      }
+    ]
+  },
+  {
+    id: 2,
+    account: '987654321',
+    password: 'test123',
+    firstName: 'Петр',
+    lastName: 'Петров',
+    email: 'petrov@example.com',
+    addresses: [
+      {
+        country: 'Россия',
+        city: 'Красноярск',
+        street: 'Маркса',
+        house: '78',
+        apartment: '15'
+      }
+    ]
+  }
+];
+
+export enum FeedbackStatus {
+  SENT = 'SENT',
+  IN_PROGRESS = 'IN_PROGRESS',
+  RESOLVED = 'RESOLVED'
+}
+
+export enum FeedbackTopic {
+  RECALCULATION = 'RECALCULATION',
+  METERS = 'METERS',
+  MAINTENANCE = 'MAINTENANCE',
+  REPAIR = 'REPAIR',
+  OTHER = 'OTHER'
+}
+
+export interface Feedback {
+  id: number;
+  topic: FeedbackTopic;
+  email: string;
+  message: string;
+  status: FeedbackStatus;
+  createdAt: string;
+}
+
+export class AuthStore {
+  isAuthenticated = false;
+  isLoading = false;
+  error: string | null = null;
+  user: User | null = null;
+  feedbacks: Feedback[] = [];
+
+  constructor() {
+    makeAutoObservable(this);
+  }
+
+  setLoading = action((value: boolean) => {
+    this.isLoading = value;
+  });
+
+  setError = action((error: string | null) => {
+    this.error = error;
+  });
+
+  setAuth = action((user: User | null) => {
+    this.isAuthenticated = !!user;
+    this.user = user;
+  });
+
+  async login(account: string, password: string) {
+    this.setLoading(true);
+    this.setError(null);
+
+    try {
+      await new Promise(resolve => setTimeout(resolve, 800));
+      
+      const user = MOCK_USERS.find(u => 
+        u.account === account && u.password === password
+      );
+
+      if (!user) {
+        throw new Error('Неверный номер лицевого счёта или пароль');
+      }
+
+      runInAction(() => {
+        this.setAuth({
+          id: user.id,
+          account: user.account,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+          addresses: user.addresses
+        });
+      });
+    } catch (error) {
+      runInAction(() => {
+        this.setError(error instanceof Error ? error.message : 'Ошибка при входе');
+      });
+      throw error;
+    } finally {
+      runInAction(() => {
+        this.setLoading(false);
+      });
+    }
+  }
+
+  logout = action(() => {
+    this.setAuth(null);
+    this.setError(null);
+  });
+
+  async sendFeedback(data: Omit<Feedback, 'id' | 'status' | 'createdAt'>) {
+    try {
+      await new Promise(resolve => setTimeout(resolve, 800));
+      
+      runInAction(() => {
+        this.feedbacks.push({
+          ...data,
+          id: this.feedbacks.length + 1,
+          status: FeedbackStatus.SENT,
+          createdAt: new Date().toISOString().split('T')[0]
+        });
+      });
+    } catch (error: unknown) {
+      console.log(error);
+      throw new Error('Ошибка при отправке обращения');
+    }
+  }
+
+  getFeedbacks = action(() => {
+    return this.feedbacks;
+  });
+} 

@@ -1,0 +1,20 @@
+.form {
+  padding: 24px 0;
+  
+  :global {
+    .ant-form-item {
+      margin-bottom: 24px;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+  
+  .forgotPassword {
+    display: block;
+    text-align: right;
+    margin-top: -16px;
+    margin-bottom: 24px;
+  }
+} 

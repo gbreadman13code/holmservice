@@ -1,0 +1,24 @@
+@use '@/styles/variables' as vars;
+@use '@/styles/mixins' as mix;
+@use 'sass:map';
+
+.home {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  padding-bottom: 48px;
+  position: relative;
+  z-index: 2;
+  overflow: visible;
+  flex-grow: 1;
+  background-color: map.get(vars.$colors, 'background'); // Светло-серый фон для всей страницы
+
+  > section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+} 

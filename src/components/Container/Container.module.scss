@@ -1,0 +1,30 @@
+@use '@/styles/variables' as vars;
+@use '@/styles/mixins' as mix;
+@use 'sass:map';
+
+.container {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 0 16px;
+
+  @include mix.media-up('sm') {
+    max-width: map.get(vars.$container-max-widths, 'sm');
+  }
+
+  @include mix.media-up('md') {
+    max-width: map.get(vars.$container-max-widths, 'md');
+  }
+
+  @include mix.media-up('lg') {
+    max-width: map.get(vars.$container-max-widths, 'lg');
+  }
+
+  @include mix.media-up('xl') {
+    max-width: map.get(vars.$container-max-widths, 'xl');
+  }
+
+  @include mix.media-up('xxl') {
+    max-width: map.get(vars.$container-max-widths, 'xxl');
+  }
+} 

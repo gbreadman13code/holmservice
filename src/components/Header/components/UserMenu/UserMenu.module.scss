@@ -1,0 +1,21 @@
+.menu {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  :global {
+    .ant-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      height: 40px;
+      padding: 0 20px;
+      line-height: 1;
+
+      .anticon {
+        margin: 0;
+        font-size: 16px;
+      }
+    }
+  }
+} 

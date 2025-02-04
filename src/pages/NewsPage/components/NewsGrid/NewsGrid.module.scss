@@ -1,0 +1,67 @@
+@use '@/styles/variables' as vars;
+@use '@/styles/mixins' as mix;
+@use 'sass:map';
+
+.newsSection {
+  padding: 48px 0;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 48px;
+
+  h2 {
+    margin-bottom: 8px !important;
+  }
+}
+
+.subtitle {
+  font-size: 18px;
+  color: map.get(vars.$colors, 'text-secondary');
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 48px;
+  min-height: 200px;
+  position: relative;
+
+  @include mix.media-down('lg') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include mix.media-down('md') {
+    grid-template-columns: 1fr;
+  }
+}
+
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+
+.skeletonCard {
+  height: 100%;
+  
+  :global {
+    .ant-card {
+      height: 100%;
+    }
+  }
+}
+
+.skeletonImage {
+  width: 100%;
+  padding-top: 56.25%; // 16:9 ratio
+  background: #f0f0f0;
+  margin-bottom: 16px;
+} 

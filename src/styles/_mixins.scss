@@ -1,0 +1,18 @@
+@use 'sass:map';
+@use './_variables' as vars;
+
+@mixin media-up($breakpoint) {
+  @if map.has-key(vars.$breakpoints, $breakpoint) {
+    @media (min-width: map.get(vars.$breakpoints, $breakpoint)) {
+      @content;
+    }
+  }
+}
+
+@mixin media-down($breakpoint) {
+  @if map.has-key(vars.$breakpoints, $breakpoint) {
+    @media (max-width: map.get(vars.$breakpoints, $breakpoint)) {
+      @content;
+    }
+  }
+} 

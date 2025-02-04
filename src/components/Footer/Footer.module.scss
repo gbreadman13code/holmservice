@@ -1,0 +1,167 @@
+@use '@/styles/mixins' as mix;
+
+.footer {
+  background: rgba(2, 115, 51, 0.05);
+  border-top: 1px solid rgba(2, 115, 51, 0.1);
+  padding: 48px 0 24px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.top {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 48px;
+  margin-bottom: 48px;
+}
+
+.column {
+  h4 {
+    color: rgba(0, 0, 0, 0.85) !important;
+    margin-bottom: 24px !important;
+  }
+}
+
+.phones {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  a {
+    color: var(--primary-color);
+    font-size: 24px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.3s;
+
+    @include mix.media-down('lg') {
+      font-size: 20px;
+    }
+
+    &:hover {
+      color: darken(#027333, 10%);
+    }
+  }
+}
+
+.navigation {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  a {
+    color: rgba(0, 0, 0, 0.65);
+    text-decoration: none;
+
+    &:hover {
+      color: #027333;
+    }
+  }
+}
+
+.social {
+  display: flex;
+  gap: 16px;
+
+  a {
+    color: var(--primary-color);
+    font-size: 28px;
+    transition: color 0.3s;
+
+    &:hover {
+      color: darken(#027333, 10%);
+    }
+  }
+}
+
+.bottom {
+  padding-top: 24px;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.links {
+  display: flex;
+  gap: 24px;
+
+  a {
+    color: rgba(0, 0, 0, 0.65);
+    text-decoration: none;
+
+    &:hover {
+      color: #027333;
+    }
+  }
+}
+
+.skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 180px;
+}
+
+@media (max-width: 992px) {
+  .top {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .column:last-child {
+    grid-column: 1 / -1;
+    text-align: center;
+  }
+
+  .social {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .top {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .navigation {
+    align-items: center;
+  }
+
+  .bottom {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+
+  .links {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+.container {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 0 16px;
+
+  @media (min-width: 576px) {
+    max-width: 540px;
+  }
+
+  @media (min-width: 768px) {
+    max-width: 720px;
+  }
+
+  @media (min-width: 992px) {
+    max-width: 960px;
+  }
+
+  @media (min-width: 1200px) {
+    max-width: 1140px;
+  }
+
+  @media (min-width: 1400px) {
+    max-width: 1320px;
+  }
+} 

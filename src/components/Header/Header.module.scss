@@ -1,0 +1,130 @@
+@use '@/styles/mixins' as mix;
+
+.header {
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: 80px;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  gap: 48px;
+
+  @include mix.media-down('lg') {
+    gap: 32px;
+  }
+
+  @include mix.media-down('md') {
+    gap: 24px;
+  }
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+
+  img {
+    height: 80px;
+    width: auto;
+    object-fit: contain;
+
+    @include mix.media-down('md') {
+      height: 60px;
+    }
+
+    @include mix.media-down('sm') {
+      height: 50px;
+    }
+  }
+}
+
+.container {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+
+  @media (min-width: 576px) {
+    max-width: 540px;
+  }
+
+  @media (min-width: 768px) {
+    max-width: 720px;
+  }
+
+  @media (min-width: 992px) {
+    max-width: 960px;
+  }
+
+  @media (min-width: 1200px) {
+    max-width: 1140px;
+  }
+
+  @media (min-width: 1400px) {
+    max-width: 1320px;
+  }
+}
+
+.menu {
+  flex: 1;
+  border-bottom: none;
+}
+
+.actions {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  :global {
+    .ant-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: auto;
+      padding: 8px 16px;
+      
+      span {
+        display: inline-block;
+        line-height: 1.5;
+      }
+    }
+  }
+
+  .container {
+height: 80px;
+
+  }
+}
+
+.phone {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 0 16px;
+  }
+  
+  .logo {
+    margin-right: 24px;
+    
+    img {
+      height: 32px;
+    }
+  }
+  
+  .phone {
+    display: none;
+  }
+} 

@@ -1,0 +1,117 @@
+@use 'antd/dist/reset.css';
+@use './_fonts';
+@use './_variables' as vars;
+@use './_mixins' as mix;
+@use 'sass:map';
+
+// Сброс CSS-переменных браузера
+:root {
+  --arc-palette-foregroundPrimary: none;
+  --arc-palette-cutoutColor: none;
+  --arc-palette-title: none;
+  --arc-palette-hover: none;
+  --arc-palette-backgroundExtra: none;
+  --arc-background-simple-color: none;
+  --arc-palette-minContrastColor: none;
+  --arc-palette-subtitle: none;
+  --arc-palette-focus: none;
+  --arc-palette-maxContrastColor: none;
+  --arc-palette-background: none;
+  --arc-palette-foregroundSecondary: none;
+  --arc-palette-foregroundTertiary: none;
+}
+
+// Наши CSS-переменные
+:root {
+  --primary-color: #{map.get(vars.$colors, 'primary')};
+  --background-color: #{map.get(vars.$colors, 'background')};
+  --text-color: #{map.get(vars.$colors, 'text')};
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: vars.$font-family;
+  font-weight: map.get(vars.$font-weights, 'regular');
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: map.get(vars.$colors, 'background');
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: vars.$font-family;
+  font-weight: map.get(vars.$font-weights, 'black');
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+html, body {
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+  position: relative;
+  width: 100%;
+}
+
+.ant-layout {
+  background: #fff !important;
+}
+
+// Переопределение стилей для интерактивных элементов
+:global {
+  .ant-btn:focus,
+  .ant-input:focus,
+  .ant-select:focus,
+  .ant-menu-item:focus {
+    border-color: map.get(vars.$colors, 'primary') !important;
+    outline-color: rgba(2, 115, 51, 0.2) !important;
+  }
+
+  .ant-menu-item:hover,
+  .ant-menu-item-active,
+  .ant-menu-submenu-active,
+  .ant-menu-submenu-title:hover {
+    color: map.get(vars.$colors, 'primary') !important;
+  }
+
+  .ant-menu-item-selected {
+    color: map.get(vars.$colors, 'primary') !important;
+    background-color: rgba(2, 115, 51, 0.1) !important;
+  }
+}
+
+:root {
+  --primary-color: #027333;
+  --primary-color-hover: #025a29;
+  --primary-color-active: #024720;
+  --primary-color-outline: rgba(2, 115, 51, 0.2);
+  --primary-color-bg: rgba(2, 115, 51, 0.05);
+}
+
+.ant-btn-primary {
+  background: var(--primary-color);
+
+  &:hover {
+    background: var(--primary-color-hover) !important;
+  }
+
+  &:active {
+    background: var(--primary-color-active) !important;
+  }
+}
+
+.ant-btn-default {
+  &:hover {
+    color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+  }
+} 

@@ -1,0 +1,135 @@
+.warning {
+  padding: 24px 0;
+}
+
+.content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  background: rgba(255, 77, 79, 0.05);
+  border: 1px solid rgba(255, 77, 79, 0.2);
+  border-radius: 8px;
+  padding: 24px;
+  overflow: hidden;
+}
+
+.info {
+  flex: 1;
+  min-width: 0;
+}
+
+.title {
+  color: #ff4d4f !important;
+  margin-bottom: 16px !important;
+}
+
+.slider {
+  position: relative;
+
+  :global {
+    .ant-carousel {
+      .slick-slider {
+        margin: 0;
+      }
+
+      .slick-list {
+        overflow: hidden;
+      }
+
+      .slick-slide > div {
+        display: flex;
+      }
+    }
+  }
+}
+
+.sliderItem {
+  display: flex;
+  flex-direction: column;
+}
+
+.text {
+  font-size: 16px;
+  margin: 0 !important;
+  line-height: 1.5;
+}
+
+.progressBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background: #ff4d4f;
+  transition: width 0.1s linear;
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  background: #ff4d4f;
+  border-radius: 4px;
+  transform: rotate(45deg);
+}
+
+.icon {
+  transform: rotate(-45deg);
+  font-size: 32px;
+  color: white;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 16px;
+
+  :global {
+    .ant-btn {
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      border-radius: 50%;
+
+      &:hover {
+        border-color: #ff4d4f;
+        color: #ff4d4f;
+      }
+    }
+  }
+}
+
+.counter {
+  min-width: 40px;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+@media (max-width: 768px) {
+  .content {
+    flex-direction: column-reverse;
+    text-align: center;
+    gap: 24px;
+  }
+
+  .iconWrapper {
+    width: 48px;
+    height: 48px;
+  }
+
+  .icon {
+    font-size: 24px;
+  }
+
+  .controls {
+    justify-content: center;
+  }
+} 

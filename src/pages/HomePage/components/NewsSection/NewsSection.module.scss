@@ -1,0 +1,68 @@
+@use '@/styles/mixins' as mix;
+
+.news {
+  padding: 48px 0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 32px;
+}
+
+.headerInfo {
+  max-width: 600px;
+}
+
+.title {
+  margin-bottom: 8px !important;
+}
+
+.subtitle {
+  color: rgba(0, 0, 0, 0.45);
+  margin-bottom: 0 !important;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-bottom: 48px;
+  min-height: 200px;
+  position: relative;
+
+  @include mix.media-down('lg') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include mix.media-down('sm') {
+    grid-template-columns: 1fr;
+  }
+}
+
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@media (max-width: 1200px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    text-align: center;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+} 
