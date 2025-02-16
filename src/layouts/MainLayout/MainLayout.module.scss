@@ -6,28 +6,20 @@
 }
 
 .main {
-  width: 100%;
-  height: auto;
+  flex: 1;
   display: flex;
   flex-direction: column;
+  width: 100%;
   position: relative;
   z-index: 1;
-  overflow: visible;
-  flex: 1;
+
+  flex-grow: 1;
 }
 
 .layout {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-
-  :global {
-    .ant-layout {
-      // min-height: 100vh;
-      background: red;
-    }
-  }
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
 }
 
 .container {

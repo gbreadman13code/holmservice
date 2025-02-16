@@ -15,9 +15,10 @@ import { ProtectedRoute } from '@/components/ProtectedRoute';
 
 export const router = createBrowserRouter([
   {
+    path: '/',
     element: <MainLayout />,
     children: [
-      { path: '/', element: <HomePage /> },
+      { path: '', element: <HomePage /> },
       { path: 'news', element: <NewsPage /> },
       { path: 'news/:slug', element: <NewsItemPage /> },
       { path: 'documents', element: <DocumentsPage /> },
@@ -37,4 +38,6 @@ export const router = createBrowserRouter([
       }
     ]
   }
-]); 
+], {
+  basename: '/holmservice/'
+}); 

@@ -73,7 +73,15 @@
   color: rgba(255, 255, 255, 0.9);
 }
 
-
+.illustration {
+  max-width: 400px;
+  margin: 0 auto;
+  
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
 
 .form {
   :global {
@@ -103,5 +111,12 @@
   .loginCard {
     width: 100%;
     max-width: 400px;
+  }
+}
+
+@media (max-width: 992px) {
+  .illustration {
+    max-width: 300px;
+    margin: 32px auto;
   }
 } 

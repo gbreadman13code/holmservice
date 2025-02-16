@@ -3,6 +3,7 @@ import { AppleOutlined, AndroidOutlined } from '@ant-design/icons';
 import { Container } from '@/components/Container';
 import phCardNews from '@/assets/placeholders/ph-card-news.png';
 import styles from './PromoSection.module.scss';
+import mobileLoginIllustration from '@/assets/illustrations/mobile-login.svg';
 
 const { Title, Paragraph } = Typography;
 
@@ -26,7 +27,7 @@ export const PromoSection = () => {
             </Space>
           </div>
           <div className={styles.image}>
-            <img src={phCardNews} alt="Мобильное приложение" />
+            <img src={mobileLoginIllustration} alt="Мобильное приложение" />
           </div>
         </div>
       </Container>

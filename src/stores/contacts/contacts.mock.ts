@@ -26,21 +26,21 @@ export const contactsMock: ContactsData = {
   ],
   emails: [
     {
-      id: 3,
+      id: 4,
       title: 'Общие вопросы',
       type: 'email',
       values: ['info@holmservice.ru'],
       isCommon: true
     },
     {
-      id: 2,
+      id: 5,
       title: 'Техническая поддержка',
       type: 'email',
       values: ['support@holmservice.ru'],
       isCommon: false
     },
     {
-      id: 3,
+      id: 6,
       title: 'Бухгалтерия',
       type: 'email',
       values: ['buh@holmservice.ru'],

@@ -17,20 +17,21 @@ export const LoginForm = observer(() => {
   const [form] = Form.useForm<LoginFormData>();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (isAuth) {
-      form.resetFields();
-      navigate('/account');
-    }
-  }, [isAuth, form, navigate]);
-
   const handleSubmit = async (values: LoginFormData) => {
     try {
       await login(values.account, values.password);
+      form.resetFields();
+      navigate('/account');
     } catch (error) {
       console.error('Login error:', error);
     }
   };
+
+  useEffect(() => {
+    if (isAuth) {
+      navigate('/');
+    }
+  }, []);
 
   return (
     <div className={styles.loginCard}>
