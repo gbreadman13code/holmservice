@@ -7,7 +7,7 @@ interface ProtectedRouteProps {
 }
 
 export const ProtectedRoute = observer(({ children }: ProtectedRouteProps) => {
-  if (!authStore.isAuthenticated) {
+  if (!authStore.isAuthenticated) { 
     return <Navigate to="/" replace />;
   }
 

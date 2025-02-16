@@ -8,35 +8,34 @@ import { ContactsPage } from '@/pages/ContactsPage';
 import { DocumentsPage } from '@/pages/DocumentsPage';
 import { MyHomePage } from '@/pages/MyHomePage';
 import { AccountPage } from '@/pages/AccountPage';
+import { PrivateRoute } from '@/components/PrivateRoute';
 
-export const publicRoutes = [
+// Все маршруты в одном layout
+export const routes = [
   {
-    path: '/login',
-    element: <LoginPage />,
-  },
-  {
+    path: '/',
     element: <MainLayout />,
     children: [
-      {
-        path: '/holmservice/',
-        element: <HomePage />
-      },
+      { path: '', element: <HomePage /> },
       { path: 'news', element: <NewsPage /> },
       { path: 'news/:slug', element: <NewsItemPage /> },
       { path: 'about', element: <AboutPage /> },
       { path: 'documents', element: <DocumentsPage /> },
       { path: 'contacts', element: <ContactsPage /> },
       { path: 'my-home', element: <MyHomePage /> },
-    ]
-  },
-];
-
-export const privateRoutes = [
-  {
-    path: '/profile',
-    element: <MainLayout />,
-    children: [
-      { index: true, element: <AccountPage /> },
+      { path: 'login', element: <LoginPage /> },
+      { 
+        path: 'account', 
+        element: <PrivateRoute><AccountPage /></PrivateRoute> 
+      }
     ]
   }
+];
+
+// Публичные маршруты (доступны всем)
+export const publicRoutes = routes;
+
+// Приватные маршруты (требуют авторизации)
+export const privateRoutes = [
+  { path: '/account', element: <AccountPage /> }
 ]; 
