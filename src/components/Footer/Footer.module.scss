@@ -1,4 +1,5 @@
 @use '@/styles/mixins' as mix;
+@use "sass:color";
 
 .footer {
   // background: rgba(2, 115, 51, 0.05);
@@ -38,7 +39,7 @@
     }
 
     &:hover {
-      color: darken(#027333, 10%);
+      color: color.adjust(#027333, $lightness: -10%);
     }
   }
 }
@@ -68,7 +69,7 @@
     transition: color 0.3s;
 
     &:hover {
-      color: darken(#027333, 10%);
+      color: color.adjust(#027333, $lightness: -10%);
     }
   }
 }
