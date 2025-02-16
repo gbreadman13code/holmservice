@@ -1,3 +1,148 @@
 .page {
+  .hero {
+    padding: 80px 0;
+    text-align: center;
+    background: var(--primary-color-bg);
+
+    h1 {
+      margin-bottom: 16px;
+    }
+
+    .subtitle {
+      font-size: 18px;
+      color: rgba(0, 0, 0, 0.65);
+    }
+  }
+
+  .content {
+    position: relative;
+    min-height: calc(100vh - 80px - 300px);
+    padding: 48px 0;
+  }
+}
+
+.search {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+
+  .subtitle {
+    display: block;
+    margin-top: 16px;
+    color: rgba(0, 0, 0, 0.65);
+  }
+}
+
+.form {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+
+  .select {
+    flex: 1;
+    text-align: left;
+  }
+}
+
+.houseInfo {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.topSelector {
+  margin-bottom: 40px;
+  background: #fff;
+}
+
+.loading {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
   padding: 40px 0;
+
+  .ant-spin {
+    margin-bottom: 8px;
+  }
+}
+
+.companyInfo {
+  margin-top: 32px;
+  
+  .infoContent {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+.reports {
+  margin-top: 32px;
+
+  .reportsList {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+.workPlans {
+  margin-top: 32px;
+
+  .plansList {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+.cityBackground {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  // right: 0;
+  height: 500px;
+  width: 700px;
+  background-repeat: no-repeat;
+  background-position: bottom left;
+  background-size: auto 500px;
+  opacity: 1;
+  pointer-events: none;
+  z-index: 0;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 400px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+  }
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 576px) {
+  .form {
+    flex-direction: column;
+
+    .select {
+      width: 100%;
+    }
+
+    button {
+      width: 100%;
+    }
+  }
 } 
