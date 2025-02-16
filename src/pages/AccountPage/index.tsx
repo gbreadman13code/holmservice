@@ -1,4 +1,4 @@
-import { Typography, Button, Menu } from 'antd';
+import { Typography, Menu } from 'antd';
 import { Container } from '@/components/Container';
 import { useAuth } from '@/stores/auth/hooks';
 import styles from './AccountPage.module.scss';
@@ -7,7 +7,8 @@ import {
   DashboardOutlined,
   CalculatorOutlined,
   CreditCardOutlined,
-  MessageOutlined
+  MessageOutlined,
+  HomeOutlined
 } from '@ant-design/icons';
 import { MetersSection } from './components/MetersSection';
 import { ChargesSection } from './components/ChargesSection';
@@ -41,7 +42,6 @@ const menuItems = [
 
 export const AccountPage = () => {
   const { user } = useAuth();
-  const [selectedAddressIndex, setSelectedAddressIndex] = useState(0);
   const [selectedMenuItem, setSelectedMenuItem] = useState('meters');
 
   if (!user) return null;
@@ -66,16 +66,11 @@ export const AccountPage = () => {
       <section className={styles.hero}>
         <Container>
           <Title level={1}>{user.firstName} {user.lastName}</Title>
-          <div className={styles.addressButtons}>
-            {user.addresses.map((address, index) => (
-              <Button
-                key={index}
-                type={selectedAddressIndex === index ? 'primary' : 'default'}
-                onClick={() => setSelectedAddressIndex(index)}
-              >
-                {`${address.street}, ${address.house}, кв. ${address.apartment}`}
-              </Button>
-            ))}
+          <div className={styles.addressTextWrapper}>
+            <Typography.Text strong className={styles.addressText}>
+              <HomeOutlined style={{ marginRight: 8 }} />
+              {`${user.address.street}, ${user.address.house}, кв. ${user.address.apartment}`}
+            </Typography.Text>
           </div>
         </Container>
       </section>

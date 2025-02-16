@@ -4,10 +4,13 @@ import { EmergencyPhones } from '../EmergencyPhones';
 import styles from './HeroSection.module.scss';
 import { LoginForm } from '@/components/LoginForm';
 import teamWorkIllustration from '@/assets/illustrations/team-work.svg';
+import { useAuth } from '@/stores/auth';
 
 const { Title, Text } = Typography;
 
 export const HeroSection = () => {
+  const { isAuth } = useAuth();
+
 
   return (
     <div className={styles.hero}>
@@ -25,9 +28,10 @@ export const HeroSection = () => {
               <img src={teamWorkIllustration} alt="Команда профессионалов" />
             </div>
 
-            <div className={styles.loginCard}>
+            {!isAuth && <div className={styles.loginCard}>
               <LoginForm />
             </div>
+            }
           </div>
         </Container>
       </section>

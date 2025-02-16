@@ -10,12 +10,16 @@
       font-size: 16px;
     }
 
-    .addressButtons {
+    .addressTextWrapper {
       display: flex;
       gap: 12px;
       margin-top: 24px;
       flex-wrap: wrap;
       justify-content: center;
+
+      .addressText {
+        font-size: 24px;
+      }
     }
   }
 

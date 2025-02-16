@@ -14,33 +14,25 @@ interface User {
   firstName: string;
   lastName: string;
   email: string;
-  addresses: Address[];
+  address: Address;
 }
 
 const MOCK_USERS = [
   {
     id: 1,
-    account: '123456789',
-    password: 'test123',
+    account: '123',
+    password: '123',
     firstName: 'Иван',
     lastName: 'Иванов',
     email: 'ivanov@example.com',
-    addresses: [
-      {
-        country: 'Россия',
-        city: 'Красноярск',
-        street: 'Ленина',
-        house: '1',
-        apartment: '123'
+    address: {
+      country: 'Россия',
+      city: 'Красноярск',
+      street: 'Ленина',
+      house: '1',
+      apartment: '123'
       },
-      {
-        country: 'Россия',
-        city: 'Красноярск',
-        street: 'Мира',
-        house: '10',
-        apartment: '45'
-      }
-    ]
+      
   },
   {
     id: 2,
@@ -49,15 +41,14 @@ const MOCK_USERS = [
     firstName: 'Петр',
     lastName: 'Петров',
     email: 'petrov@example.com',
-    addresses: [
-      {
-        country: 'Россия',
-        city: 'Красноярск',
-        street: 'Маркса',
-        house: '78',
-        apartment: '15'
+    address: {
+      country: 'Россия',
+      city: 'Красноярск',
+      street: 'Маркса',
+      house: '78',
+      apartment: '15'
       }
-    ]
+
   }
 ];
 
@@ -90,9 +81,10 @@ export class AuthStore {
   error: string | null = null;
   user: User | null = null;
   feedbacks: Feedback[] = [];
+  isFeedbackSending = false;
 
   constructor() {
-    makeAutoObservable(this);
+    makeAutoObservable(this, {}, { deep: true });
   }
 
   setLoading = action((value: boolean) => {
@@ -130,7 +122,7 @@ export class AuthStore {
           firstName: user.firstName,
           lastName: user.lastName,
           email: user.email,
-          addresses: user.addresses
+          address: user.address
         });
       });
     } catch (error) {
@@ -150,25 +142,35 @@ export class AuthStore {
     this.setError(null);
   });
 
+  setFeedbackSending = action((value: boolean) => {
+    this.isFeedbackSending = value;
+  });
+
+  get feedbacksList() {
+    return this.feedbacks;
+  }
+
   async sendFeedback(data: Omit<Feedback, 'id' | 'status' | 'createdAt'>) {
+    this.setFeedbackSending(true);
+    
     try {
-      await new Promise(resolve => setTimeout(resolve, 800));
+      await new Promise(resolve => setTimeout(resolve, 1000));
       
+      const newFeedback = {
+        ...data,
+        id: this.feedbacks.length + 1,
+        status: FeedbackStatus.SENT,
+        createdAt: new Date().toISOString()
+      };
+
       runInAction(() => {
-        this.feedbacks.push({
-          ...data,
-          id: this.feedbacks.length + 1,
-          status: FeedbackStatus.SENT,
-          createdAt: new Date().toISOString().split('T')[0]
-        });
+        this.feedbacks = [newFeedback, ...this.feedbacks];
       });
     } catch (error: unknown) {
       console.log(error);
       throw new Error('Ошибка при отправке обращения');
+    } finally {
+      this.setFeedbackSending(false);
     }
   }
-
-  getFeedbacks = action(() => {
-    return this.feedbacks;
-  });
 } 
