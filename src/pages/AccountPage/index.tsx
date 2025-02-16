@@ -2,7 +2,7 @@ import { Typography, Menu } from 'antd';
 import { Container } from '@/components/Container';
 import { useAuth } from '@/stores/auth/hooks';
 import styles from './AccountPage.module.scss';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   DashboardOutlined,
   CalculatorOutlined,
@@ -14,6 +14,7 @@ import { MetersSection } from './components/MetersSection';
 import { ChargesSection } from './components/ChargesSection';
 import { PaymentsSection } from './components/PaymentsSection';
 import { FeedbackSection } from './components/FeedbackSection';
+import { useLocation } from 'react-router-dom';
 
 const { Title } = Typography;
 
@@ -43,7 +44,17 @@ const menuItems = [
 export const AccountPage = () => {
   const { user } = useAuth();
   const [selectedMenuItem, setSelectedMenuItem] = useState('meters');
+  const location = useLocation();
 
+  useEffect(() => {
+    // Проверяем наличие якоря в URL и устанавливаем соответствующий пункт меню
+    if (location.hash === '#feedback') {
+      setSelectedMenuItem('feedback');
+
+      window.history.pushState(null, '', location.pathname);
+    }
+  }, [location]);
+    
   if (!user) return null;
 
   const renderContent = () => {

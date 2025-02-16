@@ -97,7 +97,7 @@ export const FeedbackSection = observer(() => {
   };
 
   return (
-    <div className={styles.section}>
+    <div className={styles.section} id='feedback-section'>
       <div className={styles.form}>
         <Spin spinning={isFeedbackSending}>
           <Form

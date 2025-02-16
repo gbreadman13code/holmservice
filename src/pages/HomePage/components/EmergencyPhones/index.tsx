@@ -4,6 +4,7 @@ import { Container } from '@/components/Container';
 import { useAuth } from '@/stores/auth/hooks';
 import { useAuthModal } from '@/stores/modals/hooks';
 import { useContacts } from '@/stores/contacts/hooks';
+import { useNavigate } from 'react-router-dom';
 import styles from './EmergencyPhones.module.scss';
 
 const { Title } = Typography;
@@ -14,13 +15,14 @@ export const EmergencyPhones = observer(() => {
   const { contacts, isLoading } = useContacts(true);
   const commonPhone = contacts?.phones.find(phone => phone.isCommon);
   const commonPhones = commonPhone?.values || [];
+  const navigate = useNavigate();
 
   const handleMessageClick = () => {
     if (!isAuth) {
       openAuthModal();
     } else {
-      // Здесь будет логика для авторизованных пользователей
-      console.log('Открыть форму обращения');
+      // Редиректим в личный кабинет с якорем на секцию обращений
+      navigate('/account#feedback');
     }
   };
 
