@@ -1,7 +1,6 @@
 import { Typography, Button, Space } from 'antd';
 import { AppleOutlined, AndroidOutlined } from '@ant-design/icons';
 import { Container } from '@/components/Container';
-import phCardNews from '@/assets/placeholders/ph-card-news.png';
 import styles from './PromoSection.module.scss';
 import mobileLoginIllustration from '@/assets/illustrations/mobile-login.svg';
 

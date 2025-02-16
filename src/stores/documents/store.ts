@@ -1,4 +1,4 @@
-import { action, makeAutoObservable } from 'mobx';
+import { makeAutoObservable } from 'mobx';
 
 export type DocumentExtension = 'pdf' | 'doc' | 'docx';
 

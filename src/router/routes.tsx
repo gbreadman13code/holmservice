@@ -8,7 +8,7 @@ import { ContactsPage } from '@/pages/ContactsPage';
 import { DocumentsPage } from '@/pages/DocumentsPage';
 import { MyHomePage } from '@/pages/MyHomePage';
 import { AccountPage } from '@/pages/AccountPage';
-import { PrivateRoute } from '@/components/PrivateRoute';
+import { ProtectedRoute } from '@/components/ProtectedRoute';
 
 // Все маршруты в одном layout
 export const routes = [
@@ -26,7 +26,7 @@ export const routes = [
       { path: 'login', element: <LoginPage /> },
       { 
         path: 'account', 
-        element: <PrivateRoute><AccountPage /></PrivateRoute> 
+        element: <ProtectedRoute><AccountPage /></ProtectedRoute> 
       }
     ]
   }
