@@ -15,6 +15,7 @@ import { ChargesSection } from './components/ChargesSection';
 import { PaymentsSection } from './components/PaymentsSection';
 import { FeedbackSection } from './components/FeedbackSection';
 import { useLocation } from 'react-router-dom';
+import accountIllustration from '@/assets/illustrations/account-img.svg';
 
 const { Title } = Typography;
 
@@ -76,12 +77,19 @@ export const AccountPage = () => {
     <div className={styles.page}>
       <section className={styles.hero}>
         <Container>
-          <Title level={1}>{user.firstName} {user.lastName}</Title>
-          <div className={styles.addressTextWrapper}>
-            <Typography.Text strong className={styles.addressText}>
-              <HomeOutlined style={{ marginRight: 8 }} />
-              {`${user.address.street}, ${user.address.house}, кв. ${user.address.apartment}`}
-            </Typography.Text>
+          <div className={styles.heroContent}>
+            <div className={styles.heroInfo}>
+              <Title level={1}>{user.firstName} {user.lastName}</Title>
+              <div className={styles.addressTextWrapper}>
+                <Typography.Text strong className={styles.addressText}>
+                  <HomeOutlined style={{ marginRight: 8 }} />
+                  {`${user.address.street}, ${user.address.house}, кв. ${user.address.apartment}`}
+                </Typography.Text>
+              </div>
+            </div>
+            <div className={styles.heroImage}>
+              <img src={accountIllustration} alt="Личный кабинет" />
+            </div>
           </div>
         </Container>
       </section>
@@ -89,12 +97,13 @@ export const AccountPage = () => {
       <section className={styles.content}>
         <Container>
           <div className={styles.grid}>
-            <Menu
+             <Menu
               className={styles.menu}
               selectedKeys={[selectedMenuItem]}
               items={menuItems}
               onClick={({ key }) => setSelectedMenuItem(key)}
-            />
+              mode={"vertical"}
+            /> 
             <div className={styles.contentArea}>
               {renderContent()}
             </div>

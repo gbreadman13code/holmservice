@@ -6,7 +6,6 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 48px;
   padding-bottom: 48px;
   position: relative;
   z-index: 2;
@@ -18,5 +17,11 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+    gap: 48px;
   }
+
+  @include mix.media-down('md') {
+      gap: 0px;
+  }   
 } 
+

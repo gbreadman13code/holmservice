@@ -6,7 +6,11 @@ import { useNavigate } from 'react-router-dom';
 import styles from './UserMenu.module.scss';
 import { AuthModal } from '@/components/AuthModal';
 
-export const UserMenu = () => {
+interface UserMenuProps {
+  isMobile?: boolean;
+}
+
+export const UserMenu = ({ isMobile }: UserMenuProps) => {
   const { openAuthModal } = useAuthModal();
   const { isAuth } = useAuth();
   const navigate = useNavigate();
@@ -18,6 +22,32 @@ export const UserMenu = () => {
       openAuthModal();
     }
   };
+
+  if (isMobile) {
+    return (
+      <div className={styles.mobileMenu}>
+        <Button 
+        type="text" 
+        icon={<PhoneOutlined />}
+        href="tel:+78001234567"
+      >
+        8 (800) 123-45-67
+      </Button>
+        
+        <Button 
+          type="primary" 
+          block
+          icon={<UserOutlined />}
+          onClick={handleCabinetClick}
+          className={styles.mobileButton}
+        >
+          Личный кабинет
+        </Button>
+
+        <AuthModal />
+      </div>
+    );
+  }
 
   return (
     <div className={styles.menu}>

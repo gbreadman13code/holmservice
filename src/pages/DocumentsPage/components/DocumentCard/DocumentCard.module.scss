@@ -1,3 +1,5 @@
+@use '@/styles/mixins' as mix;
+
 .card {
   cursor: pointer;
   transition: all 0.3s;
@@ -34,4 +36,22 @@
       font-size: 12px;
     }
   }
+
+  @include mix.media-down('md') {
+    :global(.ant-card-body) {
+      padding: 10px;
+    }
+
+    .title {
+      font-size: 10px;
+    }
+
+    .icon {
+      margin-bottom: 0px;
+    }
+
+    .size {
+      font-size: 10px !important;
+    }
+  } 
 } 

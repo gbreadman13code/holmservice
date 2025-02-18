@@ -1,12 +1,11 @@
-import { Typography, Form, Input, Select, Checkbox, Button, Table, Spin } from 'antd';
+import { Typography, Form, Input, Select, Checkbox, Button, Spin } from 'antd';
 import { observer } from 'mobx-react-lite';
 import { useAuth } from '@/stores/auth/hooks';
-import { FeedbackStatus, FeedbackTopic } from '@/stores/auth/store';
+import { FeedbackTopic } from '@/stores/auth/store';
 import styles from './FeedbackSection.module.scss';
 import { useEffect } from 'react';
 import { toJS } from 'mobx';
-import { format, parseISO } from 'date-fns';
-import { ru } from 'date-fns/locale';
+import { FeedbackTable } from './components/FeedbackTable';
 
 const { Title } = Typography;
 const { TextArea } = Input;
@@ -25,48 +24,6 @@ const topicOptions = [
   { label: 'Обслуживание', value: FeedbackTopic.MAINTENANCE },
   { label: 'Ремонт', value: FeedbackTopic.REPAIR },
   { label: 'Другое', value: FeedbackTopic.OTHER }
-];
-
-const statusLabels = {
-  [FeedbackStatus.SENT]: 'Отправлено',
-  [FeedbackStatus.IN_PROGRESS]: 'На рассмотрении',
-  [FeedbackStatus.RESOLVED]: 'Рассмотрено'
-};
-
-const columns = [
-  {
-    title: 'Номер обращения',
-    dataIndex: 'id',
-    key: 'id'
-  },
-  {
-    title: 'Дата',
-    dataIndex: 'createdAt',
-    key: 'createdAt',
-    render: (date: string) => {
-      const parsedDate = parseISO(date);
-      return (
-        <span>
-          {format(parsedDate, 'd MMMM yyyy', { locale: ru })}
-          <br />
-          <small style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
-            {format(parsedDate, 'HH:mm')}
-          </small>
-        </span>
-      );
-    }
-  },
-  {
-    title: 'Контакт для связи',
-    dataIndex: 'email',
-    key: 'email'
-  },
-  {
-    title: 'Статус',
-    dataIndex: 'status',
-    key: 'status',
-    render: (status: FeedbackStatus) => statusLabels[status]
-  }
 ];
 
 export const FeedbackSection = observer(() => {
@@ -174,15 +131,15 @@ export const FeedbackSection = observer(() => {
         </Spin>
       </div>
 
-      <div className={styles.table}>
-        <Title level={3}>История обращений</Title>
-        <Table
-          columns={columns}
-          dataSource={toJS(feedbacks)}
-          rowKey="id"
-          loading={isFeedbackSending}
-        />
-      </div>
-    </div>
+        <div className={styles.table}>
+          <Title level={3}>{feedbacks.length < 1 ? 'История обращений пуста' : 'История обращений'}</Title>
+          {feedbacks.length > 0 && (
+            <FeedbackTable 
+              data={toJS(feedbacks)} 
+              loading={isFeedbackSending}
+            />
+          )}
+        </div>
+        </div>
   );
 }); 

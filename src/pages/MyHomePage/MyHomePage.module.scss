@@ -1,23 +1,19 @@
-.page {
-  .hero {
-    padding: 80px 0;
-    text-align: center;
-    background: var(--primary-color-bg);
+@use '@/styles/mixins' as mix;
 
-    h1 {
-      margin-bottom: 16px;
-    }
-
-    .subtitle {
-      font-size: 18px;
-      color: rgba(0, 0, 0, 0.65);
-    }
-  }
+  .page {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 
   .content {
     position: relative;
-    min-height: calc(100vh - 80px - 300px);
-    padding: 48px 0;
+    height: 100% !important;
+    padding: 48px 0px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
   }
 }
 
@@ -105,26 +101,18 @@
 
 .cityBackground {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  // right: 0;
-  height: 500px;
-  width: 700px;
+bottom: -8px;
+  right: 0;
+  height: 250px;
+  width: 370px;
   background-repeat: no-repeat;
   background-position: bottom left;
-  background-size: auto 500px;
+  background-size: auto 270px;
   opacity: 1;
   pointer-events: none;
-  z-index: 0;
 
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 400px;
-    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+  @include mix.media-down('md') {
+    display: none;
   }
 }
 

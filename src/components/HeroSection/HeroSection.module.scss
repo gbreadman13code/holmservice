@@ -1,0 +1,33 @@
+@use '@/styles/mixins' as mix;
+
+.hero {
+    padding: 80px 0;
+    text-align: center;
+    background: var(--primary-color-bg);
+  
+    h1 {
+      margin-bottom: 16px;
+    }
+
+    .subtitle {
+      font-size: 18px;
+      color: rgba(0, 0, 0, 0.65);
+    }
+
+    @include mix.media-down('md') {
+      padding: 40px 0;
+
+      h1 {
+        font-size: 30px;
+        margin-bottom: 8px;
+      }
+
+      .subtitle {
+        font-size: 14px;
+      }
+    }
+  }
+  
+  
+
+  

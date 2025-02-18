@@ -1,0 +1,22 @@
+@use '@/styles/mixins' as mix;
+
+.logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  text-decoration: none;
+
+  img {
+    height: 80px;
+    width: auto;
+    object-fit: contain;
+
+    @include mix.media-down('md') {
+      height: 60px;
+    }
+
+    @include mix.media-down('sm') {
+      height: 50px;
+    }
+  }
+} 

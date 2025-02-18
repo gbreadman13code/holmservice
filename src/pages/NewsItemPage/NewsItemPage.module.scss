@@ -1,5 +1,12 @@
+@use '@/styles/mixins' as mix;
+
 .article {
   padding: 48px 0;
+
+  @include mix.media-down('md') {
+    padding: 24px 0;
+
+  } 
 }
 
 .narrow {
@@ -9,6 +16,11 @@
   display: flex;
   flex-direction: column;
   gap: 34px;
+
+  @include mix.media-down('md') {
+gap: 10px;
+
+  } 
 }
 
 .backLink {
@@ -30,6 +42,10 @@
 .title {
   margin-bottom: 16px !important;
   text-align: left !important;
+
+  @include mix.media-down('md') {
+    font-size: 20px !important;
+  } 
 }
 
 .meta {
@@ -38,12 +54,23 @@
   align-items: center;
   margin-bottom: 32px;
   color: rgba(0, 0, 0, 0.45);
+
+  @include mix.media-down('md') {
+    flex-direction: column;
+    align-items: flex-start;
+      } 
+
+      .copyLink {
+        padding: 0;
+      }
 }
 
 .metaInfo {
   display: flex;
   align-items: center;
   gap: 8px;
+
+  
 }
 
 .content {
