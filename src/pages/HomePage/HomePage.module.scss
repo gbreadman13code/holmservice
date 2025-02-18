@@ -21,4 +21,9 @@
     align-items: center;
     flex-shrink: 0;
   }
+
+  @include mix.media-down('md') {
+    gap: 0;
+    padding: 0;
+  }
 } 

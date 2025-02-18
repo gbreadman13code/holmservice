@@ -17,20 +17,23 @@
   display: block;
 
   @include mix.media-down('md') {
-    padding: 80px 0;
+    padding: 40px 0;
   }
 }
 
 .content {
   display: flex;
-  // grid-template-columns: 1fr 1fr;
   gap: 48px;
   align-items: center;
   justify-content: space-between;
 
   @include mix.media-down('lg') {
-    grid-template-columns: 1fr;
+    flex-direction: column;
     text-align: center;
+  }
+
+  @include mix.media-down('md') {
+    gap: 0px;
   }
 }
 
@@ -38,8 +41,16 @@
   background: white;
   padding: 32px;
   border-radius: 8px;
-  width: 400px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+
+  @include mix.media-down('lg') {
+    margin: 0 auto;
+  }
+
+  @include mix.media-down('md') {
+    display: none;
+  }
 
   h3 {
     margin-bottom: 24px;
@@ -59,18 +70,27 @@
   
   h1 {
     color: white;
+    margin-bottom: 16px;
     font-size: 48px;
-    margin-bottom: 24px;
+    line-height: 1.2;
     text-transform: uppercase;
     font-family: vars.$font-family;
     font-weight: 900; // Gogh Black
+
+    @include mix.media-down('md') {
+      font-size: 32px;
+    }
   }
 }
 
 .slogan {
+  color: rgba(255, 255, 255, 0.9);
   font-size: 24px;
   max-width: 600px;
-  color: rgba(255, 255, 255, 0.9);
+
+  @include mix.media-down('md') {
+    font-size: 18px;
+  }
 }
 
 .illustration {
@@ -81,6 +101,10 @@
     width: 100%;
     height: auto;
   }
+
+  // @include mix.media-down('md') {
+  //   display: none;
+  // }
 }
 
 .form {

@@ -1,28 +1,78 @@
-import { Layout } from 'antd';
-import { Link } from 'react-router-dom';
+import { Button, Drawer } from 'antd';
+import { MenuOutlined } from '@ant-design/icons';
+import { observer } from 'mobx-react-lite';
 import { Container } from '@/components/Container';
+import { useIsMobile } from '@/hooks/useIsMobile';
+import { Logo } from '../Logo';
 import { Navigation } from './components/Navigation';
-import Logo from '@/assets/logo.png';
-import styles from './Header.module.scss';
 import { UserMenu } from './components/UserMenu';
+import styles from './Header.module.scss';
+import { useState } from 'react';
 
-const { Header: AntHeader } = Layout;
+export const Header = observer(() => {
+  // const { isAuth } = useAuth();
+  // const { openAuthModal } = useAuthModal();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const isMobile = useIsMobile();
 
-export const Header = () => {
   return (
-    <AntHeader className={styles.header}>
-      <Container>
-        <div className={styles.content}>
-          <Link to="/" className={styles.logo}>
-            <img src={Logo} alt="" />
-          </Link>
-          
-          <div className={styles.actions}>
-            <Navigation />
-            <UserMenu />
-          </div>
+    <>
+      {/* Десктопная версия */}
+      {!isMobile && (
+        <header className={styles.header}>
+          <Container>
+            <div className={styles.content}>
+              <Logo />
+              <div className={styles.desktopOnly}>
+                <Navigation />
+                <UserMenu />
+              </div>
+            </div>
+          </Container>
+        </header>
+      )}
+
+      {/* Мобильная версия */}
+      {isMobile && (
+        <header className={styles.mobileHeader}>
+          <Container>
+            <div className={styles.mobileContent}>
+              <Logo />
+              <Button
+                type="text"
+                icon={<MenuOutlined />}
+                onClick={() => setIsMobileMenuOpen(true)}
+                className={styles.menuButton}
+              />
+            </div>
+          </Container>
+        </header>
+      )}
+
+      {/* Мобильное меню */}
+      <Drawer
+        placement="right"
+        open={isMobileMenuOpen}
+        onClose={() => setIsMobileMenuOpen(false)}
+        width="100%"
+        className={styles.mobileMenu}
+        closable={false}
+      >
+        <div className={styles.mobileMenuHeader}>
+          <Logo />
+          <Button 
+            type="text" 
+            onClick={() => setIsMobileMenuOpen(false)}
+            className={styles.closeButton}
+          >
+            ✕
+          </Button>
         </div>
-      </Container>
-    </AntHeader>
+        <div className={styles.mobileMenuContent}>
+          <Navigation onItemClick={() => setIsMobileMenuOpen(false)} />
+          <UserMenu isMobile />          
+        </div>
+      </Drawer>
+    </>
   );
-}; 
+}); 

@@ -1,14 +1,6 @@
+@use '@/styles/mixins' as mix;
+
 .page {
-  .hero {
-    padding: 80px 0;
-    text-align: center;
-    background: var(--primary-color-bg);
-
-    h1 {
-      margin-bottom: 16px;
-    }
-  }
-
   .content {
     padding: 60px 0;
 
@@ -71,6 +63,24 @@
           &:last-child {
             margin-bottom: 0;
           }
+        }
+      }
+    }
+
+    @include mix.media-down('md') {
+      .terms {
+        font-size: 14px;
+
+        h2 {
+          font-size: 18px;
+        }
+
+        h3 {
+          font-size: 16px;
+        }
+
+        h4 {
+          font-size: 14px;
         }
       }
     }

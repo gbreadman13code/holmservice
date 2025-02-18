@@ -4,8 +4,9 @@ import { MailOutlined, PhoneOutlined, EnvironmentOutlined } from '@ant-design/ic
 import { useContacts } from '@/stores/contacts/hooks';
 import styles from './ContactsPage.module.scss';
 import { observer } from 'mobx-react-lite';
+import HeroSection from '@/components/HeroSection';
 
-const { Title, Text } = Typography;
+const { Text } = Typography;
 
 const address = {
   title: 'Главный офис',
@@ -44,14 +45,7 @@ export const ContactsPage = observer(() => {
 
   return (
     <div className={styles.page}>
-      <section className={styles.hero}>
-        <Container>
-          <Title level={1}>Связаться с нами</Title>
-          <Text className={styles.subtitle}>
-            Номера телефонов, электронные почты специалистов и адреса
-          </Text>
-        </Container>
-      </section>
+      <HeroSection title="Связаться с нами" subtitle="Номера телефонов, электронные почты специалистов и адреса" />
 
       <section className={styles.content}>
         <Container>

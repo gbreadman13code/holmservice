@@ -3,7 +3,7 @@
 @use 'sass:map';
 
 .newsSection {
-  padding: 48px 0;
+  padding: 0px 0px 48px 0px;
 }
 
 .header {
@@ -13,6 +13,10 @@
   h2 {
     margin-bottom: 8px !important;
   }
+
+  @include mix.media-down('md') {
+    font-size: 22px ;
+  } 
 }
 
 .subtitle {
@@ -65,3 +69,4 @@
   background: #f0f0f0;
   margin-bottom: 16px;
 } 
+

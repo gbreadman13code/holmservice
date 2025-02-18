@@ -1,3 +1,5 @@
+@use '@/styles/mixins' as mix;
+
 .menu {
   display: flex;
   align-items: center;
@@ -16,6 +18,28 @@
         margin: 0;
         font-size: 16px;
       }
+    }
+  }
+}
+
+.mobileMenu {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 12px;
+}
+
+.mobileButton {
+  height: 48px !important;
+  font-size: 16px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  :global {
+    .anticon {
+      font-size: 20px;
+      margin-right: 8px;
     }
   }
 } 

@@ -45,7 +45,7 @@ export const AboutPage = () => {
             Управляем вашим домом и заботимся о вас
           </Text>
 
-          <Row gutter={[32, 32]} className={styles.features}>
+          <Row gutter={[32, 12]} className={styles.features}>
             <Col xs={24} md={8}>
               <div className={styles.feature}>
                 <Title level={3}>{houses}+</Title>

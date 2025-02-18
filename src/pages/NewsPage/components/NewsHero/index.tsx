@@ -52,9 +52,9 @@ export const NewsHero = observer(() => {
             {latestNews.title}
           </Title>
           <div className={styles.meta}>
-            <Text>{formatDate(latestNews.publishDate)}</Text>
+            <Text className={styles.date}>{formatDate(latestNews.publishDate)}</Text>
             <span className={styles.separator}>•</span>
-            <Text>{Math.ceil(latestNews.fullTextCharCount / (180 * 5))} мин</Text>
+            <Text className={styles.readingTime}>{Math.ceil(latestNews.fullTextCharCount / (180 * 5))} мин</Text>
           </div>
         </div>
       </Container>

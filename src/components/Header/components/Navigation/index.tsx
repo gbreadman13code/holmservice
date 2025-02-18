@@ -2,10 +2,16 @@ import { Menu } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
 import { DownOutlined } from '@ant-design/icons';
 import { navigation } from '../../../../router/navigation';
+import { useIsMobile } from '@/hooks/useIsMobile';
 import styles from './Navigation.module.scss';
 
-const Navigation = () => {
+interface NavigationProps {
+  onItemClick?: () => void;
+}
+
+export const Navigation = ({ onItemClick }: NavigationProps) => {
   const { pathname } = useLocation();
+  const isMobile = useIsMobile();
 
   const items = navigation.map((item) => {
     if (item.path === '/documents') {
@@ -19,37 +25,40 @@ const Navigation = () => {
         children: [
           {
             key: '/documents/rso',
-            label: <Link to="/documents/rso">Договоры с РСО</Link>
+            label: <Link to="/documents/rso" onClick={onItemClick}>Договоры с РСО</Link>
           },
           {
             key: '/documents/templates',
-            label: <Link to="/documents/templates">Шаблоны документов</Link>
+            label: <Link to="/documents/templates" onClick={onItemClick}>Шаблоны документов</Link>
           },
           {
             key: '/documents/terms',
-            label: <Link to="/documents/terms">Условия и соглашения</Link>
+            label: <Link to="/documents/terms" onClick={onItemClick}>Условия и соглашения</Link>
           }
         ]
       };
     }
     return {
       key: item.path,
-      label: <Link to={item.path}>{item.label}</Link>
+      label: <Link to={item.path} onClick={onItemClick}>{item.label}</Link>
     };
   });
 
   return (
     <div className={styles.wrapper}>
-
-        <Menu 
-          mode="horizontal" 
-          selectedKeys={[pathname]} 
-          className={styles.menu}
-          items={items}
-        />
+      {isMobile ? <Menu 
+        mode={"inline"}
+        selectedKeys={[pathname]}
+        className={`${styles.menu} ${isMobile ? styles.mobileMenu : ''}`}
+        items={items}
+        triggerSubMenuAction={'click'}
+      /> : <Menu 
+      mode={"horizontal"}
+      selectedKeys={[pathname]}
+      className={`${styles.menu} ${isMobile ? styles.mobileMenu : ''}`}
+      items={items}
+    />}
 
     </div>
   );
-};
-
-export { Navigation }; 
+}; 

@@ -86,6 +86,7 @@ export const NewsItemPage = observer(() => {
               type="text" 
               icon={<LinkOutlined />}
               onClick={handleCopyLink}
+              className={styles.copyLink}
             >
               Скопировать ссылку
             </Button>

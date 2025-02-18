@@ -1,11 +1,10 @@
-import { Typography, Skeleton } from 'antd';
+import { Skeleton } from 'antd';
 import { observer } from 'mobx-react-lite';
 import { documentsStore } from '@/stores/documents';
 import { Container } from '@/components/Container';
 import styles from './TermsPage.module.scss';
 import { useEffect } from 'react';
-
-const { Title } = Typography;
+import HeroSection from '@/components/HeroSection';
 
 export const TermsPage = observer(() => {
   useEffect(() => {
@@ -17,11 +16,7 @@ export const TermsPage = observer(() => {
 
   return (
     <div className={styles.page}>
-      <section className={styles.hero}>
-        <Container>
-          <Title level={1}>Условия и соглашения</Title>
-        </Container>
-      </section>
+      <HeroSection title="Условия и соглашения" subtitle="" />
 
       <section className={styles.content}>
         <Container>

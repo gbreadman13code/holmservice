@@ -1,4 +1,4 @@
-import { Typography, Card, Skeleton } from 'antd';
+import {  Card, Skeleton } from 'antd';
 import { Container } from '@/components/Container';
 import { NewsCard } from '@/components/NewsCard';
 import { Pagination } from 'antd';
@@ -7,8 +7,7 @@ import { useNews } from '@/stores/news/hooks';
 import { observer } from 'mobx-react-lite';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
-
-const { Title, Text } = Typography;
+import HeroSection from '@/components/HeroSection';
 
 const SkeletonGrid = () => {
   return (
@@ -66,12 +65,10 @@ export const NewsGrid = observer(() => {
   };
 
   return (
-    <section className={styles.newsSection}>
+    <section className={styles.newsSection} ref={headerRef} >
+        <HeroSection title="Новости" subtitle="Информация о домах, отключениях и другие новости" />
+
       <Container>
-        <div ref={headerRef} className={styles.header}>
-          <Title level={2}>Новости</Title>
-          <Text className={styles.subtitle}>Информация о домах, отключениях и другие новости</Text>
-        </div>
         <div className={styles.grid}>
           {loading ? (
             <SkeletonGrid />

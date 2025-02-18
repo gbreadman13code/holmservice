@@ -6,6 +6,7 @@ import styles from './MyHomePage.module.scss';
 import { useEffect } from 'react';
 import { DownloadOutlined } from '@ant-design/icons';
 import cityIllustration from '@/assets/illustrations/city-pattern.svg';
+import HeroSection from '@/components/HeroSection';
 
 const { Title, Text } = Typography;
 const { Option } = Select;
@@ -147,14 +148,7 @@ export const MyHomePage = observer(() => {
   if (myHomeStore.isLoading && myHomeStore.selectedStreet && myHomeStore.selectedHouse) {
     return (
       <div className={styles.page}>
-        <section className={styles.hero}>
-          <Container>
-            <Title level={1}>Мой дом</Title>
-            <Text className={styles.subtitle}>
-              Поиск информации о доме
-            </Text>
-          </Container>
-        </section>
+        <HeroSection title="Мой дом" subtitle="Поиск информации о доме" />
 
         <section className={styles.content}>
           <Container>
@@ -169,14 +163,7 @@ export const MyHomePage = observer(() => {
   if (myHomeStore.houseInfo) {
     return (
       <div className={styles.page}>
-        <section className={styles.hero}>
-          <Container>
-            <Title level={1}>Мой дом</Title>
-            <Text className={styles.subtitle}>
-              Информация о выбранном доме
-            </Text>
-          </Container>
-        </section>
+        <HeroSection title="Мой дом" subtitle="Информация о выбранном доме" />
 
         <section className={styles.content}>
           <Container>
@@ -187,8 +174,8 @@ export const MyHomePage = observer(() => {
               <WorkPlans plans={myHomeStore.houseInfo.workPlans} />
             </div>
           </Container>
-      <div className={styles.cityBackground} style={{ backgroundImage: `url(${cityIllustration})` }} />
-
+        
+        <div className={styles.cityBackground} style={{ backgroundImage: `url(${cityIllustration})` }} />
         </section>
       </div>
     );
@@ -196,21 +183,15 @@ export const MyHomePage = observer(() => {
 
   return (
     <div className={styles.page}>
-      <section className={styles.hero}>
-        <Container>
-          <Title level={1}>Мой дом</Title>
-          <Text className={styles.subtitle}>
-            Выберите адрес вашего дома, чтобы узнать информацию о нем
-          </Text>
-        </Container>
-      </section>
+      <HeroSection title="Мой дом" subtitle="Выберите адрес вашего дома, чтобы узнать информацию о нем" />
+
 
       <section className={styles.content}>
         <Container>
           <AddressSelector />
         </Container>
-      <div className={styles.cityBackground} style={{ backgroundImage: `url(${cityIllustration})` }} />
-
+      
+        <div className={styles.cityBackground} style={{ backgroundImage: `url(${cityIllustration})` }} />
       </section>
 
 

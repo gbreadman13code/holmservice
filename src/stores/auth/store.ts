@@ -167,7 +167,7 @@ export class AuthStore {
         this.feedbacks = [newFeedback, ...this.feedbacks];
       });
     } catch (error: unknown) {
-      console.log(error);
+      console.error(error);
       throw new Error('Ошибка при отправке обращения');
     } finally {
       this.setFeedbackSending(false);
