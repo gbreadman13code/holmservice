@@ -3,25 +3,19 @@ name: PROD
 on: 
   pull_request:
     branches:
-      - ci-cd-test
+      - main
     type:
       - closed
 
 jobs:
-  
-    ci-cd:
+
+    build:
         name: СI/CD
         runs-on: ubuntu-latest
         steps:
 
             - name: Получение репозитория проекта на виртуальную машину
               uses: actions/checkout@v4
-
-            - name: Установка переменных окружения из Kubernetes
-              run: |
-                echo "HOST_PROD=$HOST_PROD" >> $GITHUB_ENV
-                echo "USERNAME_PROD=$USERNAME_PROD" >> $GITHUB_ENV
-                echo "ID_RSA_PROD=$ID_RSA_PROD" >> $GITHUB_ENV
 
             - name: Установка node
               uses: actions/setup-node@v3
@@ -37,13 +31,11 @@ jobs:
             - name: Деплой билда на сервер
               uses: appleboy/scp-action@v0.1.4
               with:
-                host: ${{ env.HOST_PROD }}
-                username: ${{ env.USERNAME_PROD }}
-                key: ${{ env.ID_RSA_PROD }}
+                host: ${{ vars.HOST_PROD }}
+                username: ${{ secrets.USERNAME_PROD }}
+                key: ${{ secrets.ID_RSA_PROD }}
                 source: .
-                target: /app/back/holmservice
-              
-
+                target: /app/back/
     deploy:
         name: Замена
         runs-on: ubuntu-latest
@@ -54,11 +46,11 @@ jobs:
             - name: Выполнение скрипта замены билда
               uses: appleboy/ssh-action@v1.0.3
               with:
-                host: ${{ env.HOST_PROD }}
-                username: ${{ env.USERNAME_PROD }}
-                key: ${{ env.ID_RSA_PROD }}
+                host: ${{ vars.HOST_PROD }}
+                username: ${{ secrets.USERNAME_PROD }}
+                key: ${{ secrets.ID_RSA_PROD }}
                 script: |
-                  cd /app/back/holmservice
+                  cd /app/back/
 
 
                   # Проверка и созание папки front-archive
@@ -89,15 +81,14 @@ jobs:
                   # Замена актуального front на новый
 
                   cd ../
-                  if [ -d build ]; then
+                  if [ -d dist ]; then
                     if [ -d front ]; then
                       rm -r front
                     fi
-                    echo "Переименовываю build в front"
-                    mv build front
+                    echo "Переименовываю dist в front"
+                    mv dist front
                   fi
 
 
                   # Перезапуск контейнеров
-
                   docker compose -f docker-compose.yaml restart

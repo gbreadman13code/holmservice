@@ -39,5 +39,6 @@ export const router = createBrowserRouter([
     ]
   }
 ], {
-  basename: '/holmservice/'
+  // basename: '/holmservice/'
+  basename: '/'
 }); 
