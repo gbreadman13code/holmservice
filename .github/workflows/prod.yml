@@ -1,0 +1,103 @@
+name: PROD
+
+on: 
+  pull_request:
+    branches:
+      - ci-cd-test
+    type:
+      - closed
+
+jobs:
+  
+    ci-cd:
+        name: СI/CD
+        runs-on: ubuntu-latest
+        steps:
+
+            - name: Получение репозитория проекта на виртуальную машину
+              uses: actions/checkout@v4
+
+            - name: Установка переменных окружения из Kubernetes
+              run: |
+                echo "HOST_PROD=$HOST_PROD" >> $GITHUB_ENV
+                echo "USERNAME_PROD=$USERNAME_PROD" >> $GITHUB_ENV
+                echo "ID_RSA_PROD=$ID_RSA_PROD" >> $GITHUB_ENV
+
+            - name: Установка node
+              uses: actions/setup-node@v3
+
+            - name: Установка пакетов npm
+              run: npm i --legacy-peer-deps
+
+            - name: Сборка проекта
+              env:
+                CI: false
+              run: npm run build
+
+            - name: Деплой билда на сервер
+              uses: appleboy/scp-action@v0.1.4
+              with:
+                host: ${{ env.HOST_PROD }}
+                username: ${{ env.USERNAME_PROD }}
+                key: ${{ env.ID_RSA_PROD }}
+                source: .
+                target: /app/back/holmservice
+              
+
+    deploy:
+        name: Замена
+        runs-on: ubuntu-latest
+        needs: build
+        
+        steps:
+
+            - name: Выполнение скрипта замены билда
+              uses: appleboy/ssh-action@v1.0.3
+              with:
+                host: ${{ env.HOST_PROD }}
+                username: ${{ env.USERNAME_PROD }}
+                key: ${{ env.ID_RSA_PROD }}
+                script: |
+                  cd /app/back/holmservice
+
+
+                  # Проверка и созание папки front-archive
+
+                  if [ ! -d front-archive ]; then
+                    echo "Создаю папку front-archive"
+                    mkdir front-archive
+                  fi
+
+
+                  # Ротация архивных версий
+
+                  cd front-archive
+                  if [ $(ls -1 | wc -l) -gt 3 ]; then
+                    echo "Есть больше трёх архивных версий"
+                    echo "Провожу ротацию"
+                    # Удаление самого старого билда
+                    find . -maxdepth 1 -type d -exec stat -c "%Y:%n" {} + | sort -n | head -n 1 | cut -d: -f2- | xargs rm -r;
+                    # Создание актуального архива
+                    cp -r ../front "front-$(date +"%Y-%m-%d_%H-%M-%S")"
+                  else
+                    echo "Ещё нет трёх архивных версий"
+                    # Создание актуального архива
+                    cp -r ../front "front-$(date +"%Y-%m-%d_%H-%M-%S")"
+                  fi
+
+
+                  # Замена актуального front на новый
+
+                  cd ../
+                  if [ -d build ]; then
+                    if [ -d front ]; then
+                      rm -r front
+                    fi
+                    echo "Переименовываю build в front"
+                    mv build front
+                  fi
+
+
+                  # Перезапуск контейнеров
+
+                  docker compose -f docker-compose.yaml restart
