@@ -8,8 +8,8 @@ on:
       - closed
 
 jobs:
-  
-    ci-cd:
+
+    build:
         name: СI/CD
         runs-on: ubuntu-latest
         steps:
@@ -42,8 +42,6 @@ jobs:
                 key: ${{ env.ID_RSA_PROD }}
                 source: .
                 target: /app/back/holmservice
-              
-
     deploy:
         name: Замена
         runs-on: ubuntu-latest
