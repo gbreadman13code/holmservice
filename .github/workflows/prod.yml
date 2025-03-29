@@ -17,11 +17,11 @@ jobs:
             - name: Получение репозитория проекта на виртуальную машину
               uses: actions/checkout@v4
 
-            - name: Установка переменных окружения из Kubernetes
-              run: |
-                echo "HOST_PROD=$HOST_PROD" >> $GITHUB_ENV
-                echo "USERNAME_PROD=$USERNAME_PROD" >> $GITHUB_ENV
-                echo "ID_RSA_PROD=$ID_RSA_PROD" >> $GITHUB_ENV
+            # - name: Установка переменных окружения из Kubernetes
+            #   run: |
+            #     echo "HOST_PROD=$HOST_PROD" >> $GITHUB_ENV
+            #     echo "USERNAME_PROD=$USERNAME_PROD" >> $GITHUB_ENV
+            #     echo "ID_RSA_PROD=$ID_RSA_PROD" >> $GITHUB_ENV
 
             - name: Установка node
               uses: actions/setup-node@v3
@@ -37,9 +37,9 @@ jobs:
             - name: Деплой билда на сервер
               uses: appleboy/scp-action@v0.1.4
               with:
-                host: ${{ env.HOST_PROD }}
-                username: ${{ env.USERNAME_PROD }}
-                key: ${{ env.ID_RSA_PROD }}
+                host: ${{ variables.HOST_PROD }}
+                username: ${{ secrets.USERNAME_PROD }}
+                key: ${{ secrets.ID_RSA_PROD }}
                 source: .
                 target: /app/back/holmservice
     deploy:
@@ -52,9 +52,9 @@ jobs:
             - name: Выполнение скрипта замены билда
               uses: appleboy/ssh-action@v1.0.3
               with:
-                host: ${{ env.HOST_PROD }}
-                username: ${{ env.USERNAME_PROD }}
-                key: ${{ env.ID_RSA_PROD }}
+                host: ${{ variables.HOST_PROD }}
+                username: ${{ secrets.USERNAME_PROD }}
+                key: ${{ secrets.ID_RSA_PROD }}
                 script: |
                   cd /app/back/holmservice
 
