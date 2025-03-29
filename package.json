@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://gbreadman13code.github.io/holmservice",
+  "homepage": "https://holmservice.in-arthurs-apps.space",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
