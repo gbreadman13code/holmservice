@@ -37,7 +37,7 @@ jobs:
             - name: Деплой билда на сервер
               uses: appleboy/scp-action@v0.1.4
               with:
-                host: ${{ variables.HOST_PROD }}
+                host: ${{ vars.HOST_PROD }}
                 username: ${{ secrets.USERNAME_PROD }}
                 key: ${{ secrets.ID_RSA_PROD }}
                 source: .
@@ -52,7 +52,7 @@ jobs:
             - name: Выполнение скрипта замены билда
               uses: appleboy/ssh-action@v1.0.3
               with:
-                host: ${{ variables.HOST_PROD }}
+                host: ${{ vars.HOST_PROD }}
                 username: ${{ secrets.USERNAME_PROD }}
                 key: ${{ secrets.ID_RSA_PROD }}
                 script: |
