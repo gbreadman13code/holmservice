@@ -5,6 +5,8 @@ import { useAuth } from '@/stores/auth/hooks';
 import { useNavigate } from 'react-router-dom';
 import styles from './UserMenu.module.scss';
 import { AuthModal } from '@/components/AuthModal';
+import { useMemo } from 'react';
+import { useContacts } from '@/stores/contacts/hooks';
 
 interface UserMenuProps {
   isMobile?: boolean;
@@ -12,9 +14,17 @@ interface UserMenuProps {
 
 export const UserMenu = ({ isMobile }: UserMenuProps) => {
   const { openAuthModal } = useAuthModal();
+  const { contacts } = useContacts();
+  
   const { isAuth } = useAuth();
   const navigate = useNavigate();
 
+  const commonPhone = useMemo(() => {
+    return contacts?.phones.find(phone => phone.is_common)?.phones[0].value;
+  }, [contacts]);
+
+  console.log(commonPhone)
+  
   const handleCabinetClick = () => {
     if (isAuth) {
       navigate('/account');
@@ -29,9 +39,9 @@ export const UserMenu = ({ isMobile }: UserMenuProps) => {
         <Button 
         type="text" 
         icon={<PhoneOutlined />}
-        href="tel:+78001234567"
+        href={`tel:${commonPhone}`}
       >
-        8 (800) 123-45-67
+        {commonPhone}
       </Button>
         
         <Button 
@@ -54,9 +64,9 @@ export const UserMenu = ({ isMobile }: UserMenuProps) => {
       <Button 
         type="text" 
         icon={<PhoneOutlined />}
-        href="tel:+78001234567"
+        href={`tel:${commonPhone}`}
       >
-        8 (800) 123-45-67
+        {commonPhone}
       </Button>
       
       <Button 

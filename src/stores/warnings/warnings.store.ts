@@ -1,11 +1,11 @@
 import { makeAutoObservable, runInAction } from 'mobx';
-import { warningsMock } from './warnings.mock';
+import { api } from '@/api/axios';
+import { BaseResponse } from '@/api/types';
 
 export interface Warning {
   id: number;
-  title: string;
-  description: string;
-  date: string;
+  content: string;
+  status: "RED" | "YELLOW" | "GREEN";
 }
 
 class WarningsStore {
@@ -24,9 +24,10 @@ class WarningsStore {
     try {
       // Имитируем задержку сети
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      const response = await api.get<BaseResponse<Warning>>('alerts/');
+
       runInAction(() => {
-        this.warnings = warningsMock;
+        this.warnings = response.data.results;
         this.isLoading = false;
       });
     } catch (error) {

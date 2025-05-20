@@ -11,9 +11,10 @@ import { useState } from 'react';
 
 export const Header = observer(() => {
   // const { isAuth } = useAuth();
-  // const { openAuthModal } = useAuthModal();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const isMobile = useIsMobile();
+
+  
 
   return (
     <>

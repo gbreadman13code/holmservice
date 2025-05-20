@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import { contactsStore } from './contacts.store';
 
-export const useContacts = (commonOnly: boolean = false) => {
+export const useContacts = () => {
   useEffect(() => {
     contactsStore.fetchContacts();
   }, []);
 
   return {
-    contacts: commonOnly ? contactsStore.commonContacts : contactsStore.groupedContacts,
+    contacts: contactsStore.contacts,
     isLoading: contactsStore.isLoading,
     error: contactsStore.error
   };

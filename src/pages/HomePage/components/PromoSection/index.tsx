@@ -12,9 +12,9 @@ export const PromoSection = () => {
       <Container>
         <div className={styles.content}>
           <div className={styles.info}>
-            <Title level={2}>ХолмСервис в вашем мобильном телефоне</Title>
+            <Title level={2}>Холмсервис в вашем мобильном телефоне</Title>
             <Paragraph className={styles.description}>
-              Платите за коммунальные услуги и передавайте показания счетчиков легко - в мобильном приложении УК "ХолмСервис"
+              Платите за коммунальные услуги и передавайте показания счетчиков легко - в мобильном приложении УК "Холмсервис"
             </Paragraph>
             <Space size="middle">
               <Button type="primary" icon={<AppleOutlined />} size="large">

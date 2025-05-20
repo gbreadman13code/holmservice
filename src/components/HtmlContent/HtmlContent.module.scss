@@ -1,0 +1,36 @@
+.content {
+  :global {
+    p {
+      margin-bottom: 0.75em;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      color: rgba(0, 0, 0, 0.85);
+      font-weight: 600;
+      margin-bottom: 0.5em;
+    }
+
+    ul, ol {
+      margin: 0;
+      padding: 0;
+      list-style-position: inside;
+    }
+
+    li {
+      margin-bottom: 0.5em;
+    }
+
+    a {
+      color: #1890ff;
+      text-decoration: none;
+      background-color: transparent;
+      outline: none;
+      cursor: pointer;
+      transition: color 0.3s;
+      
+      &:hover {
+        color: #40a9ff;
+      }
+    }
+  }
+} 

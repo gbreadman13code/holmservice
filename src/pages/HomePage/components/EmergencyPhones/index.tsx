@@ -6,15 +6,15 @@ import { useAuthModal } from '@/stores/modals/hooks';
 import { useContacts } from '@/stores/contacts/hooks';
 import { useNavigate } from 'react-router-dom';
 import styles from './EmergencyPhones.module.scss';
-
+import { toJS } from 'mobx';
 const { Title } = Typography;
 
 export const EmergencyPhones = observer(() => {
   const { isAuth } = useAuth();
   const { openAuthModal } = useAuthModal();
-  const { contacts, isLoading } = useContacts(true);
-  const commonPhone = contacts?.phones.find(phone => phone.isCommon);
-  const commonPhones = commonPhone?.values || [];
+  const { contacts, isLoading } = useContacts();
+  const commonPhone = contacts?.phones.find(phone => phone.is_common);
+  const commonPhones = commonPhone?.phones || [];
   const navigate = useNavigate();
 
   const handleMessageClick = () => {
@@ -25,6 +25,8 @@ export const EmergencyPhones = observer(() => {
       navigate('/account#feedback');
     }
   };
+
+  console.log(toJS(contacts));
 
   return (
     <section className={styles.emergency}>
@@ -46,12 +48,12 @@ export const EmergencyPhones = observer(() => {
             ) : (
               <>
                 <Title level={3} className={styles.title}>
-                  {commonPhone?.title}
+                  {commonPhone?.info}
                 </Title>
                 <div className={styles.phones}>
                   {commonPhones.map((phone, index) => (
-                    <a key={index} href={`tel:${phone.replace(/\D/g, '')}`}>
-                      {phone}
+                    <a key={index} href={`tel:${phone.value}`}>
+                      {phone.value}
                     </a>
                   ))}
                 </div>

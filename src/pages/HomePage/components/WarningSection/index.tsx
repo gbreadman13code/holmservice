@@ -1,13 +1,24 @@
 import { Typography, Carousel, Button } from 'antd';
 import { Container } from '@/components/Container';
-import { WarningFilled, LeftOutlined, RightOutlined } from '@ant-design/icons';
+import { LeftOutlined, RightOutlined } from '@ant-design/icons';
+import { WarningFilled, CheckCircleFilled, InfoCircleFilled } from '@ant-design/icons';
 import { useRef, useState, useEffect } from 'react';
-import styles from './WarningSection.module.scss';
-import { CarouselRef } from 'antd/es/carousel';
 import { observer } from 'mobx-react-lite';
+import { CarouselRef } from 'antd/es/carousel';
 import { useWarnings } from '@/stores/warnings/hooks';
+import styles from './WarningSection.module.scss';
 
 const { Title, Paragraph } = Typography;
+
+// Типы статусов предупреждений
+export type WarningStatus = 'RED' | 'GREEN' | 'YELLOW';
+
+// Карта иконок для разных статусов
+const statusIcons = {
+  RED: WarningFilled,
+  GREEN: CheckCircleFilled,
+  YELLOW: InfoCircleFilled
+};
 
 export const WarningSection = observer(() => {
   const { warnings, isLoading } = useWarnings();
@@ -38,15 +49,25 @@ export const WarningSection = observer(() => {
     isChangingSlide.current = false;
   };
 
-  if (isLoading || warnings.length === 0) {
+  if (warnings.length === 0 || isLoading) {
     return null;
   }
+
+  const multipleWarnings = warnings.length > 1;
+  // Определяем статус текущего предупреждения (по умолчанию RED)
+  const currentWarningIndex = carouselRef.current?.innerSlider?.state?.currentSlide || 0;
+  const currentWarning = warnings[currentWarningIndex];
+  const currentStatus = (currentWarning?.status || 'RED') as WarningStatus;
+  const statusClass = styles[currentStatus.toLowerCase()];
+  
+  // Выбираем иконку в зависимости от статуса
+  const StatusIcon = statusIcons[currentStatus];
 
   return (
     <section className={styles.warning}>
       <Container>
         <div 
-          className={styles.content}
+          className={`${styles.content} ${statusClass}`}
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
@@ -64,33 +85,35 @@ export const WarningSection = observer(() => {
                 {warnings.map((warning) => (
                   <div key={warning.id} className={styles.sliderItem}>
                     <Paragraph className={styles.text}>
-                      {warning.description}
+                      {warning.content}
                     </Paragraph>
-                    
                   </div>
                 ))}
               </Carousel>
             </div>
           </div>
           <div className={styles.iconWrapper}>
-            <WarningFilled className={styles.icon} />
+            <StatusIcon className={styles.icon} />
           </div>
-          <div className={styles.progressBar} style={{ width: `${progress}%` }} />
+          {multipleWarnings && (
+            <div className={styles.progressBar} style={{ width: `${progress}%` }} />
+          )}
 
         </div>
-        <div className={styles.controls}>
-          <Button 
-            type="text" 
-            icon={<LeftOutlined />} 
-            onClick={() => carouselRef.current?.prev()}
-          />
-          <Button 
-            type="text" 
-            icon={<RightOutlined />} 
-            onClick={() => carouselRef.current?.next()}
-          />
-        </div>
-
+        {multipleWarnings && (
+          <div className={styles.controls}>
+            <Button 
+              type="text" 
+              icon={<LeftOutlined />} 
+              onClick={() => carouselRef.current?.prev()}
+            />
+            <Button 
+              type="text" 
+              icon={<RightOutlined />} 
+              onClick={() => carouselRef.current?.next()}
+            />
+          </div>
+        )}
 
       </Container>
       

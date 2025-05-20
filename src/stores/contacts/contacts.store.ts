@@ -1,21 +1,12 @@
 import { makeAutoObservable, runInAction } from 'mobx';
-import { contactsMock } from './contacts.mock';
+import { api } from '@/api/axios';
+import { AddressItem, Contacts, EmailItem, PhoneItem } from './types';
+import { BaseResponse } from '@/api/types';
 
-export interface Contact {
-  id: number;
-  title: string;
-  type: 'phone' | 'email';
-  values: string[];
-  isCommon: boolean;
-}
 
-export interface ContactsData {
-  phones: Contact[];
-  emails: Contact[];
-}
 
 class ContactsStore {
-  contacts: Contact[] | null = null;
+  contacts: Contacts | null = null;
   isLoading = false;
   error: string | null = null;
 
@@ -29,14 +20,18 @@ class ContactsStore {
 
     try {
       // Имитируем задержку сети
-      await new Promise(resolve => setTimeout(resolve, 500));
+      const addresses = await api.get<BaseResponse<AddressItem>>('addresses/');
+      const phones = await api.get<BaseResponse<PhoneItem>>('phones/');
+      const emails = await api.get<BaseResponse<EmailItem>>('emails/');
       
       runInAction(() => {
         // Преобразуем моковые данные в нужный формат
-        this.contacts = [
-          ...contactsMock.phones,
-          ...contactsMock.emails
-        ];
+        this.contacts = {
+          phones: phones.data.results,
+          emails: emails.data.results,
+          addresses: addresses.data.results
+        };
+        
         this.isLoading = false;
       });
     } catch (error) {
@@ -46,25 +41,6 @@ class ContactsStore {
         console.error(error);
       });
     }
-  }
-
-  get groupedContacts(): ContactsData {
-    if (!this.contacts) return { phones: [], emails: [] };
-
-    return {
-      phones: this.contacts.filter(contact => contact.type === 'phone'),
-      emails: this.contacts.filter(contact => contact.type === 'email')
-    };
-  }
-
-  get commonContacts(): ContactsData {
-    if (!this.contacts) return { phones: [], emails: [] };
-
-    const common = this.contacts.filter(contact => contact.isCommon);
-    return {
-      phones: common.filter(contact => contact.type === 'phone'),
-      emails: common.filter(contact => contact.type === 'email')
-    };
   }
 }
 

@@ -1,21 +1,16 @@
 import { Row, Col } from 'antd';
 import { observer } from 'mobx-react-lite';
-import { Document, documentsStore } from '@/stores/documents';
+import { documentsStore } from '@/stores/documents';
 import { DocumentCard } from '../components/DocumentCard';
 import { DocumentSkeleton } from '../components/DocumentSkeleton';
 import { Container } from '@/components/Container';
 import styles from './TemplatesPage.module.scss';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import HeroSection from '@/components/HeroSection';
 
 export const TemplatesPage = observer(() => {
-  const [documents, setDocuments] = useState<Document[]>([]);
-
   useEffect(() => {
-    (async () => {
-      const documents = await documentsStore.getTemplateDocuments();
-      setDocuments(documents);
-    })();
+    documentsStore.getTemplateDocuments();
   }, []);
 
   const renderContent = () => {
@@ -27,7 +22,7 @@ export const TemplatesPage = observer(() => {
       ));
     }
 
-    return documents.map((document, index) => (
+    return documentsStore.templateDocuments.map((document, index) => (
       <Col key={index} xs={12} sm={12} md={8} lg={6}>
         <DocumentCard document={document} />
       </Col>

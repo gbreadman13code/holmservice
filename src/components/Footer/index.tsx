@@ -30,9 +30,9 @@ const socialLinks = [
 ];
 
 export const Footer = observer(() => {
-  const { contacts, isLoading } = useContacts(true);
-  const commonPhone = contacts?.phones.find(phone => phone.isCommon);
-  const commonPhones = commonPhone?.values || [];
+  const { contacts, isLoading } = useContacts();
+  const commonPhone = contacts?.phones.find(phone => phone.is_common);
+  const commonPhones = commonPhone?.phones || [];
 
   return (
     <AntFooter className={styles.footer}>
@@ -50,7 +50,7 @@ export const Footer = observer(() => {
                 }} 
               />
             ) : (
-              <Title level={4}>{commonPhone?.title}</Title>
+              <Title level={4}>{commonPhone?.info}</Title>
             )}
             <div className={styles.phones}>
               {isLoading ? (
@@ -60,8 +60,8 @@ export const Footer = observer(() => {
                 </div>
               ) : commonPhones.length > 0 ? (
                 commonPhones.map((phone, index) => (
-                  <a key={index} href={`tel:${phone.replace(/\D/g, '')}`}>
-                    {phone}
+                  <a key={index} href={`tel:${phone.phone}`}>
+                    {phone.value}
                   </a>
                 ))
               ) : null}
@@ -96,7 +96,7 @@ export const Footer = observer(() => {
         </div>
 
         <div className={styles.bottom}>
-          <Text>© 2024 Холм Сервис. Все права защищены</Text>
+          <Text>© 2025 Холмсервис. Все права защищены</Text>
           <div className={styles.links}>
             <Link to="/privacy">Политика конфиденциальности</Link>
             <Link to="/terms">Пользовательское соглашение</Link>

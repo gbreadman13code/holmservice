@@ -20,10 +20,6 @@ const address = {
 export const ContactsPage = observer(() => {
   const { contacts, isLoading } = useContacts();
 
-  // Создаем отсортированные копии массивов
-  const sortedEmails = contacts?.emails ? [...contacts.emails] : [];
-  const sortedPhones = contacts?.phones ? [...contacts.phones] : [];
-
   const renderSkeleton = () => (
     <div className={styles.block}>
       <div className={styles.icon}>
@@ -58,19 +54,19 @@ export const ContactsPage = observer(() => {
                 </>
               ) : (
                 <>
-                  {sortedEmails.length > 0 && (
+                  {contacts?.emails?.length && (
                     <div className={styles.block}>
                       <div className={styles.icon}>
                         <MailOutlined />
                       </div>
                       <div className={styles.list}>
-                        {sortedEmails.map((item) => (
+                        {contacts?.emails?.map((item) => (
                           <div key={item.id} className={styles.item}>
-                            <Text type="secondary">{item.title}</Text>
+                            <Text type="secondary">{item.info}</Text>
                             <div className={styles.values}>
-                              {item.values.map((email, index) => (
-                                <a key={index} href={`mailto:${email}`}>{email}</a>
-                              ))}
+                                {item.emails.map(email => (
+                                  <a key={email.id} href={`mailto:${email.value}`}>{email.value}</a>
+                                ))}
                             </div>
                           </div>
                         ))}
@@ -78,18 +74,18 @@ export const ContactsPage = observer(() => {
                     </div>
                   )}
 
-                  {sortedPhones.length > 0 && (
+                  {contacts?.phones?.length && (
                     <div className={styles.block}>
                       <div className={styles.icon}>
                         <PhoneOutlined />
                       </div>
                       <div className={styles.list}>
-                        {sortedPhones.map((item) => (
+                        {contacts?.phones?.map((item) => (
                           <div key={item.id} className={styles.item}>
-                            <Text type="secondary">{item.title}</Text>
+                            <Text type="secondary">{item.info}</Text>
                             <div className={styles.values}>
-                              {item.values.map((phone, index) => (
-                                <a key={index} href={`tel:${phone.replace(/\D/g, '')}`}>{phone}</a>
+                              {item.phones.map(phone => (
+                                <a key={phone.id} href={`tel:${phone.value}`}>{phone.value}</a>
                               ))}
                             </div>
                           </div>
@@ -105,10 +101,14 @@ export const ContactsPage = observer(() => {
                   <EnvironmentOutlined />
                 </div>
                 <div className={styles.list}>
-                  <div className={styles.item}>
-                    <Text type="secondary">{address.title}</Text>
-                    <Text>{address.address}</Text>
-                  </div>
+                  {contacts?.addresses.map((item) => (
+                    <div key={item.id} className={styles.item}>
+                        <Text type="secondary">{item.info}</Text>
+                        {item.address.map(address => (
+                          <Text key={address.id}>{address.value}</Text>
+                        ))}
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>

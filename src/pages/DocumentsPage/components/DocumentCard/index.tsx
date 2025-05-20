@@ -1,15 +1,20 @@
 import { Card } from 'antd';
-import { FilePdfOutlined, FileWordOutlined } from '@ant-design/icons';
-import { Document } from '@/stores/documents';
+import { FileOutlined, FilePdfOutlined, FileWordOutlined, FileImageOutlined, FileExcelOutlined } from '@ant-design/icons';
 import styles from './DocumentCard.module.scss';
-
+import { Document } from '@/stores/documents/types';
 interface DocumentCardProps {
   document: Document;
 }
 
 export const DocumentCard = ({ document }: DocumentCardProps) => {
+
   const handleDownload = () => {
-    window.open(document.url, '_blank');
+    const link = window.document.createElement('a');
+    link.href = document.filepath;
+    link.download = document.filepath.split('/').pop() || 'document'; 
+    window.document.body.appendChild(link);
+    link.click();
+    window.document.body.removeChild(link);
   };
 
   const getIcon = () => {
@@ -17,10 +22,13 @@ export const DocumentCard = ({ document }: DocumentCardProps) => {
       case 'pdf':
         return <FilePdfOutlined className={styles.pdfIcon} />;
       case 'doc':
-      case 'docx':
         return <FileWordOutlined className={styles.wordIcon} />;
+      case 'image':
+        return <FileImageOutlined className={styles.imageIcon} />;
+      case 'table':
+        return <FileExcelOutlined className={styles.excelIcon} />;
       default:
-        return null;
+        return <FileOutlined className={styles.anyIcon} />;
     }
   };
 
@@ -28,8 +36,8 @@ export const DocumentCard = ({ document }: DocumentCardProps) => {
     <Card className={styles.card} onClick={handleDownload}>
       <div className={styles.icon}>{getIcon()}</div>
       <div className={styles.info}>
-        <div className={styles.title}>{document.title}</div>
-        <div className={styles.size}>{document.size}</div>
+        <div className={styles.title}>{document.filename}</div>
+        <div className={styles.size}>28 MB</div>
       </div>
     </Card>
   );

@@ -1,10 +1,11 @@
 import { makeAutoObservable, runInAction } from 'mobx';
-import { NewsItem, CurrentNews } from './types';
-import { mockNews } from './mock';
+import { NewsItem } from './types';
+import { BaseResponse } from '@/api/types';
+import { api } from '@/api/axios';
 
 export class NewsStore {
   news: NewsItem[] = [];
-  currentNews: CurrentNews | null = null;
+  currentNews: NewsItem | null = null;
   total: number = 0;
   loading: boolean = false;
   currentPage: number = 1;
@@ -24,16 +25,16 @@ export class NewsStore {
 
     try {
       const offset = (this.currentPage - 1) * this.pageSize;
-      // Имитируем запрос с limit/offset
-      await new Promise(resolve => setTimeout(resolve, 500));
-      const response = {
-        items: mockNews.slice(offset, offset + this.pageSize),
-        total: mockNews.length
-      };
+      const response = await api.get<BaseResponse<NewsItem>>('news/', {
+        params: {
+          limit: this.pageSize,
+          offset
+        }
+      });
 
       runInAction(() => {
-        this.news = response.items;
-        this.total = response.total;
+        this.news = response.data.results;
+        this.total = response.data.count;
       });
     } finally {
       runInAction(() => {
@@ -46,10 +47,15 @@ export class NewsStore {
     this.loading = true;
 
     try {
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
+      const response = await api.get<BaseResponse<NewsItem>>('news/', {
+        params: {
+          limit: count,
+          offset: 0
+        }
+      });
+
       runInAction(() => {
-        this.news = mockNews.slice(0, count);
+        this.news = response.data.results;
       });
     } finally {
       runInAction(() => {
@@ -59,8 +65,17 @@ export class NewsStore {
   }
 
   async fetchNewsById(id: number): Promise<NewsItem | null> {
-    await new Promise(resolve => setTimeout(resolve, 500));
-    return mockNews.find(news => news.id === id) || null;
+    this.loading = true;
+    this.currentNews = null;
+
+    try {
+      const response = await api.get<BaseResponse<NewsItem>>(`news/${id}/`);
+      return response.data.results[0] || null;
+    } finally {
+      runInAction(() => {
+        this.loading = false;
+      });
+    }
   }
 
   async fetchNewsBySlug(slug: string) {
@@ -68,29 +83,8 @@ export class NewsStore {
     this.currentNews = null;
 
     try {
-      await new Promise(resolve => setTimeout(resolve, 500));
-      const news = mockNews.find(news => news.slug === slug);
-      
-      if (news) {
-        runInAction(() => {
-          this.currentNews = {
-            ...news,
-            fullText: `Система водоснабжения крупных городов давно нуждается в модернизации. Новая программа, представленная Министерством ЖКХ, 
-направлена на обновление инфраструктуры водопровода, включая замену устаревших труб, установку современных систем фильтрации и внедрение цифровых технологий 
-для контроля качества воды.
-
-По словам представителей министерства, проект будет реализован поэтапно: сначала в мегаполисах с наиболее изношенной инфраструктурой, таких как Москва, Санкт-Петербург и Екатеринбург. 
-Далее модернизация будет распространяться на города с населением более 1 миллиона человек.
-
-Ожидается, что реализация программы приведет к значительному снижению потерь воды в системе, улучшению качества подачи и сокращению числа аварий. 
-Также важной частью программы является повышение экологической безопасности, так как будут внедрены новые технологии очистки сточных вод.
-
-Программа рассчитана на пять лет, а общий объем финансирования составит более 200 миллиардов рублей. Финансирование будет осуществляться как из федерального бюджета, так и за счет частных инвестиций. 
-
-Министерство также призвало население к активному участию в обсуждении проекта, чтобы сделать его максимально эффективным и отвечающим потребностям жителей.`
-          };
-        });
-      }
+      const response = await api.get<NewsItem>(`news/${slug}/`);
+      this.currentNews = response.data;
     } finally {
       runInAction(() => {
         this.loading = false;

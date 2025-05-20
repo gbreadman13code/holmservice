@@ -24,10 +24,6 @@ export const Navigation = ({ onItemClick }: NavigationProps) => {
         ),
         children: [
           {
-            key: '/documents/rso',
-            label: <Link to="/documents/rso" onClick={onItemClick}>Договоры с РСО</Link>
-          },
-          {
             key: '/documents/templates',
             label: <Link to="/documents/templates" onClick={onItemClick}>Шаблоны документов</Link>
           },

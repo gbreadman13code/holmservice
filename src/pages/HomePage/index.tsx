@@ -6,6 +6,7 @@ import { GosuslugiPromoSection } from './components/GosuslugiPromoSection';
 import styles from './HomePage.module.scss';
 
 export const HomePage = () => {
+  
   return (
     <div className={styles.home}>
       <HeroSection />

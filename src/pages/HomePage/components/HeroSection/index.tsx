@@ -18,7 +18,7 @@ export const HeroSection = () => {
         <Container>
           <div className={styles.content}>
             <div className={styles.info}>
-              <Title level={1}>Управляющая компания холмсервис</Title>
+              <Title level={1}>Управляющая компания Холмсервис</Title>
               <Text className={styles.slogan}>
                 Профессиональное управление многоквартирными домами
               </Text>

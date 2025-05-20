@@ -1,16 +1,7 @@
 import { makeAutoObservable, runInAction } from 'mobx';
-
-interface Street {
-  id: number;
-  name: string;
-}
-
-interface House {
-  id: number;
-  number: string;
-  streetId: number;
-}
-
+import { Street, House } from './types';
+import { BaseResponse } from '@/api/types';
+import { api } from '@/api/axios';
 export interface ICompanyInfo {
   name: string;
   address: string;
@@ -44,34 +35,8 @@ export interface HouseInfo {
   workPlans: WorkPlan[];
 }
 
-const MOCK_STREETS = [
-  { id: 1, name: 'улица Дмитрия Мартынова' },
-  { id: 2, name: 'улица Чернышевского' },
-  { id: 3, name: 'улица Ленина' },
-  { id: 4, name: 'улица Красноярский рабочий' },
-  { id: 5, name: 'улица 78 Добровольческой бригады' },
-  { id: 6, name: 'улица 9 Мая' },
-  { id: 7, name: 'улица Алексеева' },
-  { id: 8, name: 'улица Весны' },
-  { id: 9, name: 'улица Молокова' },
-  { id: 10, name: 'улица Авиаторов' }
-];
-
-const generateHouses = (streetId: number) => [
-  { id: streetId * 100 + 1, number: '1', streetId },
-  { id: streetId * 100 + 2, number: '2', streetId },
-  { id: streetId * 100 + 3, number: '3А', streetId },
-  { id: streetId * 100 + 4, number: '5', streetId },
-  { id: streetId * 100 + 5, number: '7', streetId },
-  { id: streetId * 100 + 6, number: '9Б', streetId },
-  { id: streetId * 100 + 7, number: '11', streetId },
-  { id: streetId * 100 + 8, number: '13', streetId },
-  { id: streetId * 100 + 9, number: '15А', streetId },
-  { id: streetId * 100 + 10, number: '17', streetId }
-];
-
 const COMPANY_INFO: ICompanyInfo = {
-  name: 'ООО УК "Холм Сервис"',
+  name: 'ООО УК "Холмсервис"',
   address: 'ул. Весны, 26, пом. 150',
   schedule: 'понедельник-пятница: с 09-00 до 18-00, обед с 13-00 до 14-00; суббота, воскресенье: выходной',
   phone: '8 (391) 255-55-55',
@@ -114,8 +79,8 @@ const generateWorkPlans = (houseId: number): WorkPlan[] => [
 export class MyHomeStore {
   streets: Street[] = [];
   houses: House[] = [];
-  selectedStreet: Street | null = null;
-  selectedHouse: House | null = null;
+  selectedStreetId: number | null = null;
+  selectedHouseId: number | null = null;
   houseInfo: HouseInfo | null = null;
   isLoading = false;
 
@@ -123,24 +88,34 @@ export class MyHomeStore {
     makeAutoObservable(this);
   }
 
-  setSelectedStreet = (street: Street | null) => {
-    this.selectedStreet = street;
-    this.selectedHouse = null; // Сбрасываем выбранный дом при смене улицы
-    if (street) {
-      this.loadHouses(street.id);
+  setSelectedStreet = (streetId: number | null) => {
+    this.selectedStreetId = streetId;
+    this.selectedHouseId = null; // Сбрасываем выбранный дом при смене улицы
+    if (streetId) {
+      this.loadHouses(streetId);
     }
   };
 
-  setSelectedHouse = (house: House | null) => {
-    this.selectedHouse = house;
+  setSelectedHouse = (houseId: number | null) => {
+    this.selectedHouseId = houseId;
   };
 
   loadStreets = async () => {
     this.isLoading = true;
     try {
-      const response = await new Promise<Street[]>(resolve => 
-        setTimeout(() => resolve(MOCK_STREETS), 1000)
-      );
+      const firstResponse = await api.get<BaseResponse<Street>>('streets/', {
+        params: {
+          page: 1
+        }
+      });
+
+      const secondResponse = await api.get<BaseResponse<Street>>('streets/', {
+        params: {
+          page: 2
+        }
+      });
+
+      const response = [...firstResponse.data.results, ...secondResponse.data.results];
 
       runInAction(() => {
         this.streets = response;
@@ -155,12 +130,13 @@ export class MyHomeStore {
   loadHouses = async (streetId: number) => {
     this.isLoading = true;
     try {
-      const response = await new Promise<House[]>(resolve =>
-        setTimeout(() => resolve(generateHouses(streetId)), 500)
-      );
+        const response = this.streets.find(street => street.id === streetId)?.houses;
+        
+
+      const houses = response || [];
 
       runInAction(() => {
-        this.houses = response;
+        this.houses = houses;
       });
     } finally {
       runInAction(() => {
@@ -170,19 +146,17 @@ export class MyHomeStore {
   };
 
   searchHouseInfo = async () => {
-    if (!this.selectedStreet || !this.selectedHouse) return;
+    if (!this.selectedHouseId) return;
 
     this.isLoading = true;
     try {
-      const response = await new Promise<HouseInfo>(resolve =>
-        setTimeout(() => resolve({
-          id: this.selectedHouse!.id,
-          address: `${this.selectedStreet!.name}, ${this.selectedHouse!.number}`,
+      const response = {
+          id: this.selectedHouseId,
+          address: `${this.streets.find(street => street.id === this.selectedStreetId)?.name}, ${this.houses.find(house => house.id === this.selectedHouseId)?.number}`,
           companyInfo: COMPANY_INFO,
-          reports: generateReports(this.selectedHouse!.id),
-          workPlans: generateWorkPlans(this.selectedHouse!.id)
-        }), 1000)
-      );
+          reports: generateReports(this.selectedHouseId),
+          workPlans: generateWorkPlans(this.selectedHouseId)
+        }
 
       runInAction(() => {
         this.houseInfo = response;

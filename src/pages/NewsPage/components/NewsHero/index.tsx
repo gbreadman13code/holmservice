@@ -44,7 +44,7 @@ export const NewsHero = observer(() => {
   if (!latestNews) return null;
 
   return (
-    <Link to={`/news/${latestNews.slug}`} className={styles.hero}>
+    <Link to={`/news/${latestNews.id}`} className={styles.hero}>
       <Container>
         <div className={styles.content}>
           <Text className={styles.label}>Последняя новость</Text>
@@ -52,9 +52,9 @@ export const NewsHero = observer(() => {
             {latestNews.title}
           </Title>
           <div className={styles.meta}>
-            <Text className={styles.date}>{formatDate(latestNews.publishDate)}</Text>
+            <Text className={styles.date}>{formatDate(latestNews.created_at)}</Text>
             <span className={styles.separator}>•</span>
-            <Text className={styles.readingTime}>{Math.ceil(latestNews.fullTextCharCount / (180 * 5))} мин</Text>
+            <Text className={styles.readingTime}>{Math.ceil(latestNews.content.length / (180 * 5))} мин</Text>
           </div>
         </div>
       </Container>

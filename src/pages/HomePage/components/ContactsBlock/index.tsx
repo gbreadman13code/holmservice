@@ -7,9 +7,9 @@ import styles from './ContactsBlock.module.scss';
 const { Title } = Typography;
 
 export const ContactsBlock = observer(() => {
-  const { contacts, isLoading } = useContacts(true);
-  const commonPhone = contacts?.phones.find(phone => phone.isCommon);
-  const commonPhones = commonPhone?.values || [];
+  const { contacts, isLoading } = useContacts();
+  const commonPhone = contacts?.phones.find(phone => phone.is_common);
+  const commonPhones = commonPhone?.phones || [];
 
   return (
     <section className={styles.section}>
@@ -24,11 +24,11 @@ export const ContactsBlock = observer(() => {
           </div>
         ) : commonPhones.length > 0 ? (
           <>
-            <Title level={2}>{commonPhone?.title}</Title>
+            <Title level={2}>{commonPhone?.info}</Title>
             <div className={styles.phones}>
               {commonPhones.map((phone, index) => (
-                <a key={index} href={`tel:${phone.replace(/\D/g, '')}`}>
-                  {phone}
+                <a key={index} href={`tel:${phone.value}`}>
+                  {phone.value}
                 </a>
               ))}
             </div>

@@ -1,4 +1,4 @@
-import { Typography, Skeleton, Button, message } from 'antd';
+import { Typography, Skeleton, Button, message, Carousel } from 'antd';
 import { Container } from '@/components/Container';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -6,9 +6,9 @@ import { observer } from 'mobx-react-lite';
 import { newsStore } from '@/stores/news';
 import { formatDate } from '@/utils/formatDate';
 import { ArrowLeftOutlined, LinkOutlined } from '@ant-design/icons';
+import { HtmlContent } from '@/components/HtmlContent';
 import styles from './NewsItemPage.module.scss';
-
-const { Title, Text, Paragraph } = Typography;
+const { Title, Text } = Typography;
 
 const NewsItemSkeleton = () => (
   <div className={styles.skeleton}>
@@ -49,6 +49,8 @@ export const NewsItemPage = observer(() => {
     void message.success('Ссылка скопирована');
   };
 
+  
+
   if (loading) {
     return <NewsItemSkeleton />;
   }
@@ -60,6 +62,11 @@ export const NewsItemPage = observer(() => {
       </Container>
     );
   }
+
+  const images = [
+    currentNews.cover,
+    ...currentNews.photos.map((photo) => photo.photo),
+  ].filter(Boolean) as string[]
 
   return (
     <Container>
@@ -78,9 +85,9 @@ export const NewsItemPage = observer(() => {
 
           <div className={styles.meta}>
             <div className={styles.metaInfo}>
-              <Text>{formatDate(currentNews.publishDate)}</Text>
+              <Text>{formatDate(currentNews.created_at)}</Text>
               <span className={styles.separator}>•</span>
-              <Text>{Math.ceil(currentNews.fullTextCharCount / (180 * 5))} мин</Text>
+              <Text>{Math.ceil(currentNews.content.length / (180 * 5))} мин</Text>
             </div>
             <Button 
               type="text" 
@@ -94,10 +101,20 @@ export const NewsItemPage = observer(() => {
         </div>
 
         <div className={styles.content}>
-          <img src={currentNews.imageUrl} alt={currentNews.title} className={styles.image} />
-          <Paragraph className={styles.text} style={{ whiteSpace: 'pre-line' }}>
-            {currentNews.fullText}
-          </Paragraph>
+          {images.length && <div className={styles.videoSlider}>
+              <Carousel autoplay={false} dots={true}>
+                {images.map((image, index) => (
+                  <img src={image} alt={currentNews.title} className={styles.image} key={index} />
+                ))}
+              </Carousel>
+            </div>}
+          
+          {currentNews.vk_video_link && (
+            <div className={styles.videoSlider}>
+                <iframe src={currentNews.vk_video_link} width="100%" height="500" frameBorder="0" allowFullScreen={true} allow="autoplay; encrypted-media; fullscreen; picture-in-picture"></iframe>
+            </div>
+          )}
+          <HtmlContent content={currentNews.content} className={styles.text} />
         </div>
       </article>
     </Container>

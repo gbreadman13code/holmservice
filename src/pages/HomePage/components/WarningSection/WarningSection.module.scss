@@ -1,5 +1,11 @@
 @use '@/styles/mixins' as mix;
 
+// Переменные для цветов статусов
+:export {
+  statusRed: #ff4d4f;
+  statusGreen: #52c41a;
+  statusYellow: #faad14;
+}
 
 .warning {
   padding: 24px 0;
@@ -10,13 +16,11 @@
   display: flex;
   align-items: center;
   gap: 32px;
-  background: rgba(255, 77, 79, 0.05);
-  border: 1px solid rgba(255, 77, 79, 0.2);
+  background: var(--status-bg-color, rgba(255, 77, 79, 0.05));
+  border: 1px solid var(--status-border-color, rgba(255, 77, 79, 0.2));
   border-radius: 8px;
   padding: 24px;
   overflow: hidden;
-
-  
 }
 
 .info {
@@ -29,7 +33,7 @@
 }
 
 .title {
-  color: #ff4d4f !important;
+  color: var(--status-color, #ff4d4f) !important;
   margin-bottom: 16px !important;
 }
 
@@ -69,7 +73,7 @@
   bottom: 0;
   left: 0;
   height: 2px;
-  background: #ff4d4f;
+  background: var(--status-color, #ff4d4f);
   transition: width 0.1s linear;
 }
 
@@ -79,7 +83,7 @@
   justify-content: center;
   width: 64px;
   height: 64px;
-  background: #ff4d4f;
+  background: var(--status-color, #ff4d4f);
   border-radius: 4px;
   transform: rotate(45deg);
 }
@@ -109,8 +113,8 @@
       border-radius: 50%;
 
       &:hover {
-        border-color: #ff4d4f;
-        color: #ff4d4f;
+        border-color: var(--status-color, #ff4d4f);
+        color: var(--status-color, #ff4d4f);
       }
     }
   }
@@ -143,4 +147,23 @@
   .controls {
     justify-content: center;
   }
+} 
+
+// Классы для разных статусов
+.red {
+  --status-color: #ff4d4f;
+  --status-bg-color: rgba(255, 77, 79, 0.05);
+  --status-border-color: rgba(255, 77, 79, 0.2);
+}
+
+.green {
+  --status-color: #52c41a;
+  --status-bg-color: rgba(82, 196, 26, 0.05);
+  --status-border-color: rgba(82, 196, 26, 0.2);
+}
+
+.yellow {
+  --status-color: #faad14;
+  --status-bg-color: rgba(250, 173, 20, 0.05);
+  --status-border-color: rgba(250, 173, 20, 0.2);
 } 

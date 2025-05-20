@@ -16,13 +16,11 @@ const filterOption: SelectProps['filterOption'] = (input, option) =>
 
 const AddressSelector = observer(({ className }: { className?: string }) => {
   const handleStreetChange = (value: number) => {
-    const street = myHomeStore.streets.find(s => s.id === value) || null;
-    myHomeStore.setSelectedStreet(street);
+    myHomeStore.setSelectedStreet(value);
   };
 
   const handleHouseChange = (value: number) => {
-    const house = myHomeStore.houses.find(h => h.id === value) || null;
-    myHomeStore.setSelectedHouse(house);
+    myHomeStore.setSelectedHouse(value);
   };
 
   const handleSearch = () => {
@@ -36,7 +34,7 @@ const AddressSelector = observer(({ className }: { className?: string }) => {
         className={styles.select}
         onChange={handleStreetChange}
         loading={myHomeStore.isLoading}
-        value={myHomeStore.selectedStreet?.id}
+        value={myHomeStore.selectedStreetId}
         showSearch
         optionFilterProp="children"
         filterOption={filterOption}
@@ -52,8 +50,8 @@ const AddressSelector = observer(({ className }: { className?: string }) => {
         placeholder="Выберите дом"
         className={styles.select}
         onChange={handleHouseChange}
-        disabled={!myHomeStore.selectedStreet || myHomeStore.isLoading}
-        value={myHomeStore.selectedHouse?.id}
+        disabled={!myHomeStore.selectedStreetId || myHomeStore.isLoading}
+        value={myHomeStore.selectedHouseId}
         showSearch
         optionFilterProp="children"
         filterOption={filterOption}
@@ -68,7 +66,7 @@ const AddressSelector = observer(({ className }: { className?: string }) => {
       <Button
         type="primary"
         onClick={handleSearch}
-        disabled={!myHomeStore.selectedStreet || !myHomeStore.selectedHouse}
+        disabled={!myHomeStore.selectedStreetId || !myHomeStore.selectedHouseId}
         loading={myHomeStore.isLoading}
       >
         Найти
@@ -145,7 +143,7 @@ export const MyHomePage = observer(() => {
     myHomeStore.loadStreets();
   }, []);
 
-  if (myHomeStore.isLoading && myHomeStore.selectedStreet && myHomeStore.selectedHouse) {
+  if (myHomeStore.isLoading && myHomeStore.selectedStreetId && myHomeStore.selectedHouseId) {
     return (
       <div className={styles.page}>
         <HeroSection title="Мой дом" subtitle="Поиск информации о доме" />

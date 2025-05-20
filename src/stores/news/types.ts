@@ -1,12 +1,18 @@
 export interface NewsItem {
   id: number;
+  cover: string | null;
   title: string;
-  description: string;
-  fullTextCharCount: number;
-  fullText?: string;
-  imageUrl: string;
-  publishDate: string; // В формате 'YYYY-MM-DD'
+  content: string;
+  created_at: string;
   slug: string;
+  photos: AdditionalImage[];
+  vk_video_link?: string;
+} 
+
+export interface AdditionalImage {
+  id: number;
+  photo: string;
+  news: number;
 }
 
 export interface NewsResponse {
