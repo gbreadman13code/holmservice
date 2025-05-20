@@ -24,7 +24,7 @@ export const NewsCard = ({ news }: NewsCardProps) => {
   return (
     <Link to={`/news/${news.slug}`} className={styles.card}>
       <div className={styles.imageWrapper}>
-        <img src={news.cover} alt={news.title} className={styles.image} />
+        <img src={news.cover ?? ''} alt={news.title} className={styles.image} />
       </div>
       <div className={styles.content}>
         <Title level={5} className={styles.title}>{news.title}</Title>
