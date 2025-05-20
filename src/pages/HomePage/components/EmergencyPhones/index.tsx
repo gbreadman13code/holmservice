@@ -6,7 +6,6 @@ import { useAuthModal } from '@/stores/modals/hooks';
 import { useContacts } from '@/stores/contacts/hooks';
 import { useNavigate } from 'react-router-dom';
 import styles from './EmergencyPhones.module.scss';
-import { toJS } from 'mobx';
 const { Title } = Typography;
 
 export const EmergencyPhones = observer(() => {
