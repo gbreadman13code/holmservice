@@ -5,25 +5,21 @@ import { useAuth } from '@/stores/auth/hooks';
 import { useNavigate } from 'react-router-dom';
 import styles from './UserMenu.module.scss';
 import { AuthModal } from '@/components/AuthModal';
-import { useMemo } from 'react';
 import { useContacts } from '@/stores/contacts/hooks';
+import { observer } from 'mobx-react-lite';
 
 interface UserMenuProps {
   isMobile?: boolean;
 }
 
-export const UserMenu = ({ isMobile }: UserMenuProps) => {
+export const UserMenu = observer(({ isMobile }: UserMenuProps) => {
   const { openAuthModal } = useAuthModal();
   const { contacts } = useContacts();
   
   const { isAuth } = useAuth();
   const navigate = useNavigate();
 
-  const commonPhone = useMemo(() => {
-    return contacts?.phones.find(phone => phone.is_common)?.phones[0].value;
-  }, [contacts]);
-
-  console.log(commonPhone)
+  const commonPhone = contacts?.phones.find(phone => phone.is_common)?.phones[0].value;
   
   const handleCabinetClick = () => {
     if (isAuth) {
@@ -36,13 +32,15 @@ export const UserMenu = ({ isMobile }: UserMenuProps) => {
   if (isMobile) {
     return (
       <div className={styles.mobileMenu}>
+        {commonPhone && (
         <Button 
         type="text" 
         icon={<PhoneOutlined />}
         href={`tel:${commonPhone}`}
-      >
-        {commonPhone}
-      </Button>
+        >
+          {commonPhone}
+        </Button>
+        )}
         
         <Button 
           type="primary" 
@@ -61,6 +59,7 @@ export const UserMenu = ({ isMobile }: UserMenuProps) => {
 
   return (
     <div className={styles.menu}>
+      {commonPhone && (
       <Button 
         type="text" 
         icon={<PhoneOutlined />}
@@ -68,7 +67,7 @@ export const UserMenu = ({ isMobile }: UserMenuProps) => {
       >
         {commonPhone}
       </Button>
-      
+      )}
       <Button 
         type="primary" 
         icon={<UserOutlined />}
@@ -80,4 +79,4 @@ export const UserMenu = ({ isMobile }: UserMenuProps) => {
       <AuthModal />
     </div>
   );
-}; 
+}); 
