@@ -37,9 +37,9 @@ export const FeedbackSection = observer(() => {
   const agreement = Form.useWatch('agreement', form);
 
   useEffect(() => {
-    if (user?.email) {
+    if (user?.main_email) {
       form.setFieldsValue({
-        email: user.email
+        email: user.main_email
       });
     }
   }, [form, user]);
@@ -62,7 +62,7 @@ export const FeedbackSection = observer(() => {
             layout="vertical"
             onFinish={handleSubmit}
             initialValues={{
-              email: user?.email,
+              email: user?.main_email,
               agreement: false
             }}
             disabled={isFeedbackSending}

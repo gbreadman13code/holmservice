@@ -1,4 +1,4 @@
-import { Typography, Menu } from 'antd';
+import { Menu, Typography } from 'antd';
 import { Container } from '@/components/Container';
 import { useAuth } from '@/stores/auth/hooks';
 import styles from './AccountPage.module.scss';
@@ -8,7 +8,7 @@ import {
   CalculatorOutlined,
   CreditCardOutlined,
   MessageOutlined,
-  HomeOutlined
+  HomeOutlined,
 } from '@ant-design/icons';
 import { MetersSection } from './components/MetersSection';
 import { ChargesSection } from './components/ChargesSection';
@@ -16,8 +16,7 @@ import { PaymentsSection } from './components/PaymentsSection';
 import { FeedbackSection } from './components/FeedbackSection';
 import { useLocation } from 'react-router-dom';
 import accountIllustration from '@/assets/illustrations/account-img.svg';
-
-const { Title } = Typography;
+import Title from 'antd/es/typography/Title';
 
 const menuItems = [
   {
@@ -78,15 +77,15 @@ export const AccountPage = () => {
       <section className={styles.hero}>
         <Container>
           <div className={styles.heroContent}>
-            <div className={styles.heroInfo}>
-              <Title level={1}>{user.firstName} {user.lastName}</Title>
-              <div className={styles.addressTextWrapper}>
-                <Typography.Text strong className={styles.addressText}>
-                  <HomeOutlined style={{ marginRight: 8 }} />
-                  {`${user.address.street}, ${user.address.house}, кв. ${user.address.apartment}`}
-                </Typography.Text>
-              </div>
-            </div>
+                  <div className={styles.heroInfo}>
+                    <Title level={1}>{user.main_name}</Title>
+                    <div className={styles.addressTextWrapper}>
+                      <Typography.Text strong className={styles.addressText}>
+                        <HomeOutlined style={{ marginRight: 8 }} />
+                        {`${user.address}, ${user.house_id}, кв. ${user.name_kvartir}`}
+                      </Typography.Text>
+                    </div>
+                  </div>
             <div className={styles.heroImage}>
               <img src={accountIllustration} alt="Личный кабинет" />
             </div>
