@@ -26,8 +26,6 @@ export const EmergencyPhones = observer(() => {
     }
   };
 
-  console.log(toJS(contacts));
-
   return (
     <section className={styles.emergency}>
       <Container>
