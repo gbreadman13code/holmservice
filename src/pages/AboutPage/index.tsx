@@ -1,7 +1,6 @@
 import { Typography, Row, Col } from 'antd';
 import { Container } from '@/components/Container';
 import styles from './AboutPage.module.scss';
-import phCompanyPhoto from '@/assets/placeholders/ph-card-news.png';
 import { useEffect, useState } from 'react';
 
 const { Title, Text, Paragraph } = Typography;
@@ -76,7 +75,7 @@ export const AboutPage = () => {
               "Мы не просто управляем домами — мы создаем пространство для комфортной жизни"
             </Text>
             <Text className={styles.quoteAuthor}>
-              Александр Иванов, генеральный директор
+              Ирина Сидорова, генеральный директор
             </Text>
           </div>
           
@@ -113,7 +112,7 @@ export const AboutPage = () => {
             </Col>
             <Col xs={24} md={12}>
               <div className={styles.imageWrapper}>
-                <img src={phCompanyPhoto} alt="Офис компании" className={styles.image} />
+                <img src={'https://s16.stc.yc.kpcdn.net/share/i/4/2097403/wr-750.webp'} alt="Офис компании" className={styles.image} />
               </div>
             </Col>
           </Row>
