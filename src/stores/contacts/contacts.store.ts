@@ -19,13 +19,11 @@ class ContactsStore {
     this.error = null;
 
     try {
-      // Имитируем задержку сети
       const addresses = await api.get<BaseResponse<AddressItem>>('addresses/');
       const phones = await api.get<BaseResponse<PhoneItem>>('phones/');
       const emails = await api.get<BaseResponse<EmailItem>>('emails/');
       
       runInAction(() => {
-        // Преобразуем моковые данные в нужный формат
         this.contacts = {
           phones: phones.data.results,
           emails: emails.data.results,
