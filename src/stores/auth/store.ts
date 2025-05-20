@@ -90,8 +90,7 @@ export class AuthStore {
     console.log(account, password)
 
     try {
-      // Используем withCredentials для сохранения кук
-      const response = await api.post<BaseResponse<AuthResponse>>('auth/', {
+      await api.post<BaseResponse<AuthResponse>>('auth/', {
         account_num: +account,
         password: password
       }, { withCredentials: true });
