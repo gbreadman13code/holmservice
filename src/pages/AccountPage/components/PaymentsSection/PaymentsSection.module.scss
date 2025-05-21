@@ -1,0 +1,125 @@
+.paymentsSection {
+  width: 100%;
+}
+
+.tableWrapper {
+  margin-top: 20px;
+}
+
+.spinnerContainer {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.paginationWrapper {
+  margin-top: 16px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+// Стили для контейнера с номером платежа и иконкой копирования
+.payNumContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.copyIcon {
+  color: rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+  transition: color 0.3s;
+  
+  &:hover {
+    color: #1890ff;
+  }
+}
+
+// Стили для заголовка карточки на мобильном
+.cardTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+// Стили для колонки с датой
+.dateColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+}
+
+.date {
+  font-weight: 500;
+}
+
+.time {
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 12px;
+}
+
+// Стили для мобильных карточек
+.mobileCards {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.card {
+  width: 100%;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.08);
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  
+  :global(.ant-card-head-title) {
+    font-size: 16px;
+    font-weight: 500;
+    white-space: normal !important;
+    word-break: break-word;
+  }
+
+  :global(.ant-card-body) {
+    padding: 16px;
+  }
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 8px;
+  align-items: flex-start;
+  
+  span {
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  span:first-child {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+// Добавим адаптивность для таблицы на мобильных устройствах
+@media (max-width: 768px) {
+  .tableWrapper {
+    overflow-x: auto;
+  }
+  
+  .paginationWrapper {
+    justify-content: center;
+  }
+  
+  .row {
+    grid-template-columns: 90px 1fr;
+  }
+} 

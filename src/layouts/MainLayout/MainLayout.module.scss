@@ -17,10 +17,9 @@
 }
 
 .layout {
-  min-height: 100vh;
-
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
 }
 
 .container {
@@ -53,4 +52,13 @@
 
 .content {
   flex: 1;
+}
+
+.loadScreen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #ffffff;
 } 

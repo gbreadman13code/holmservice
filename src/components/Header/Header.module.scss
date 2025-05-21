@@ -1,4 +1,5 @@
 @use '@/styles/mixins' as mix;
+@use '@/styles/variables' as var;
 
 // Общие стили
 .header, .mobileHeader {
@@ -11,6 +12,11 @@
 
 // Десктопная версия
 .header {
+  padding: 0 16px;
+  // max-width: map-get(var.$container-max-widths, 'xxl');
+  max-width: 1520px;
+  width: 100%;
+  margin: 0 auto;
   @include mix.media-down('md') {
     display: none;
   }

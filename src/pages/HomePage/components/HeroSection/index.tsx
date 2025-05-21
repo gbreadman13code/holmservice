@@ -4,14 +4,12 @@ import { EmergencyPhones } from '../EmergencyPhones';
 import styles from './HeroSection.module.scss';
 import { LoginForm } from '@/components/LoginForm';
 import teamWorkIllustration from '@/assets/illustrations/team-work.svg';
-import { useAuth } from '@/stores/auth';
+import { authStore } from '@/stores';
+import { observer } from 'mobx-react-lite';
 
 const { Title, Text } = Typography;
 
-export const HeroSection = () => {
-  const { isAuth } = useAuth();
-
-
+export const HeroSection = observer(() => {
   return (
     <div className={styles.hero}>
       <section className={styles.mainHero}>
@@ -28,7 +26,7 @@ export const HeroSection = () => {
               <img src={teamWorkIllustration} alt="Команда профессионалов" />
             </div>
 
-            {!isAuth && <div className={styles.loginCard}>
+            {!authStore.isAuthenticated && <div className={styles.loginCard}>
               <LoginForm />
             </div>
             }
@@ -38,4 +36,4 @@ export const HeroSection = () => {
       <EmergencyPhones />
     </div>
   );
-}; 
+}); 

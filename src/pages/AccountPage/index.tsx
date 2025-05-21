@@ -9,20 +9,22 @@ import {
   CreditCardOutlined,
   MessageOutlined,
   HomeOutlined,
+  LogoutOutlined,
 } from '@ant-design/icons';
 import { MetersSection } from './components/MetersSection';
 import { ChargesSection } from './components/ChargesSection';
 import { PaymentsSection } from './components/PaymentsSection';
 import { FeedbackSection } from './components/FeedbackSection';
-import { useLocation } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import accountIllustration from '@/assets/illustrations/account-img.svg';
 import Title from 'antd/es/typography/Title';
+import { authStore } from '@/stores';
 
 const menuItems = [
   {
     key: 'meters',
     icon: <DashboardOutlined />,
-    label: 'Передать показания счетчиков'
+    label: 'Показания счетчиков'
   },
   {
     key: 'charges',
@@ -38,7 +40,12 @@ const menuItems = [
     key: 'feedback',
     icon: <MessageOutlined />,
     label: 'Обратная связь'
-  }
+  },
+  {
+    key: 'logout',
+    icon: <LogoutOutlined />,
+    label: 'Выйти'
+  },
 ];
 
 export const AccountPage = () => {
@@ -67,6 +74,9 @@ export const AccountPage = () => {
         return <PaymentsSection />;
       case 'feedback':
         return <FeedbackSection />;
+      case 'logout':
+        authStore.logout();
+        return <Navigate to="/" />;
       default:
         return null;
     }
@@ -78,11 +88,11 @@ export const AccountPage = () => {
         <Container>
           <div className={styles.heroContent}>
                   <div className={styles.heroInfo}>
-                    <Title level={1}>{user.main_name}</Title>
+                    <Title level={1}>{user.name_kvartir}</Title>
                     <div className={styles.addressTextWrapper}>
                       <Typography.Text strong className={styles.addressText}>
                         <HomeOutlined style={{ marginRight: 8 }} />
-                        {`${user.address}, ${user.house_id}, кв. ${user.name_kvartir}`}
+                        {`${user.address}`}
                       </Typography.Text>
                     </div>
                   </div>
