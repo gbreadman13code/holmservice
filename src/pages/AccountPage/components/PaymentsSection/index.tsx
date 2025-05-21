@@ -118,7 +118,7 @@ export const PaymentsSection = observer(() => {
   };
 
   // Обработчик изменения размера страницы
-  const handlePageSizeChange = (current: number, size: number) => {
+  const handlePageSizeChange = (_current: number, size: number) => {
     setPageSize(size);
     setCurrentPage(1); // Сбрасываем на первую страницу при изменении размера
   };
