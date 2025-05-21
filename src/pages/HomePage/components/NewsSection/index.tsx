@@ -5,15 +5,12 @@ import { NewsCard } from '@/components/NewsCard';
 import styles from './NewsSection.module.scss';
 import { useLatestNews } from '@/stores/news/hooks';
 import { observer } from 'mobx-react-lite';
-import { toJS } from 'mobx';
 
 const { Title, Paragraph } = Typography;
 
 export const NewsSection = observer(() => {
   const navigate = useNavigate();
   const { news, loading } = useLatestNews();
-
-  console.log(toJS(news))
 
   return (
     <section className={styles.news}>

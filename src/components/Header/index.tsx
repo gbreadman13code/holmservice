@@ -21,7 +21,7 @@ export const Header = observer(() => {
       {/* Десктопная версия */}
       {!isMobile && (
         <header className={styles.header}>
-          <Container>
+          {/* <Container> */}
             <div className={styles.content}>
               <Logo />
               <div className={styles.desktopOnly}>
@@ -29,7 +29,7 @@ export const Header = observer(() => {
                 <UserMenu />
               </div>
             </div>
-          </Container>
+          {/* </Container> */}
         </header>
       )}
 
@@ -71,7 +71,7 @@ export const Header = observer(() => {
         </div>
         <div className={styles.mobileMenuContent}>
           <Navigation onItemClick={() => setIsMobileMenuOpen(false)} />
-          <UserMenu isMobile />          
+          <UserMenu isMobile onClose={() => setIsMobileMenuOpen(false)} />          
         </div>
       </Drawer>
     </>

@@ -9,7 +9,7 @@ interface LogoProps {
 export const Logo = ({ className }: LogoProps) => {
   return (
     <Link to="/" className={`${styles.logo} ${className || ''}`}>
-      <img src={LogoImage} alt="Холмсервис" />
+      <img src={LogoImage} alt="Холмсервис"  />
     </Link>
   );
 }; 

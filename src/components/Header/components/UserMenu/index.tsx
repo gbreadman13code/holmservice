@@ -10,9 +10,10 @@ import { observer } from 'mobx-react-lite';
 
 interface UserMenuProps {
   isMobile?: boolean;
+  onClose?: () => void;
 }
 
-export const UserMenu = observer(({ isMobile }: UserMenuProps) => {
+export const UserMenu = observer(({ isMobile, onClose }: UserMenuProps) => {
   const { openAuthModal } = useAuthModal();
   const { contacts } = useContacts();
   
@@ -23,6 +24,7 @@ export const UserMenu = observer(({ isMobile }: UserMenuProps) => {
   
   const handleCabinetClick = () => {
     if (isAuth) {
+      onClose?.();
       navigate('/account');
     } else {
       openAuthModal();
