@@ -1,0 +1,322 @@
+.loaderWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  width: 100%;
+}
+
+.meterCard {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  
+  :global(.ant-card-body) {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.cardContent {
+  flex: 1;
+  margin-bottom: 16px;
+  
+  p {
+    margin-bottom: 8px;
+  }
+}
+
+.historyButton {
+  width: 100%;
+}
+
+.noData {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+  color: #999;
+  font-size: 16px;
+}
+
+// Стили для таблицы
+.tableContainer {
+  margin-top: 32px;
+  border-top: 1px solid #eee;
+  padding-top: 24px;
+}
+
+.tableLoader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  width: 100%;
+}
+
+.tableWrapper {
+  width: 100%;
+  padding: 16px;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.tableTitle {
+  color: #333;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  font-size: 20px;
+  font-weight: 600;
+  border-left: 4px solid #1890ff;
+  padding-left: 12px;
+}
+
+.historyTable {
+  margin-top: 16px;
+  
+  .volume {
+    // color: #1890ff;
+    font-weight: 600;
+  }
+}
+
+// Стили для тултипа
+.tooltip {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  padding: 6px;
+  font-size: 13px;
+}
+
+.tooltipTitle {
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #f0f0f0;
+  color: #222;
+}
+
+.tooltipRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.tooltipLabel {
+  color: #666;
+  margin-right: 12px;
+}
+
+.tooltipValue {
+  font-weight: 500;
+  color: #333;
+  
+  &.volume {
+    color: #1890ff;
+    font-weight: 600;
+  }
+}
+
+// Стили для блока анализа
+.analysisPromoBlock {
+  margin: 16px 0 20px;
+  padding: 12px 16px;
+  background-color: #f9f9f9;
+  border-left: 4px solid #722ed1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.analysisText {
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.analysisIcon {
+  font-size: 18px;
+  color: #722ed1;
+  margin-right: 8px;
+}
+
+.analysisResultBlock {
+  margin: 16px 0 20px;
+  padding: 0px 16px;
+  background-color: #f9fcff;
+  border-left: 4px solid #722ed1;
+  position: relative;
+  transition: padding 0.3s ease;
+}
+
+.analysisResultBlock.collapsed {
+  padding-bottom: 0px;
+}
+
+.analysisControls {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  z-index: 10;
+}
+
+.copyButton {
+  opacity: 0.7;
+  transition: opacity 0.2s;
+  
+  &:hover {
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+}
+
+.collapseButton {
+  opacity: 0.7;
+  transition: opacity 0.2s;
+  margin-right: 4px;
+  
+  &:hover {
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+}
+
+.analysisResultHeader {
+  margin-top: 16px;
+  margin-bottom: 12px;
+  color: #722ed1;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.analysisResultText {
+  color: #333;
+  white-space: pre-line;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 16px;
+  overflow: hidden;
+  opacity: 1;
+  transform-origin: top;
+  transform: scaleY(1);
+  transition: transform 0.3s ease,
+              opacity 0.3s ease,
+              margin-bottom 0.3s ease;
+  
+  &.collapsed {
+    transform: scaleY(0);
+    opacity: 0;
+    margin-bottom: 0;
+    display: none;
+  }
+  
+  // Стили для Markdown элементов
+  h2 {
+    color: #722ed1;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: 18px;
+    font-weight: 600;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 8px;
+  }
+
+  p {
+    margin: 0px;
+  }
+  
+  h3 {
+    color: #333;
+    margin-top: 16px;
+    margin-bottom: 0px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  
+  strong {
+    font-weight: 600;
+    color: #444;
+  }
+  
+  em {
+    color: #555;
+  }
+  
+  ul, ol {
+    padding-left: 20px;
+    margin-bottom: 0px;
+    
+    li {
+      margin-bottom: 0px;
+    }
+  }
+  
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 0px;
+    
+    th, td {
+      border: 1px solid #eee;
+      padding: 8px 12px;
+      text-align: left;
+    }
+    
+    th {
+      background-color: #f5f5f5;
+      font-weight: 600;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #fafafa;
+    }
+  }
+  
+  code {
+    background-color: #f5f5f5;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-family: Consolas, Monaco, 'Andale Mono', monospace;
+    font-size: 13px;
+  }
+  
+  pre {
+    background-color: #f5f5f5;
+    padding: 10px;
+    border-radius: 4px;
+    overflow: auto;
+    font-family: Consolas, Monaco, 'Andale Mono', monospace;
+    font-size: 13px;
+    line-height: 1.45;
+    margin-bottom: 0px;
+  }
+  
+  blockquote {
+    border-left: 3px solid #ddd;
+    margin-left: 0;
+    padding-left: 16px;
+    color: #666;
+    font-style: italic;
+  }
+}
+
+.buttonCollapsed {
+  margin-top: 0;
+}
+
+.collapsedTitle {
+  color: #333;
+  font-size: 20px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.analysisResultLoader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 0;
+} 
