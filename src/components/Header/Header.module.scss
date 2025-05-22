@@ -14,9 +14,7 @@
 .header {
   padding: 0 16px;
   // max-width: map-get(var.$container-max-widths, 'xxl');
-  max-width: 1520px;
-  width: 100%;
-  margin: 0 auto;
+  
   @include mix.media-down('md') {
     display: none;
   }
@@ -24,6 +22,9 @@
 
 .content {
   height: 80px;
+  max-width: 1520px;
+  width: 100%;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;

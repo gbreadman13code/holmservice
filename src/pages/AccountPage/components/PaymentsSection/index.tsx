@@ -104,9 +104,7 @@ export const PaymentsSection = observer(() => {
       const offset = (currentPage - 1) * pageSize;
       await authStore.getPayments(pageSize, offset);
       
-      // Предполагаем, что у нас есть 100 записей 
-      // TODO: Обновить когда на бэкенде будет добавлена возможность получить общее количество
-      setTotal(63);
+      setTotal(authStore.payments?.total || 0);
     };
 
     loadPayments();
