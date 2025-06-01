@@ -3,28 +3,18 @@ import { useIsMobile } from '@/hooks/useIsMobile';
 import { format, parseISO } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import styles from './FeedbackTable.module.scss';
-import { FeedbackStatus } from '@/stores/auth/store';
+import { FeedbackResponse, FeedbackStatus } from '@/stores/auth/store';
 
 const { Text } = Typography;
 
-interface Feedback {
-  id: number;
-  createdAt: string;
-  email: string;
-  status: FeedbackStatus;
-  topic: string;
-  message: string;
-}
-
 interface FeedbackTableProps {
-  data: Feedback[];
+  data: FeedbackResponse[];
   loading: boolean;
 }
 
 const statusLabels: Record<FeedbackStatus, string> = {
   [FeedbackStatus.SENT]: 'Отправлено',
-  [FeedbackStatus.IN_PROGRESS]: 'На рассмотрении',
-  [FeedbackStatus.RESOLVED]: 'Рассмотрено'
+  [FeedbackStatus.DELIVERED]: 'Доставлено'
 };
 
 export const FeedbackTable = ({ data, loading }: FeedbackTableProps) => {
@@ -38,8 +28,8 @@ export const FeedbackTable = ({ data, loading }: FeedbackTableProps) => {
     },
     {
       title: 'Дата',
-      dataIndex: 'createdAt',
-      key: 'createdAt',
+      dataIndex: 'created_at',
+      key: 'created_at',
       render: (date: string) => {
         const parsedDate = parseISO(date);
         return (
@@ -56,7 +46,21 @@ export const FeedbackTable = ({ data, loading }: FeedbackTableProps) => {
     {
       title: 'Контакт для связи',
       dataIndex: 'email',
-      key: 'email'
+      key: 'email',
+      render: (_: string, record: FeedbackResponse) => {
+        return (
+          <div className={styles.row} style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            <div>
+              <Text type="secondary">Email: </Text>
+              <Text>{record.email}</Text>
+            </div>
+            <div>
+              <Text type="secondary">Телефон: </Text>
+              <Text>{record.phone}</Text>
+            </div>
+          </div>
+        )
+      }
     },
     {
       title: 'Статус',
@@ -80,10 +84,10 @@ export const FeedbackTable = ({ data, loading }: FeedbackTableProps) => {
               <div className={styles.row}>
                 <Text type="secondary">Дата:</Text>
                 <Text>
-                  {format(parseISO(feedback.createdAt), 'd MMMM yyyy', { locale: ru })}
+                  {format(parseISO(feedback.created_at), 'd MMMM yyyy', { locale: ru })}
                   <br />
                   <small style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
-                    {format(parseISO(feedback.createdAt), 'HH:mm')}
+                    {format(parseISO(feedback.created_at), 'HH:mm')}
                   </small>
                 </Text>
               </div>

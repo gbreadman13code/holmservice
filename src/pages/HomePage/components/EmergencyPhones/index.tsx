@@ -2,7 +2,6 @@ import { Typography, Button, Skeleton } from 'antd';
 import { observer } from 'mobx-react-lite';
 import { Container } from '@/components/Container';
 import { useAuth } from '@/stores/auth/hooks';
-import { useAuthModal } from '@/stores/modals/hooks';
 import { useContacts } from '@/stores/contacts/hooks';
 import { useNavigate } from 'react-router-dom';
 import styles from './EmergencyPhones.module.scss';
@@ -10,7 +9,6 @@ const { Title } = Typography;
 
 export const EmergencyPhones = observer(() => {
   const { isAuth } = useAuth();
-  const { openAuthModal } = useAuthModal();
   const { contacts, isLoading } = useContacts();
   const commonPhone = contacts?.phones.find(phone => phone.is_common);
   const commonPhones = commonPhone?.phones || [];
@@ -18,7 +16,7 @@ export const EmergencyPhones = observer(() => {
 
   const handleMessageClick = () => {
     if (!isAuth) {
-      openAuthModal();
+      navigate('/feedback');
     } else {
       // Редиректим в личный кабинет с якорем на секцию обращений
       navigate('/account#feedback');

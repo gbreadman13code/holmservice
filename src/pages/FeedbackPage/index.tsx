@@ -1,14 +1,14 @@
-import { Typography, Form, Input, Select, Checkbox, Button, Spin } from 'antd';
-import { observer } from 'mobx-react-lite';
+import { Button, Form, Spin, Typography, message as messageAntd } from 'antd';
+import { Checkbox } from 'antd';
+import { Input } from 'antd';
+import { Select } from 'antd';
+import { Container } from '@/components/Container';
+import styles from './FeedbackPage.module.scss';
 import { useAuth } from '@/stores/auth/hooks';
 import { FeedbackTopic } from '@/stores/auth/store';
-import styles from './FeedbackSection.module.scss';
-import { useEffect } from 'react';
-import { toJS } from 'mobx';
-import { FeedbackTable } from './components/FeedbackTable';
+import feedbackIllustration from '@/assets/illustrations/feedback.svg';
 
-const { Title } = Typography;
-const { TextArea } = Input;
+const { Title, Text } = Typography;
 
 // Определим интерфейс для формы
 interface FeedbackForm {
@@ -29,24 +29,21 @@ const topicOptions = [
   { label: 'Другое', value: FeedbackTopic.OTHER }
 ];
 
-export const FeedbackSection = observer(() => {
-  const { sendFeedback, getFeedbacks, feedbacks, user, isFeedbackSending } = useAuth();
+const { TextArea } = Input;
+
+export const FeedbackPage = () => {
+  const { sendFeedback, isFeedbackSending } = useAuth();
   const [form] = Form.useForm<FeedbackForm>();
+  const [messageApi, contextHolder] = messageAntd.useMessage();
 
   // Используем Form.useWatch для отслеживания изменений полей
   const topic = Form.useWatch('topic', form);
   const email = Form.useWatch('email', form);
   const message = Form.useWatch('message', form);
   const agreement = Form.useWatch('agreement', form);
-  const address = Form.useWatch('address', form);
-
-  useEffect(() => {
-    getFeedbacks();
-  }, []);
 
   const handleSubmit = async (values: FeedbackForm) => {
     try {
-
       await sendFeedback({
         topic: values.topic,
         email: values.email,
@@ -55,14 +52,31 @@ export const FeedbackSection = observer(() => {
         address: values.address,
         message: values.message,
       });
+      messageApi.success('Обращение отправлено');
       form.resetFields();
     } catch (error) {
       console.error('Error sending feedback:', error);
+      messageApi.error('Ошибка при отправке обращения');
     }
   };
 
   return (
-    <div className={styles.section} id='feedback-section'>
+    <div className={styles.page}>
+      {contextHolder}
+      <section className={styles.hero}>
+        <Container>
+          <Title level={1}>Обратная связь</Title>
+          <Text className={styles.subtitle}>
+            Мы всегда рады вашему мнению и предложениям
+          </Text>
+        </Container>
+      </section>
+
+      
+
+      <Container>
+      <section className={styles.content}>
+      <div className={styles.section} id='feedback-section'>
       <div className={styles.form}>
         <Spin spinning={isFeedbackSending}>
           <Form
@@ -70,9 +84,6 @@ export const FeedbackSection = observer(() => {
             layout="vertical"
             onFinish={handleSubmit}
             initialValues={{
-              email: user?.main_email,
-              full_name: user?.name_kvartir,
-              address: user?.address,
               agreement: false
             }}
             disabled={isFeedbackSending}
@@ -113,14 +124,6 @@ export const FeedbackSection = observer(() => {
             </Form.Item>
 
             <Form.Item
-              name="address"
-              label="Адрес"
-              rules={[{ required: true, message: 'Введите адрес' }]}
-            >
-              <Input placeholder="Введите адрес" />
-            </Form.Item>
-
-            <Form.Item
               name="message"
               label="Текст обращения"
               rules={[{ required: true, message: 'Введите текст обращения' }]}
@@ -154,7 +157,6 @@ export const FeedbackSection = observer(() => {
                     !email || 
                     !message || 
                     !agreement ||
-                    !address ||
                     form.getFieldsError().some(({ errors }) => errors.length)
                   }
                 >
@@ -164,17 +166,11 @@ export const FeedbackSection = observer(() => {
             </Form.Item>
           </Form>
         </Spin>
+        <img src={feedbackIllustration} alt="Обратная связь" />
       </div>
-
-        <div className={styles.table}>
-          <Title level={3}>{feedbacks.length < 1 ? 'История обращений пуста' : 'История обращений'}</Title>
-          {feedbacks.length > 0 && (
-            <FeedbackTable 
-              data={toJS(feedbacks)} 
-              loading={isFeedbackSending}
-            />
-          )}
         </div>
-        </div>
+      </section>
+      </Container>
+    </div>
   );
-}); 
+}; 

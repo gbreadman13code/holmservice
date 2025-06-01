@@ -13,5 +13,6 @@ export const useAuth = () => {
     login: authStore.login.bind(authStore),
     logout: authStore.logout.bind(authStore),
     sendFeedback: authStore.sendFeedback.bind(authStore),
+    getFeedbacks: authStore.getFeedbacks.bind(authStore),
   };
 }; 
