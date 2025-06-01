@@ -24,6 +24,12 @@
 
     .heroInfo {
       flex: 1;
+      
+      .debtInfo {
+        margin-bottom: 16px;
+        font-size: 18px;
+        color: var(--text-primary);
+      }
     }
 
     .heroImage {

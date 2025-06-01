@@ -19,6 +19,7 @@ import { Navigate, useLocation } from 'react-router-dom';
 import accountIllustration from '@/assets/illustrations/account-img.svg';
 import Title from 'antd/es/typography/Title';
 import { authStore } from '@/stores';
+import { HiddenText } from '@/components/HiddenText';
 
 const menuItems = [
   {
@@ -89,6 +90,13 @@ export const AccountPage = () => {
           <div className={styles.heroContent}>
                   <div className={styles.heroInfo}>
                     <Title level={1}>{user.name_kvartir}</Title>
+                    <div className={styles.debtInfo}>
+                      <HiddenText 
+                        value={user.cur_balance}
+                        prefix="Текущая задолженность: "
+                        suffix=" рублей"
+                      />
+                    </div>
                     <div className={styles.addressTextWrapper}>
                       <Typography.Text strong className={styles.addressText}>
                         <HomeOutlined style={{ marginRight: 8 }} />

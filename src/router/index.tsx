@@ -12,6 +12,7 @@ import { ContactsPage } from '@/pages/ContactsPage';
 import { MyHomePage } from '@/pages/MyHomePage';
 import { AccountPage } from '@/pages/AccountPage';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
+import { FeedbackPage } from '@/pages/FeedbackPage';
 
 export const router = createBrowserRouter([
   {
@@ -28,6 +29,7 @@ export const router = createBrowserRouter([
       { path: 'about', element: <AboutPage /> },
       { path: 'contacts', element: <ContactsPage /> },
       { path: 'my-home', element: <MyHomePage /> },
+      { path: 'feedback', element: <FeedbackPage /> },
       {
         path: 'account',
         element: (

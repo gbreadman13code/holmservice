@@ -9,6 +9,7 @@ import { warningsStore } from '@/stores/warnings/warnings.store';
 import { observer } from 'mobx-react-lite';
 import { Spin } from 'antd';
 import { Logo } from '@/components/Logo';
+import { myHomeStore } from '@/stores/my-home/store';
 
 const LoadScreen = () => {
   return (
@@ -25,6 +26,12 @@ export const MainLayout = observer(() => {
     contactsStore.fetchContacts();
     warningsStore.fetchWarnings();
   }, []);
+
+  useEffect(() => {
+    if (authStore.isAuthenticated) {
+      myHomeStore.loadStreets();
+    }
+  }, [authStore.isAuthenticated]);
 
   return (
     <div className={styles.layout}>

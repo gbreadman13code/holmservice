@@ -9,6 +9,7 @@ import { DocumentsPage } from '@/pages/DocumentsPage';
 import { MyHomePage } from '@/pages/MyHomePage';
 import { AccountPage } from '@/pages/AccountPage';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
+import { FeedbackPage } from '@/pages/FeedbackPage';
 
 // Все маршруты в одном layout
 export const routes = [
@@ -24,6 +25,7 @@ export const routes = [
       { path: 'contacts', element: <ContactsPage /> },
       { path: 'my-home', element: <MyHomePage /> },
       { path: 'login', element: <LoginPage /> },
+      { path: 'feedback', element: <FeedbackPage /> },
       { 
         path: 'account', 
         element: <ProtectedRoute><AccountPage /></ProtectedRoute> 

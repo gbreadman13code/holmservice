@@ -26,6 +26,28 @@ export interface ChargeItem {
   ADJ_VAL: number;         // Корректировочное значение (скидки/надбавки)
 }
 
+export interface SendFeedbackData {
+  topic: FeedbackTopic;
+  email: string;
+  phone: string;
+  full_name: string;
+  address: string;
+  message: string;
+}
+
+export interface FeedbackResponse {
+  id: number;
+  account_id: number;
+  topic: FeedbackTopic;
+  email: string;
+  phone: string;
+  full_name: string;
+  address: string;
+  message: string;
+  status: FeedbackStatus;
+  created_at: string;
+}
+
 // Интерфейс для ответа API с начислениями
 export interface ChargesData {
   nach: ChargeItem[];
@@ -108,23 +130,25 @@ interface AuthResponse {
 }
 
 export enum FeedbackStatus {
-  SENT = 'SENT',
-  IN_PROGRESS = 'IN_PROGRESS',
-  RESOLVED = 'RESOLVED'
+  SENT = 'sent',
+  DELIVERED = 'delivered',
 }
 
 export enum FeedbackTopic {
-  RECALCULATION = 'RECALCULATION',
-  METERS = 'METERS',
-  MAINTENANCE = 'MAINTENANCE',
-  REPAIR = 'REPAIR',
-  OTHER = 'OTHER'
+  RECALCULATION = 'recalculation',
+  METERS = 'meters',
+  MAINTENANCE = 'maintenance',
+  REPAIR = 'repair',
+  OTHER = 'other'
 }
 
 export interface Feedback {
   id: number;
   topic: FeedbackTopic;
   email: string;
+  phone: string;
+  fullName: string;
+  address: string;
   message: string;
   status: FeedbackStatus;
   createdAt: string;
@@ -140,7 +164,7 @@ export class AuthStore {
   isLoading = false;
   error: string | null = null;
   user: UserInfo | null = null;
-  feedbacks: Feedback[] = [];
+  feedbacks: FeedbackResponse[] = [];
   isFeedbackSending = false;
   accountNumber: number | null = null;
 
@@ -462,27 +486,27 @@ export class AuthStore {
     return this.feedbacks;
   }
 
-  async sendFeedback(data: Omit<Feedback, 'id' | 'status' | 'createdAt'>) {
+  async sendFeedback(data: SendFeedbackData) {
     this.setFeedbackSending(true);
     
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      const newFeedback = {
-        ...data,
-        id: this.feedbacks.length + 1,
-        status: FeedbackStatus.SENT,
-        createdAt: new Date().toISOString()
-      };
-
-      runInAction(() => {
-        this.feedbacks = [newFeedback, ...this.feedbacks];
-      });
+      await api.post('feedback/', data as SendFeedbackData);
+  
+      this.getFeedbacks();
     } catch (error: unknown) {
       console.error(error);
       throw new Error('Ошибка при отправке обращения');
     } finally {
       this.setFeedbackSending(false);
+    }
+  }
+
+  async getFeedbacks() {
+    try {
+      const response = await api.get<FeedbackResponse[]>('feedback/');
+      this.feedbacks = response.data;
+    } catch (error) {
+      console.error('Ошибка при получении обращений:', error);
     }
   }
 
