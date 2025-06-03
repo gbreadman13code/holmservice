@@ -165,4 +165,30 @@ gap: 10px;
       }
     }
   }
+}
+
+.imageWrapper {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 100% !important;
+  
+  :global {
+    .ant-image {
+      display: block !important;
+      margin: 0 auto !important;
+      text-align: center !important;
+    }
+    
+    .ant-image-img {
+      width: 100% !important;
+      margin-bottom: 32px !important;
+      border-radius: 8px !important;
+      max-height: 600px !important;
+      object-fit: contain !important;
+      display: block !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+  }
 } 

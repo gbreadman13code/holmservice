@@ -1,15 +1,11 @@
 import { Layout, Typography, Skeleton } from 'antd';
 import { Link } from 'react-router-dom';
-import { 
-  InstagramOutlined, 
-  FacebookOutlined, 
-  TwitterOutlined, 
-  YoutubeOutlined
-} from '@ant-design/icons';
 import { Container } from '@/components/Container';
 import styles from './Footer.module.scss';
 import { useContacts } from '@/stores/contacts/hooks';
 import { observer } from 'mobx-react-lite';
+import { VkIcon, TelegramIcon, OdnoklassnikiIcon } from '@/components/Icons';
+
 
 const { Footer: AntFooter } = Layout;
 const { Title, Text } = Typography;
@@ -23,10 +19,9 @@ const navigationLinks = [
 ];
 
 const socialLinks = [
-  { icon: <InstagramOutlined />, href: '#', label: 'Instagram' },
-  { icon: <FacebookOutlined />, href: '#', label: 'Facebook' },
-  { icon: <TwitterOutlined />, href: '#', label: 'Twitter' },
-  { icon: <YoutubeOutlined />, href: '#', label: 'YouTube' },
+  { icon: <VkIcon width={32} height={32} color="currentColor" />, href: 'https://vk.com/holmservice', label: 'Вконтакте' },
+  { icon: <TelegramIcon width={32} height={32} color="currentColor" />, href: 'https://t.me/holmservice', label: 'Telegram' },
+  { icon: <OdnoklassnikiIcon width={32} height={32} color="currentColor" />, href: 'https://ok.ru/holmservice', label: 'Одноклассники' },
 ];
 
 export const Footer = observer(() => {
