@@ -1,4 +1,4 @@
-import { Typography, Skeleton, Button, message, Carousel } from 'antd';
+import { Typography, Skeleton, Button, message, Carousel, Image } from 'antd';
 import { Container } from '@/components/Container';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -104,7 +104,12 @@ export const NewsItemPage = observer(() => {
           {images.length && <div className={styles.videoSlider}>
               <Carousel autoplay={false} dots={true}>
                 {images.map((image, index) => (
-                  <img src={image} alt={currentNews.title} className={styles.image} key={index} />
+                  <div key={index} className={styles.imageWrapper}>
+                    <Image 
+                      src={image} 
+                      alt={currentNews.title}
+                    />
+                  </div>
                 ))}
               </Carousel>
             </div>}

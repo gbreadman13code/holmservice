@@ -14,6 +14,18 @@ interface NewsCardProps {
   news: NewsItem;
 }
 
+// Мини-компонент для заглушки изображения
+const ImagePlaceholder = ({ title, isVideo }: { title: string, isVideo: boolean }) => (
+  <div className={styles.imagePlaceholder}>
+    <div className={styles.placeholderTitleWrapper}>
+    <Title level={5} className={styles.placeholderTitle}>{title}</Title>
+    {isVideo && <Typography.Text className={styles.placeholderVideo}>
+      Смотреть видео
+    </Typography.Text>}
+    </div>
+  </div>
+);
+
 export const NewsCard = ({ news }: NewsCardProps) => {
   // Форматируем дату, предварительно распарсив её
   const formattedDate = format(parseISO(news.created_at), 'd MMMM yyyy', { locale: ru });
@@ -24,7 +36,11 @@ export const NewsCard = ({ news }: NewsCardProps) => {
   return (
     <Link to={`/news/${news.slug}`} className={styles.card}>
       <div className={styles.imageWrapper}>
-        <img src={news.cover ?? ''} alt={news.title} className={styles.image} />
+        {news.cover ? (
+          <img src={news.cover} alt={news.title} className={styles.image} />
+        ) : (
+          <ImagePlaceholder title={news.title} isVideo={!!news.vk_video_link} />
+        )}
       </div>
       <div className={styles.content}>
         <Title level={5} className={styles.title}>{news.title}</Title>

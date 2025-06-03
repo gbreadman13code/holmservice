@@ -14,6 +14,22 @@ const features = [
 ];
 
 export const GosuslugiPromoSection = () => {
+
+  const handleGosuslugiDom = () => {
+    const userAgent = navigator.userAgent.toLowerCase();
+    const isApple = /safari|macintosh|iphone|ipad|ipod/.test(userAgent) || 
+                   /mac os x/.test(userAgent) || 
+                   /webkit/.test(userAgent);
+    
+    console.log(isApple ? 'айфон' : 'андроид');
+
+    if (isApple) {
+      window.open('https://apps.apple.com/ru/app/%D0%B3%D0%BE%D1%81%D1%83%D1%81%D0%BB%D1%83%D0%B3%D0%B8-%D0%B4%D0%BE%D0%BC/id1616550510', '_blank');
+    } else {
+      window.open('https://play.google.com/store/apps/details?id=ru.sigma.gisgkh&hl=ru&gl=US', '_blank');
+    }
+  };
+
   return (
     <section className={styles.promo}>
       <Container>
@@ -28,7 +44,7 @@ export const GosuslugiPromoSection = () => {
                 <li key={index}>{feature}</li>
               ))}
             </ul>
-            <Button type="primary" size="large">
+            <Button type="primary" size="large" onClick={handleGosuslugiDom}>
               Перейти
             </Button>
           </div>
