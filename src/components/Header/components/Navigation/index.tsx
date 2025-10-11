@@ -13,6 +13,8 @@ export const Navigation = ({ onItemClick }: NavigationProps) => {
   const { pathname } = useLocation();
   const isMobile = useIsMobile();
 
+  console.log(pathname);
+
   const items = navigation.map((item) => {
     if (item.path === '/documents') {
       return {
