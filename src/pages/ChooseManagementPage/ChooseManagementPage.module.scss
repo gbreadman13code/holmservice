@@ -1,0 +1,132 @@
+@use '@/styles/mixins' as mix;
+
+.page {
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+.content {
+  padding: 60px 0;
+
+  @include mix.media-down('md') {
+    padding: 30px 0;
+  }
+}
+
+.stepsWrapper {
+  background: white;
+  padding: 48px;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+  margin-bottom: 40px;
+
+  @include mix.media-down('md') {
+    padding: 24px 16px;
+  }
+
+  :global {
+    .ant-steps-item-title {
+      font-size: 20px !important;
+      font-weight: 600 !important;
+      color: rgba(0, 0, 0, 0.88) !important;
+    }
+
+    .ant-steps-item-description {
+      margin-top: 16px;
+    }
+
+    .ant-steps-item-icon {
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      font-size: 18px;
+
+      @include mix.media-down('md') {
+        width: 32px;
+        height: 32px;
+        line-height: 32px;
+        font-size: 16px;
+      }
+    }
+
+    .ant-steps-icon {
+      font-size: 20px;
+
+      @include mix.media-down('md') {
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+.stepContent {
+  p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: rgba(0, 0, 0, 0.75);
+    margin-bottom: 12px;
+  }
+}
+
+.list {
+  margin: 8px 0 0 0;
+  padding-left: 20px;
+  
+  li {
+    font-size: 15px;
+    line-height: 1.7;
+    color: rgba(0, 0, 0, 0.75);
+    margin-bottom: 6px;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.important {
+  margin-top: 12px;
+  padding: 12px 16px;
+  background: #fff7e6;
+  border-left: 3px solid #faad14;
+  border-radius: 4px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(0, 0, 0, 0.75);
+
+  strong {
+    color: #d46b08;
+  }
+}
+
+.contactCard {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e6f4ff 100%);
+  border: 1px solid #91caff;
+  border-radius: 12px;
+  text-align: center;
+
+  h3 {
+    color: var(--primary-color);
+    margin-bottom: 12px;
+  }
+
+  p {
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.75);
+    margin-bottom: 0;
+  }
+}
+
+.contactLink {
+  color: var(--primary-color);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: #0050b3;
+    border-bottom-color: #0050b3;
+  }
+}
+

@@ -27,7 +27,17 @@
   }
 }
 
+.buttonGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .historyButton {
+  width: 100%;
+}
+
+.submitButton {
   width: 100%;
 }
 

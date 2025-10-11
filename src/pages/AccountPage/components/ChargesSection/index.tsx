@@ -23,7 +23,7 @@ export const ChargesSection = observer(() => {
       render: (amount: number) => `${amount.toFixed(2)} ₽`,
     },
     {
-      title: 'Скидки/надбавки',
+      title: 'Перерасчет',
       dataIndex: 'ADJ_VAL',
       key: 'adjustment',
       render: (amount: number) => `${amount.toFixed(2)} ₽`,
@@ -73,7 +73,7 @@ export const ChargesSection = observer(() => {
                 <span>{charge.DET_VAL.toFixed(2)} ₽</span>
               </div>
               <div className={styles.cardRow}>
-                <span>Скидки/надбавки:</span> 
+                <span>Перерасчет:</span> 
                 <span>{charge.ADJ_VAL.toFixed(2)} ₽</span>
               </div>
               <div className={styles.cardRow}>

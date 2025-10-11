@@ -7,12 +7,15 @@ import { DocumentsPage } from '@/pages/DocumentsPage';
 import { RsoPage } from '@/pages/DocumentsPage/RsoPage';
 import { TemplatesPage } from '@/pages/DocumentsPage/TemplatesPage';
 import { TermsPage } from '@/pages/DocumentsPage/TermsPage';
+import { DetailsPage } from '@/pages/DocumentsPage/DetailsPage';
 import { AboutPage } from '@/pages/AboutPage';
 import { ContactsPage } from '@/pages/ContactsPage';
 import { MyHomePage } from '@/pages/MyHomePage';
 import { AccountPage } from '@/pages/AccountPage';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
 import { FeedbackPage } from '@/pages/FeedbackPage';
+import { PaidServicesPage } from '@/pages/DocumentsPage/PaidServicesPage';
+import { ChooseManagementPage } from '@/pages/ChooseManagementPage';
 
 export const router = createBrowserRouter([
   {
@@ -26,6 +29,9 @@ export const router = createBrowserRouter([
       { path: 'documents/rso', element: <RsoPage /> },
       { path: 'documents/templates', element: <TemplatesPage /> },
       { path: 'documents/terms', element: <TermsPage /> },
+      { path: 'documents/details', element: <DetailsPage /> },
+      { path: 'documents/paid-services', element: <PaidServicesPage /> },
+      { path: 'choose-management', element: <ChooseManagementPage /> },
       { path: 'about', element: <AboutPage /> },
       { path: 'contacts', element: <ContactsPage /> },
       { path: 'my-home', element: <MyHomePage /> },

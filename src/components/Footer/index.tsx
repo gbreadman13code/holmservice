@@ -4,7 +4,7 @@ import { Container } from '@/components/Container';
 import styles from './Footer.module.scss';
 import { useContacts } from '@/stores/contacts/hooks';
 import { observer } from 'mobx-react-lite';
-import { VkIcon, TelegramIcon, OdnoklassnikiIcon } from '@/components/Icons';
+import { VkIcon, TelegramIcon } from '@/components/Icons';
 
 
 const { Footer: AntFooter } = Layout;
@@ -21,7 +21,6 @@ const navigationLinks = [
 const socialLinks = [
   { icon: <VkIcon width={32} height={32} color="currentColor" />, href: 'https://vk.com/holmservice', label: 'Вконтакте' },
   { icon: <TelegramIcon width={32} height={32} color="currentColor" />, href: 'https://t.me/holmservice', label: 'Telegram' },
-  { icon: <OdnoklassnikiIcon width={32} height={32} color="currentColor" />, href: 'https://ok.ru/holmservice', label: 'Одноклассники' },
 ];
 
 export const Footer = observer(() => {

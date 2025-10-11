@@ -99,6 +99,7 @@ export interface IPUCounter {
   NDATE2: string | null;    // Дата окончания
   FIRST_VALUE: number;      // Начальное значение
   SERIYA: string | null;    // Серийный номер
+  IS_DIRECT_CONTRACT: boolean; // Прямой договор (можно передавать показания)
 }
 
 // Интерфейс для ответа API с ИПУ
@@ -359,6 +360,25 @@ export class AuthStore {
         this.isIPUHistoryLoading = false;
       });
       return [];
+    }
+  }
+
+  async submitCounterReading(counterId: number, counterValue: number) {
+    try {
+      const response = await api.post<{ message: string | null }>('meter-readings/set-counter-data/', {
+        counter_id: counterId,
+        counter_value: counterValue,
+      });
+      
+      // Если message не null, значит есть ошибка
+      if (response.data.message) {
+        return { success: false, errorMessage: response.data.message };
+      }
+      
+      return { success: true };
+    } catch (error) {
+      console.error('Ошибка при передаче показаний счетчика:', error);
+      return { success: false, errorMessage: 'Не удалось передать показания' };
     }
   }
 

@@ -35,9 +35,9 @@ export const GosuslugiPromoSection = () => {
       <Container>
         <div className={styles.content}>
           <div className={styles.info}>
-            <Title level={2}>Решение всех вопросов ЖКХ в Госуслуги.Дом</Title>
+            <Title level={2}>Решение всех вопросов ЖКХ <br /> в Госуслуги.Дом</Title>
             <Paragraph className={styles.description}>
-              «Госуслуги.Дом» — приложение для собственников жилья в многоквартирных домах
+              «Госуслуги.Дом» — приложение для собственников жилья <br /> в многоквартирных домах
             </Paragraph>
             <ul className={styles.features}>
               {features.map((feature, index) => (

@@ -30,6 +30,14 @@ export const Navigation = ({ onItemClick }: NavigationProps) => {
           {
             key: '/documents/terms',
             label: <Link to="/documents/terms" onClick={onItemClick}>Условия и соглашения</Link>
+          },
+          {
+            key: '/documents/details',
+            label: <Link to="/documents/details" onClick={onItemClick}>Реквизиты компании</Link>
+          },
+          {
+            key: '/documents/paid-services',
+            label: <Link to="/documents/paid-services" onClick={onItemClick}>Платные услуги</Link>
           }
         ]
       };

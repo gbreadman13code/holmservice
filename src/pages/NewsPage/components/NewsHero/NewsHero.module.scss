@@ -4,7 +4,7 @@
 @use 'sass:color';
 
 .hero {
-  padding: 96px 0;
+  padding: 40px 0;
   background-color: map.get(vars.$colors, 'primary');
   color: white;
   width: 100%;

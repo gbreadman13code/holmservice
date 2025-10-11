@@ -16,9 +16,9 @@ export const HeroSection = observer(() => {
         <Container>
           <div className={styles.content}>
             <div className={styles.info}>
-              <Title level={1}>Управляющая компания Холмсервис</Title>
+              <Title level={1}>Управляющая компания «Холмсервис»</Title>
               <Text className={styles.slogan}>
-                Профессиональное управление многоквартирными домами
+              С заботой о вашем доме
               </Text>
             </div>
 

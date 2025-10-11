@@ -6,7 +6,7 @@ import styles from './NewsSection.module.scss';
 import { useLatestNews } from '@/stores/news/hooks';
 import { observer } from 'mobx-react-lite';
 
-const { Title, Paragraph } = Typography;
+const { Title } = Typography;
 
 export const NewsSection = observer(() => {
   const navigate = useNavigate();
@@ -17,10 +17,7 @@ export const NewsSection = observer(() => {
       <Container>
         <div className={styles.header}>
           <div className={styles.headerInfo}>
-            <Title level={2} className={styles.title}>ПОСЛЕДНИЕ НОВОСТИ</Title>
-            <Paragraph className={styles.subtitle}>
-              Информация о домах, отключениях и другие новости
-            </Paragraph>
+            <Title level={2} className={styles.title}>НОВОСТИ</Title>
           </div>
           <Button type="default" onClick={() => navigate('/news')}>
             Все новости

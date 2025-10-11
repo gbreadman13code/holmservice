@@ -23,6 +23,10 @@ export const EmergencyPhones = observer(() => {
     }
   };
 
+  const handleChooseManagementClick = () => {
+    navigate('/choose-management');
+  };
+
   return (
     <section className={styles.emergency}>
       <Container>
@@ -57,15 +61,19 @@ export const EmergencyPhones = observer(() => {
           </div>
 
           <div className={styles.column}>
-            <Title level={3} className={styles.title}>
-              Обратиться в управляющую компанию
-            </Title>
             <Button 
               type="primary" 
               size="large"
               onClick={handleMessageClick}
             >
-              Написать
+              Отправить обращение
+            </Button>
+            <Button 
+              type="primary" 
+              size="large"
+              onClick={handleChooseManagementClick}
+            >
+              Сделать своей УК
             </Button>
           </div>
         </div>

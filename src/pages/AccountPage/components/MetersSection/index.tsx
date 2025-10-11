@@ -5,7 +5,9 @@ import { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
 import { ExperimentOutlined, CopyOutlined, DownOutlined, UpOutlined } from '@ant-design/icons';
 import { AnalysisModal } from './components/AnalysisModal';
+import { SubmitReadingModal } from './components/SubmitReadingModal';
 import ReactMarkdown from 'react-markdown';
+import { toJS } from 'mobx';
 
 // Интерфейс для точки данных таблицы
 interface MeterHistoryRecord {
@@ -29,6 +31,13 @@ export const MetersSection = observer(() => {
   const [isAnalysisModalVisible, setIsAnalysisModalVisible] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
   const [isAnalysisCollapsed, setIsAnalysisCollapsed] = useState(false);
+  const [isSubmitReadingModalVisible, setIsSubmitReadingModalVisible] = useState(false);
+  const [submitReadingCounter, setSubmitReadingCounter] = useState<{
+    id: number;
+    name: string;
+    currentValue: number;
+    recTypeStr: string;
+  } | null>(null);
 
   const { Text } = Typography;
 
@@ -129,6 +138,21 @@ export const MetersSection = observer(() => {
     setIsAnalysisCollapsed(prev => !prev);
   };
 
+  const showSubmitReadingModal = (counter: {
+    id: number;
+    name: string;
+    currentValue: number;
+    recTypeStr: string;
+  }) => {
+    setSubmitReadingCounter(counter);
+    setIsSubmitReadingModalVisible(true);
+  };
+
+  const hideSubmitReadingModal = () => {
+    setIsSubmitReadingModalVisible(false);
+    setSubmitReadingCounter(null);
+  };
+
   if (authStore.isIPULoading) {
     return (
       <div className={styles.loaderWrapper}>
@@ -136,6 +160,8 @@ export const MetersSection = observer(() => {
       </div>
     );
   }
+
+  console.log(toJS(authStore.ipuData?.counters));
 
   return (
     <div>
@@ -156,13 +182,30 @@ export const MetersSection = observer(() => {
                 <p><strong>Серийный номер:</strong> {counter.SERIYA || 'Не указан'}</p>
               </div>
               
-              <Button 
-                type="primary" 
-                onClick={() => handleViewHistory(counter.COUNTER_ID, counter.SERVICE_NAME)}
-                className={styles.historyButton}
-              >
-                Смотреть историю показаний
-              </Button>
+              <div className={styles.buttonGroup}>
+                <Button 
+                  type="default" 
+                  onClick={() => handleViewHistory(counter.COUNTER_ID, counter.SERVICE_NAME)}
+                  className={styles.historyButton}
+                >
+                  Смотреть историю показаний
+                </Button>
+                
+                {counter.IS_DIRECT_CONTRACT && (
+                  <Button 
+                    type="primary" 
+                    onClick={() => showSubmitReadingModal({
+                      id: counter.COUNTER_ID,
+                      name: counter.SERVICE_NAME,
+                      currentValue: counter.COUNTER_VALUE,
+                      recTypeStr: counter.REC_TYPE_STR
+                    })}
+                    className={styles.submitButton}
+                  >
+                    Передать показания
+                  </Button>
+                )}
+              </div>
             </Card>
           </Col>
         ))}
@@ -263,6 +306,26 @@ export const MetersSection = observer(() => {
             )
           )}
         </div>
+      )}
+
+      {submitReadingCounter && (
+        <SubmitReadingModal
+          isVisible={isSubmitReadingModalVisible}
+          onCancel={hideSubmitReadingModal}
+          counterName={submitReadingCounter.name}
+          currentValue={submitReadingCounter.currentValue}
+          counterId={submitReadingCounter.id}
+          recTypeStr={submitReadingCounter.recTypeStr}
+          onSuccess={() => {
+            // Перезагружаем список счетчиков с обновленными данными
+            authStore.getIPU();
+            
+            // Перезагружаем историю показаний после успешной передачи
+            if (selectedCounterId) {
+              authStore.getIPUHistory(selectedCounterId);
+            }
+          }}
+        />
       )}
     </div>
   );

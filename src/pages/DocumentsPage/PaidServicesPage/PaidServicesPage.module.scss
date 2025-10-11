@@ -1,0 +1,215 @@
+@use '@/styles/mixins' as mix;
+
+.page {
+  .content {
+    padding: 60px 0;
+
+    .services {
+      max-width: 1200px;
+      margin: 0 auto;
+
+      .searchWrapper {
+        margin-bottom: 40px;
+      }
+
+      .categorySection {
+        margin-bottom: 48px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        .categoryTitle {
+          font-size: 24px;
+          font-weight: 600;
+          color: rgba(0, 0, 0, 0.85);
+          margin-bottom: 24px;
+          padding-bottom: 12px;
+          border-bottom: 2px solid #1890ff;
+        }
+
+        .tableWrapper {
+          overflow-x: auto;
+          border-radius: 8px;
+          box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03), 
+                      0 1px 6px -1px rgba(0, 0, 0, 0.02), 
+                      0 2px 4px 0 rgba(0, 0, 0, 0.02);
+
+          .servicesTable {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 15px;
+            line-height: 1.6;
+            background: white;
+
+            thead {
+              background: #fafafa;
+              
+              tr {
+                border-bottom: 2px solid #f0f0f0;
+              }
+
+              th {
+                padding: 16px;
+                text-align: left;
+                font-weight: 600;
+                color: rgba(0, 0, 0, 0.85);
+                white-space: nowrap;
+
+                &:first-child {
+                  width: 55%;
+                }
+
+                &:nth-child(2) {
+                  width: 20%;
+                }
+
+                &:last-child {
+                  width: 25%;
+                }
+              }
+            }
+
+            tbody {
+              tr {
+                border-bottom: 1px solid #f0f0f0;
+                transition: background-color 0.2s ease;
+
+                &:hover {
+                  background-color: #f5f5f5;
+                }
+
+                &:last-child {
+                  border-bottom: none;
+                }
+              }
+
+              td {
+                padding: 14px 16px;
+                color: rgba(0, 0, 0, 0.65);
+                vertical-align: top;
+
+                &:first-child {
+                  font-weight: 500;
+                  color: rgba(0, 0, 0, 0.85);
+                }
+
+                &:nth-child(2) {
+                  color: rgba(0, 0, 0, 0.55);
+                  font-size: 14px;
+                }
+
+                &:last-child {
+                  font-weight: 600;
+                  color: #1890ff;
+                  white-space: nowrap;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .emptyState {
+        text-align: center;
+        padding: 60px 20px;
+        color: rgba(0, 0, 0, 0.45);
+        font-size: 16px;
+      }
+    }
+
+    @include mix.media-down('md') {
+      padding: 40px 0;
+
+      .services {
+        .searchWrapper {
+          margin-bottom: 24px;
+        }
+
+        .categorySection {
+          margin-bottom: 32px;
+
+          .categoryTitle {
+            font-size: 20px;
+            margin-bottom: 16px;
+          }
+
+          .tableWrapper {
+            .servicesTable {
+              font-size: 14px;
+
+              thead {
+                th {
+                  padding: 12px 8px;
+                  font-size: 13px;
+
+                  &:first-child {
+                    width: auto;
+                  }
+
+                  &:nth-child(2) {
+                    width: auto;
+                  }
+
+                  &:last-child {
+                    width: auto;
+                  }
+                }
+              }
+
+              tbody {
+                td {
+                  padding: 10px 8px;
+
+                  &:nth-child(2) {
+                    font-size: 13px;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        .emptyState {
+          padding: 40px 20px;
+          font-size: 14px;
+        }
+      }
+    }
+
+    @include mix.media-down('sm') {
+      .services {
+        .categorySection {
+          .tableWrapper {
+            .servicesTable {
+              font-size: 12px;
+
+              thead {
+                th {
+                  padding: 10px 6px;
+                  font-size: 12px;
+                }
+              }
+
+              tbody {
+                td {
+                  padding: 8px 6px;
+
+                  &:nth-child(2) {
+                    font-size: 11px;
+                  }
+
+                  &:last-child {
+                    font-size: 13px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+

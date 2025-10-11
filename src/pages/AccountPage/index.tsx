@@ -7,6 +7,7 @@ import {
   DashboardOutlined,
   CalculatorOutlined,
   CreditCardOutlined,
+  WalletOutlined,
   MessageOutlined,
   HomeOutlined,
   LogoutOutlined,
@@ -14,6 +15,7 @@ import {
 import { MetersSection } from './components/MetersSection';
 import { ChargesSection } from './components/ChargesSection';
 import { PaymentsSection } from './components/PaymentsSection';
+import { PaymentMethodsSection } from './components/PaymentMethodsSection';
 import { FeedbackSection } from './components/FeedbackSection';
 import { Navigate, useLocation } from 'react-router-dom';
 import accountIllustration from '@/assets/illustrations/account-img.svg';
@@ -36,6 +38,11 @@ const menuItems = [
     key: 'payments',
     icon: <CreditCardOutlined />,
     label: 'Мои платежи'
+  },
+  {
+    key: 'payment-methods',
+    icon: <WalletOutlined />,
+    label: 'Способы оплаты'
   },
   {
     key: 'feedback',
@@ -73,6 +80,8 @@ export const AccountPage = () => {
         return <ChargesSection />;
       case 'payments':
         return <PaymentsSection />;
+      case 'payment-methods':
+        return <PaymentMethodsSection />;
       case 'feedback':
         return <FeedbackSection />;
       case 'logout':

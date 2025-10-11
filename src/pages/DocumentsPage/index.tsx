@@ -1,6 +1,6 @@
 import { Card } from 'antd';
 import { Container } from '@/components/Container';
-import { FileTextOutlined, FileProtectOutlined } from '@ant-design/icons';
+import { FileTextOutlined, FileProtectOutlined, BankOutlined, DollarOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import styles from './DocumentsPage.module.scss';
 import HeroSection from '@/components/HeroSection';
@@ -41,6 +41,36 @@ export const DocumentsPage = () => {
                   <div className={styles.info}>
                     <h3>Условия и правила</h3>
                     <p>Правила проживания и пользования общим имуществом</p>
+                  </div>
+                </div>
+              </Card>
+            </div>
+            <div className={styles.gridItem}>
+              <Card 
+                className={styles.navCard}
+                onClick={() => navigate('/documents/details')}
+                hoverable
+              >
+                <div className={styles.cardContent}>
+                  <BankOutlined className={styles.icon} />
+                  <div className={styles.info}>
+                    <h3>Реквизиты компании</h3>
+                    <p>Реквизиты управляющей компании Холмсервис</p>
+                  </div>
+                </div>
+              </Card>
+            </div>
+            <div className={styles.gridItem}>
+              <Card 
+                className={styles.navCard}
+                onClick={() => navigate('/documents/paid-services')}
+                hoverable
+              >
+                <div className={styles.cardContent}>
+                  <DollarOutlined className={styles.icon} />
+                  <div className={styles.info}>
+                    <h3>Платные услуги</h3>
+                    <p>Прейскурант цен на платные услуги компании</p>
                   </div>
                 </div>
               </Card>
