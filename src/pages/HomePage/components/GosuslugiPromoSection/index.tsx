@@ -20,8 +20,6 @@ export const GosuslugiPromoSection = () => {
     const isApple = /safari|macintosh|iphone|ipad|ipod/.test(userAgent) || 
                    /mac os x/.test(userAgent) || 
                    /webkit/.test(userAgent);
-    
-    console.log(isApple ? 'айфон' : 'андроид');
 
     if (isApple) {
       window.open('https://apps.apple.com/ru/app/%D0%B3%D0%BE%D1%81%D1%83%D1%81%D0%BB%D1%83%D0%B3%D0%B8-%D0%B4%D0%BE%D0%BC/id1616550510', '_blank');
@@ -49,7 +47,7 @@ export const GosuslugiPromoSection = () => {
             </Button>
           </div>
           <div className={styles.image}>
-            <img src={phCardNews} alt="Госуслуги.Дом" />
+            <img src={phCardNews} alt="Госуслуги.Дом" onClick={handleGosuslugiDom} />
           </div>
         </div>
       </Container>

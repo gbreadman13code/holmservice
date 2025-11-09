@@ -13,8 +13,6 @@ export const Navigation = ({ onItemClick }: NavigationProps) => {
   const { pathname } = useLocation();
   const isMobile = useIsMobile();
 
-  console.log(pathname);
-
   const items = navigation.map((item) => {
     if (item.path === '/documents') {
       return {
@@ -31,7 +29,7 @@ export const Navigation = ({ onItemClick }: NavigationProps) => {
           },
           {
             key: '/documents/terms',
-            label: <Link to="/documents/terms" onClick={onItemClick}>Условия и соглашения</Link>
+            label: <Link to="/documents/terms" onClick={onItemClick}>Политика конфиденциальности</Link>
           },
           {
             key: '/documents/details',

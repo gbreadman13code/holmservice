@@ -24,6 +24,16 @@
   }
 }
 
+.buttons {
+  display: flex;
+  gap: 16px;
+
+  @include mix.media-down('lg') {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
 .title {
   font-size: 18px !important;
   margin: 0 !important;
@@ -35,9 +45,8 @@
 
 .phones {
   display: flex;
-  flex-direction: column;
   align-items: flex-start;
-  gap: 0px;
+  gap: 16px;
 
   a {
     color: var(--primary-color);
@@ -74,6 +83,11 @@
 }
 
 @media (max-width: 992px) {
+  .buttons {
+    flex-direction: column;
+    gap: 16px;
+  }
+
   .content {
     grid-template-columns: 1fr;
     gap: 32px;
@@ -88,4 +102,6 @@
     flex-direction: column;
     gap: 16px;
   }
+
+  
 } 

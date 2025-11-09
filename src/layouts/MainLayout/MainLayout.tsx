@@ -25,6 +25,8 @@ export const MainLayout = observer(() => {
     authStore.init();
     contactsStore.fetchContacts();
     warningsStore.fetchWarnings();
+    myHomeStore.loadStreets();
+
   }, []);
 
   useEffect(() => {

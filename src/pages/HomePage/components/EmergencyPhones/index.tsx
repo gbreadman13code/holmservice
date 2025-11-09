@@ -61,6 +61,11 @@ export const EmergencyPhones = observer(() => {
           </div>
 
           <div className={styles.column}>
+          <Title level={3} className={styles.title}>
+                  Присоединиться к нам
+                </Title>
+            <div className={styles.buttons}>
+              
             <Button 
               type="primary" 
               size="large"
@@ -69,12 +74,13 @@ export const EmergencyPhones = observer(() => {
               Отправить обращение
             </Button>
             <Button 
-              type="primary" 
+              type="default" 
               size="large"
               onClick={handleChooseManagementClick}
             >
               Сделать своей УК
             </Button>
+            </div>
           </div>
         </div>
       </Container>

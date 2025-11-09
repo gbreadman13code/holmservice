@@ -328,7 +328,27 @@ export class AuthStore {
       const response = await api.get<IPUResponse>(`meter-readings/get-counter/`);
       
       runInAction(() => {
-        this.ipuData = response.data;
+        this.ipuData = {...response.data, counters: response.data.counters.map(counter => {
+          if (counter.SERVICE_NAME === 'Электричество') {
+            return {
+              ...counter,
+              REC_TYPE_STR: 'кВт·ч'
+            }
+          }
+          if (counter.SERVICE_NAME === 'Горячая вода') {
+            return {
+              ...counter,
+              REC_TYPE_STR: 'м³'
+            }
+          }
+          if (counter.SERVICE_NAME === 'Холодная вода') {
+            return {
+              ...counter,
+              REC_TYPE_STR: 'м³'
+            }
+          }
+          return counter;
+        }) as IPUCounter[]};
         this.isIPULoading = false;
       });
       

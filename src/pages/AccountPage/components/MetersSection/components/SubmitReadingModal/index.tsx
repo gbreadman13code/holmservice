@@ -124,7 +124,7 @@ export const SubmitReadingModal = observer(({
               {
                 validator: (_, value) => {
                   if (!value) return Promise.resolve();
-                  if (value <= currentValue) {
+                  if (value < currentValue) {
                     return Promise.reject(new Error(`Новое показание должно быть больше ${currentValue}`));
                   }
                   return Promise.resolve();
@@ -133,9 +133,9 @@ export const SubmitReadingModal = observer(({
             ]}
           >
             <InputNumber
-              placeholder={`Введите показание больше ${currentValue}`}
+              placeholder={`Введите показания`}
               style={{ width: '100%' }}
-              min={currentValue + 0.01}
+              min={currentValue}
               step={0.01}
               precision={2}
               addonAfter={recTypeStr}

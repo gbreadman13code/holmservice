@@ -8,15 +8,6 @@ import HeroSection from '@/components/HeroSection';
 
 const { Text } = Typography;
 
-const address = {
-  title: 'Главный офис',
-  address: 'г. Красноярск, ул. Ленина, д. 1, офис 1',
-  coordinates: {
-    lat: 56.010569,
-    lng: 92.852572
-  }
-};
-
 export const ContactsPage = observer(() => {
   const { contacts, isLoading } = useContacts();
 
@@ -114,12 +105,7 @@ export const ContactsPage = observer(() => {
             </div>
 
             <div className={styles.map}>
-              <iframe 
-                src={`https://yandex.ru/map-widget/v1/?ll=${address.coordinates.lng}%2C${address.coordinates.lat}&z=17`}
-                width="100%" 
-                height="100%" 
-                frameBorder="0"
-              />
+              <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3Ac923af3cd816fdd693b9d467afe54ec5a8a883fd2a839abb83723bb19572baf9&amp;source=constructor" width="100%" height="360" frameBorder="0"></iframe>
             </div>
           </div>
         </Container>

@@ -1,4 +1,4 @@
-import { Form, Input, Button, Typography } from 'antd';
+import { Form, Input, Button, Typography, Checkbox } from 'antd';
 import { observer } from 'mobx-react-lite';
 import styles from './LoginForm.module.scss';
 import { useAuth } from '@/stores/auth/hooks';
@@ -58,10 +58,19 @@ export const LoginForm = observer(() => {
           <Input.Password size="large" placeholder="Введите пароль" disabled={isLoading} />
         </Form.Item>
 
-        <Form.Item>
-          <Link className={styles.forgotPassword}>
-            Забыли пароль?
-          </Link>
+        <Form.Item
+          name="personalData"
+          valuePropName="checked"
+          rules={[
+            {
+              validator: (_, value) =>
+                value ? Promise.resolve() : Promise.reject(new Error('Необходимо согласие')),
+            },
+          ]}
+        >
+          <Checkbox>
+            Согласен <Link href="/documents/terms" target="_blank">с политикой конфиденциальности</Link>
+          </Checkbox>
         </Form.Item>
 
         <Form.Item>

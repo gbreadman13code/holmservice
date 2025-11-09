@@ -1,13 +1,12 @@
 import { authStore } from '@/stores';
-import { Card, Button, Row, Col, Spin, Table, Typography, Space, message } from 'antd';
+import { Card, Button, Row, Col, Spin, Table, Grid } from 'antd';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
-import { ExperimentOutlined, CopyOutlined, DownOutlined, UpOutlined } from '@ant-design/icons';
 import { AnalysisModal } from './components/AnalysisModal';
 import { SubmitReadingModal } from './components/SubmitReadingModal';
-import ReactMarkdown from 'react-markdown';
-import { toJS } from 'mobx';
+
+const { useBreakpoint } = Grid;
 
 // Интерфейс для точки данных таблицы
 interface MeterHistoryRecord {
@@ -29,8 +28,6 @@ export const MetersSection = observer(() => {
   const [selectedCounter, setSelectedCounter] = useState<string>('');
   const [isHistoryLoading, setIsHistoryLoading] = useState(false);
   const [isAnalysisModalVisible, setIsAnalysisModalVisible] = useState(false);
-  const [messageApi, contextHolder] = message.useMessage();
-  const [isAnalysisCollapsed, setIsAnalysisCollapsed] = useState(false);
   const [isSubmitReadingModalVisible, setIsSubmitReadingModalVisible] = useState(false);
   const [submitReadingCounter, setSubmitReadingCounter] = useState<{
     id: number;
@@ -39,7 +36,8 @@ export const MetersSection = observer(() => {
     recTypeStr: string;
   } | null>(null);
 
-  const { Text } = Typography;
+  const screens = useBreakpoint();
+  const isMobile = !screens.md;
 
   useEffect(() => {
     authStore.getIPU();
@@ -49,6 +47,7 @@ export const MetersSection = observer(() => {
     setSelectedCounterId(counterId);
     setSelectedCounter(serviceName);
     setIsHistoryLoading(true);
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
     
     try {
       await authStore.getIPUHistory(counterId);
@@ -113,30 +112,37 @@ export const MetersSection = observer(() => {
     }
   ];
 
-  const showAnalysisModal = () => {
-    setIsAnalysisModalVisible(true);
-  };
+  const mobileColumns = [
+    columns[0],
+    columns[1],
+    columns[2],
+    columns[3]
+  ];
+
+  // const showAnalysisModal = () => {
+  //   setIsAnalysisModalVisible(true);
+  // };
 
   const hideAnalysisModal = () => {
     setIsAnalysisModalVisible(false);
   };
 
-  const copyAnalysisToClipboard = () => {
-    const analysisText = authStore.analysisData[selectedCounterId!]?.response || '';
+  // const copyAnalysisToClipboard = () => {
+  //   const analysisText = authStore.analysisData[selectedCounterId!]?.response || '';
     
-    navigator.clipboard.writeText(analysisText)
-      .then(() => {
-        messageApi.success('Скопировано!');
-      })
-      .catch((err) => {
-        messageApi.error('Не удалось скопировать текст');
-        console.error('Ошибка при копировании:', err);
-      });
-  };
+  //   navigator.clipboard.writeText(analysisText)
+  //     .then(() => {
+  //       messageApi.success('Скопировано!');
+  //     })
+  //     .catch((err) => {
+  //       messageApi.error('Не удалось скопировать текст');
+  //       console.error('Ошибка при копировании:', err);
+  //     });
+  // };
 
-  const toggleAnalysisCollapse = () => {
-    setIsAnalysisCollapsed(prev => !prev);
-  };
+  // const toggleAnalysisCollapse = () => {
+  //   setIsAnalysisCollapsed(prev => !prev);
+  // };
 
   const showSubmitReadingModal = (counter: {
     id: number;
@@ -161,14 +167,11 @@ export const MetersSection = observer(() => {
     );
   }
 
-  console.log(toJS(authStore.ipuData?.counters));
-
   return (
     <div>
-      {contextHolder}
       <Row gutter={[16, 16]}>
         {authStore.ipuData?.counters.map((counter) => (
-          <Col span={8} key={counter.COUNTER_ID}>
+          <Col xs={24} sm={24} md={24} lg={12} key={counter.COUNTER_ID}>
             <Card 
               title={counter.SERVICE_NAME} 
               className={styles.meterCard}
@@ -228,7 +231,7 @@ export const MetersSection = observer(() => {
               <div className={styles.tableWrapper}>
                 <h2 className={styles.tableTitle}>{`История показаний: ${selectedCounter}`}</h2>
 
-                {authStore.analysisData[selectedCounterId]?.loading ? (
+                {/* {authStore.analysisData[selectedCounterId]?.loading ? (
                   <div className={styles.analysisResultLoader}>
                     <Spin size="large" />
                     <Text className={styles.analysisText} style={{ marginLeft: 16 }}>
@@ -267,30 +270,31 @@ export const MetersSection = observer(() => {
                       </div>
                     )}
                   </div>
-                ) : (
-                  <Space className={styles.analysisPromoBlock}>
-                    <Text className={styles.analysisText}>
-                      <ExperimentOutlined className={styles.analysisIcon} /> Хотите провести ИИ-анализ вашего потребления?
-                    </Text>
-                    <Button type="primary" onClick={showAnalysisModal}>
-                      Анализировать
-                    </Button>
-                  </Space>
-                )}
+                ) : ( null
+                  // <Space className={styles.analysisPromoBlock}>
+                  //   <Text className={styles.analysisText}>
+                  //     <ExperimentOutlined className={styles.analysisIcon} /> Хотите провести ИИ-анализ вашего потребления?
+                  //   </Text>
+                  //   <Button type="primary" onClick={showAnalysisModal}>
+                  //     Анализировать
+                  //   </Button>
+                  // </Space>
+                )} */}
 
                 <Table 
                   dataSource={getTableData()} 
-                  columns={columns}
+                  columns={isMobile ? mobileColumns : columns}
                   pagination={{ 
-                    pageSize: 10,
+                    pageSize: isMobile ? 5 : 10,
                     total: authStore.ipuHistory.length,
-                    showSizeChanger: true,
+                    showSizeChanger: !isMobile,
                     showTotal: (total) => `Всего ${total} записей`
                   }}
+                  size={isMobile ? 'small' : 'middle'}
                   bordered
                   loading={isHistoryLoading}
                   className={styles.historyTable}
-                  scroll={{ x: 'max-content' }}
+                  scroll={isMobile ? { x: true } : { x: 'max-content' }}
                 />
 
                 <AnalysisModal 
