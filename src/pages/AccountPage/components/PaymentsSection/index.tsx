@@ -1,7 +1,7 @@
-import { Typography, Table, Pagination, Card, message } from 'antd';
+import { Typography, Table, Pagination, Card } from 'antd';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
-import { CopyOutlined, CheckOutlined } from '@ant-design/icons';
+// import { CopyOutlined, CheckOutlined } from '@ant-design/icons';
 import { authStore } from '@/stores';
 import { PayItem } from '@/stores/auth/store';
 import styles from './PaymentsSection.module.scss';
@@ -14,24 +14,24 @@ export const PaymentsSection = observer(() => {
   const [pageSize, setPageSize] = useState(10);
   const [total, setTotal] = useState(0);
   const isMobile = useIsMobile();
-  const [messageApi, contextHolder] = message.useMessage();
+  //  const [messageApi, contextHolder] = message.useMessage();
 
   // Функция копирования текста в буфер обмена
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text)
-      .then(() => {
-        messageApi.open({
-          type: 'success',
-          content: 'Скопировано!',
-          duration: 2,
-          icon: <CheckOutlined />
-        });
-      })
-      .catch((err) => {
-        console.error('Не удалось скопировать текст: ', err);
-        messageApi.error('Не удалось скопировать');
-      });
-  };
+  // const copyToClipboard = (text: string) => {
+  //   navigator.clipboard.writeText(text)
+  //     .then(() => {
+  //       messageApi.open({
+  //         type: 'success',
+  //         content: 'Скопировано!',
+  //         duration: 2,
+  //         icon: <CheckOutlined />
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       console.error('Не удалось скопировать текст: ', err);
+  //       messageApi.error('Не удалось скопировать');
+  //     });
+  // };
 
   // Колонки для таблицы
   const columns = [
@@ -189,7 +189,7 @@ export const PaymentsSection = observer(() => {
 
   return (
     <div className={styles.paymentsSection}>
-      {contextHolder}
+      {/* {contextHolder} */}
       {/* <Title level={2}>Мои платежи</Title> */}
       
       <div className={styles.tableWrapper}>
