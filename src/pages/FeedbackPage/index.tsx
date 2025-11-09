@@ -7,6 +7,7 @@ import styles from './FeedbackPage.module.scss';
 import { useAuth } from '@/stores/auth/hooks';
 import { FeedbackTopic } from '@/stores/auth/store';
 import feedbackIllustration from '@/assets/illustrations/feedback.svg';
+import { Link } from 'react-router-dom';
 
 const { Title, Text } = Typography;
 
@@ -142,7 +143,7 @@ export const FeedbackPage = () => {
               ]}
             >
               <Checkbox>
-                Я согласен на обработку персональных данных
+                Я согласен <Link to="/documents/terms" target="_blank">с политикой конфиденциальности</Link>
               </Checkbox>
             </Form.Item>
 

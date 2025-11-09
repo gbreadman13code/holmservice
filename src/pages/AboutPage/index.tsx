@@ -1,20 +1,23 @@
-import { Typography, Row, Col } from 'antd';
+import { Typography, Row, Col, Button } from 'antd';
 import { Container } from '@/components/Container';
 import styles from './AboutPage.module.scss';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const { Title, Text, Paragraph } = Typography;
 
 export const AboutPage = () => {
+  const navigate = useNavigate();
   const [houses, setHouses] = useState(0);
   const [residents, setResidents] = useState(0);
   const [years, setYears] = useState(0);
 
   useEffect(() => {
+    const startDate = new Date('2005-12-05');
     const duration = 2000; // 4 секунды
-    const housesTarget = 50;
-    const residentsTarget = 15000;
-    const yearsTarget = 13;
+    const housesTarget = 119;
+    const residentsTarget = 40000;
+    const yearsTarget = new Date().getFullYear() - startDate.getFullYear();
 
     const startTime = Date.now();
 
@@ -35,6 +38,10 @@ export const AboutPage = () => {
     animate();
   }, []);
 
+  const handleChooseManagementClick = () => {
+    navigate('/choose-management');
+  };
+
   return (
     <div className={styles.page}>
       <section className={styles.hero}>
@@ -47,7 +54,7 @@ export const AboutPage = () => {
           <Row gutter={[32, 12]} className={styles.features}>
             <Col xs={24} md={8}>
               <div className={styles.feature}>
-                <Title level={3}>{houses}+</Title>
+                <Title level={3}>{houses}</Title>
                 <Text>домов в управлении</Text>
               </div>
             </Col>
@@ -64,6 +71,10 @@ export const AboutPage = () => {
               </div>
             </Col>
           </Row>
+<Row justify="center" style={{ marginTop: '70px' }}>
+<Button type="primary" size="large" onClick={handleChooseManagementClick}>Сделать своей УК</Button>
+</Row>
+
         </Container>
       </section>
 
@@ -72,7 +83,7 @@ export const AboutPage = () => {
 
         <div className={styles.quote}>
             <Text className={styles.quoteText}>
-              "Мы не просто управляем домами — мы создаем пространство для комфортной жизни"
+              «Мы не просто управляем домами — мы создаем пространство для комфортной жизни»
             </Text>
             <Text className={styles.quoteAuthor}>
               Ирина Сидорова, генеральный директор

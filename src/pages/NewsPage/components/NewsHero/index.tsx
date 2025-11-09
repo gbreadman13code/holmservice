@@ -44,7 +44,7 @@ export const NewsHero = observer(() => {
   if (!latestNews) return null;
 
   return (
-    <Link to={`/news/${latestNews.id}`} className={styles.hero}>
+    <Link to={`/news/${latestNews.slug}`} className={styles.hero}>
       <Container>
         <div className={styles.content}>
           <Text className={styles.label}>Последняя новость</Text>

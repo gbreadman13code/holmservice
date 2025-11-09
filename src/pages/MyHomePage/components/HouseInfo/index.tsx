@@ -3,28 +3,28 @@ import { HomeOutlined } from '@ant-design/icons';
 import styles from './HouseInfo.module.scss';
 import { HouseParams } from '@/stores/my-home/types';
 
-const { Title, Text, Paragraph } = Typography;
+const { Title, Text,  } = Typography;
 
 interface HouseInfoProps {
   houseData: HouseParams;
-  dolg: string | null;
+  dolg?: string | null;
 }
 
-export const HouseInfo: React.FC<HouseInfoProps> = ({ houseData, dolg }) => {
+export const HouseInfo: React.FC<HouseInfoProps> = ({ houseData }) => {
   const fullAddress = `${houseData.STREET_NAME}, ${houseData.HNUMBER}${houseData.HLETTER || ''}${houseData.HBUILD ? ` корп. ${houseData.HBUILD}` : ''}`;
 
   // Парсим долг в число для определения цвета
-  const debtAmount = dolg ? parseFloat(dolg.replace(/[^\d.-]/g, '')) : null;
-  const getDebtColor = () => {
-    if (debtAmount === null || debtAmount === 0) return '#52c41a'; // зеленый - нет долга
-    if (debtAmount > 0) return '#ff4d4f'; // красный - есть долг
-    return '#1890ff'; // синий - переплата
-  };
+  // const debtAmount = dolg ? parseFloat(dolg.replace(/[^\d.-]/g, '')) : null;
+  // const getDebtColor = () => {
+  //   if (debtAmount === null || debtAmount === 0) return '#52c41a'; // зеленый - нет долга
+  //   if (debtAmount > 0) return '#ff4d4f'; // красный - есть долг
+  //   return '#1890ff'; // синий - переплата
+  // };
   
-  const getDebtText = () => {
-    if (dolg === null) return 'Долгов нет';
-    return dolg;
-  };
+  // const getDebtText = () => {
+  //   if (dolg === null) return 'Долгов нет';
+  //   return dolg;
+  // };
   
   return (
     <Card className={styles.card}>
@@ -47,7 +47,7 @@ export const HouseInfo: React.FC<HouseInfoProps> = ({ houseData, dolg }) => {
             <Text strong>{houseData.MAIN_NAME}</Text>
           </div>
           
-          <div className={styles.infoItem}>
+          {/* <div className={styles.infoItem}>
             <Text type="secondary">Долг на текущий месяц</Text>
             <Title 
               level={2} 
@@ -60,10 +60,10 @@ export const HouseInfo: React.FC<HouseInfoProps> = ({ houseData, dolg }) => {
             >
               {getDebtText()}
             </Title>
-          </div>
+          </div> */}
         </div>
 
-        {houseData.NOTE && (
+        {/* {houseData.NOTE && (
           <div className={styles.noteSection}>
             <Title level={5}>Примечания</Title>
             <Paragraph className={styles.note}>
@@ -75,7 +75,7 @@ export const HouseInfo: React.FC<HouseInfoProps> = ({ houseData, dolg }) => {
               ))}
             </Paragraph>
           </div>
-        )}
+        )} */}
       </Space>
     </Card>
   );

@@ -65,6 +65,12 @@
   flex-direction: column;
   gap: 16px;
   margin-bottom: 20px;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .card {
@@ -113,6 +119,11 @@
 @media (max-width: 768px) {
   .tableWrapper {
     overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
   
   .paginationWrapper {

@@ -39,8 +39,8 @@ export const DocumentsPage = () => {
                 <div className={styles.cardContent}>
                   <FileProtectOutlined className={styles.icon} />
                   <div className={styles.info}>
-                    <h3>Условия и правила</h3>
-                    <p>Правила проживания и пользования общим имуществом</p>
+                    <h3>Политика конфиденциальности</h3>
+                    <p>Политика взаимодействия с пользователями сайта</p>
                   </div>
                 </div>
               </Card>

@@ -35,23 +35,23 @@ export const PaymentsSection = observer(() => {
 
   // Колонки для таблицы
   const columns = [
-    {
-      title: '№ платежа',
-      dataIndex: 'PAY_NUM',
-      key: 'payNum',
-      render: (payNum: string) => (
-        <div className={styles.payNumContainer}>
-          <span>{payNum}</span>
-          <CopyOutlined 
-            className={styles.copyIcon} 
-            onClick={(e) => {
-              e.stopPropagation();
-              copyToClipboard(payNum);
-            }} 
-          />
-        </div>
-      )
-    },
+    // {
+    //   title: '№ платежа',
+    //   dataIndex: 'PAY_NUM',
+    //   key: 'payNum',
+    //   render: (payNum: string) => (
+    //     <div className={styles.payNumContainer}>
+    //       <span>{payNum}</span>
+    //       <CopyOutlined 
+    //         className={styles.copyIcon} 
+    //         onClick={(e) => {
+    //           e.stopPropagation();
+    //           copyToClipboard(payNum);
+    //         }} 
+    //       />
+    //     </div>
+    //   )
+    // },
     {
       title: 'Дата',
       dataIndex: 'STAMP',
@@ -86,11 +86,11 @@ export const PaymentsSection = observer(() => {
       dataIndex: 'OUT_MAIN_NAME',
       key: 'recipient',
     },
-    {
-      title: 'Статус',
-      dataIndex: 'PAY_STATUS_NAME',
-      key: 'status',
-    },
+    // {
+    //   title: 'Статус',
+    //   dataIndex: 'PAY_STATUS_NAME',
+    //   key: 'status',
+    // },
     {
       title: 'Банк/Касса',
       dataIndex: 'KASSA_NAME',
@@ -132,25 +132,22 @@ export const PaymentsSection = observer(() => {
             <Card 
               key={`${payment.PAY_NUM}-${Math.random()}`} 
               title={
-                <div className={styles.cardTitle}>
-                  <span>№{payment.PAY_NUM}</span>
-                  <CopyOutlined 
-                    className={styles.copyIcon} 
-                    onClick={() => copyToClipboard(payment.PAY_NUM.toString())} 
-                  />
+                <div className={styles.row}>
+                  <Text type="secondary">Дата:</Text>
+                  <Text className={styles.date}>{payment.STAMP}</Text>
                 </div>
               }
               loading={authStore.isPaymentsLoading}
               className={styles.card}
             >
               <div className={styles.cardContent}>
-                <div className={styles.row}>
+                {/* <div className={styles.row}>
                   <Text type="secondary">Дата:</Text>
                   <Text>
                     <div className={styles.date}>{payment.STAMP.split(' ')[0]}</div>
                     <div className={styles.time}>{payment.STAMP.split(' ')[1]}</div>
                   </Text>
-                </div>
+                </div> */}
                 <div className={styles.row}>
                   <Text type="secondary">Сумма:</Text>
                   <Text>{payment.PAY_VAL_RUB?.toFixed(2) || 0} ₽</Text>
@@ -163,10 +160,10 @@ export const PaymentsSection = observer(() => {
                   <Text type="secondary">Кому:</Text>
                   <Text>{payment.OUT_MAIN_NAME || '-'}</Text>
                 </div>
-                <div className={styles.row}>
+                {/* <div className={styles.row}>
                   <Text type="secondary">Статус:</Text>
                   <Text>{payment.PAY_STATUS_NAME || '-'}</Text>
-                </div>
+                </div> */}
                 <div className={styles.row}>
                   <Text type="secondary">Банк:</Text>
                   <Text>{payment.KASSA_NAME || '-'}</Text>

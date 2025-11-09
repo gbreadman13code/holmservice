@@ -6,6 +6,7 @@ import styles from './FeedbackSection.module.scss';
 import { useEffect } from 'react';
 import { toJS } from 'mobx';
 import { FeedbackTable } from './components/FeedbackTable';
+import { Link } from 'react-router-dom';
 
 const { Title } = Typography;
 const { TextArea } = Input;
@@ -139,7 +140,7 @@ export const FeedbackSection = observer(() => {
               ]}
             >
               <Checkbox>
-                Я согласен на обработку персональных данных
+                Я согласен <Link to="/documents/terms" target="_blank">с политикой конфиденциальности</Link>
               </Checkbox>
             </Form.Item>
 

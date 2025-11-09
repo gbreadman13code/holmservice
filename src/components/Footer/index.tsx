@@ -19,8 +19,8 @@ const navigationLinks = [
 ];
 
 const socialLinks = [
-  { icon: <VkIcon width={32} height={32} color="currentColor" />, href: 'https://vk.com/holmservice', label: 'Вконтакте' },
   { icon: <TelegramIcon width={32} height={32} color="currentColor" />, href: 'https://t.me/holmservice', label: 'Telegram' },
+  { icon: <VkIcon width={32} height={32} color="currentColor" />, href: 'https://vk.com/holmservice', label: 'Вконтакте' },
 ];
 
 export const Footer = observer(() => {
@@ -92,8 +92,7 @@ export const Footer = observer(() => {
         <div className={styles.bottom}>
           <Text>© 2025 Холмсервис. Все права защищены</Text>
           <div className={styles.links}>
-            <Link to="/privacy">Политика конфиденциальности</Link>
-            <Link to="/terms">Пользовательское соглашение</Link>
+            <Link to="/documents/terms">Политика конфиденциальности</Link>
           </div>
         </div>
       </Container>
