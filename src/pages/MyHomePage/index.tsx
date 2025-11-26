@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { Container } from '@/components/Container';
 import { myHomeStore } from '@/stores/my-home/store';
 import styles from './MyHomePage.module.scss';
-import cityIllustration from '@/assets/illustrations/city-pattern.svg';
+import cityIllustration from '@/assets/illustrations/city-pattern.svg?url';
 import HeroSection from '@/components/HeroSection';
 import { HouseInfo } from './components/HouseInfo';
 import { TariffsInfo } from './components/TariffsInfo';

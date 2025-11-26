@@ -6,7 +6,7 @@ import { Container } from '@/components/Container';
 import styles from './FeedbackPage.module.scss';
 import { useAuth } from '@/stores/auth/hooks';
 import { FeedbackTopic } from '@/stores/auth/store';
-import feedbackIllustration from '@/assets/illustrations/feedback.svg';
+import feedbackIllustration from '@/assets/illustrations/feedback.svg?url';
 import { Link } from 'react-router-dom';
 
 const { Title, Text } = Typography;
