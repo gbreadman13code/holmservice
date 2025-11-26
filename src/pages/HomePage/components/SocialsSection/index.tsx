@@ -1,6 +1,8 @@
 import styles from "./SocialsSection.module.scss";
 import { Typography } from "antd";
 import { Container } from "@/components/Container";
+import tgScreen from "@/assets/illustrations/tg_screen.png";
+import vkScreen from "@/assets/illustrations/vk_screen.png";
 
 const { Title, Paragraph } = Typography;
 
@@ -18,19 +20,11 @@ export const SocialsSection = () => {
       <Container>
         <div className={styles.content}>
           <div className={styles.image}>
-            <img
-              src="src/assets/illustrations/tg_screen.png"
-              alt="Telegram"
-              onClick={handleTelegramClick}
-            />
+            <img src={tgScreen} alt="Telegram" onClick={handleTelegramClick} />
           </div>
 
           <div className={styles.image}>
-            <img
-              src="src/assets/illustrations/vk_screen.png"
-              alt="Вконтакте"
-              onClick={handleVkClick}
-            />
+            <img src={vkScreen} alt="Вконтакте" onClick={handleVkClick} />
           </div>
 
           <div className={styles.info}>
