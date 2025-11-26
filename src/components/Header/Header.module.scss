@@ -1,8 +1,9 @@
-@use '@/styles/mixins' as mix;
-@use '@/styles/variables' as var;
+@use "@/styles/mixins" as mix;
+@use "@/styles/variables" as var;
 
 // Общие стили
-.header, .mobileHeader {
+.header,
+.mobileHeader {
   background: white;
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
   position: sticky;
@@ -14,10 +15,10 @@
 .header {
   padding: 0 16px;
   // max-width: map-get(var.$container-max-widths, 'xxl');
-  
-  @include mix.media-down('md') {
-    display: none;
-  }
+
+  // @include mix.media-down("md") {
+  //   display: none;
+  // }
 }
 
 .content {
@@ -39,11 +40,6 @@
 
 // Мобильная версия
 .mobileHeader {
-  display: none;
-
-  @include mix.media-down('md') {
-    display: block;
-  }
 }
 
 .mobileContent {
@@ -121,11 +117,11 @@
     width: auto;
     object-fit: contain;
 
-    @include mix.media-down('md') {
+    @include mix.media-down("md") {
       height: 60px;
     }
 
-    @include mix.media-down('sm') {
+    @include mix.media-down("sm") {
       height: 50px;
     }
   }
@@ -178,7 +174,7 @@
       justify-content: center;
       height: auto;
       padding: 8px 16px;
-      
+
       span {
         display: inline-block;
         line-height: 1.5;
@@ -187,8 +183,7 @@
   }
 
   .container {
-height: 80px;
-
+    height: 80px;
   }
 }
 
@@ -201,16 +196,16 @@ height: 80px;
   .header {
     padding: 0 16px;
   }
-  
+
   .logo {
     margin-right: 24px;
-    
+
     img {
       height: 32px;
     }
   }
-  
+
   .phone {
     display: none;
   }
-} 
+}

@@ -59,20 +59,20 @@
   }
 }
 
-.social {
-  display: flex;
-  gap: 16px;
+// .social {
+//   display: flex;
+//   gap: 16px;
 
-  a {
-    color: var(--text-color);
-    font-size: 28px;
-    transition: color 0.3s;
+//   a {
+//     color: var(--text-color);
+//     font-size: 28px;
+//     transition: color 0.3s;
 
-    &:hover {
-      color: color.adjust(#027333, $lightness: -10%);
-    }
-  }
-}
+//     &:hover {
+//       color: color.adjust(#027333, $lightness: -10%);
+//     }
+//   }
+// }
 
 .bottom {
   padding-top: 24px;

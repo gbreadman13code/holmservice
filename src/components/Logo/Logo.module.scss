@@ -1,4 +1,4 @@
-@use '@/styles/mixins' as mix;
+@use "@/styles/mixins" as mix;
 
 .logo {
   display: flex;
@@ -7,16 +7,16 @@
   text-decoration: none;
 
   img {
-    height: 80px;
+    height: 40px;
     width: auto;
     object-fit: contain;
 
-    @include mix.media-down('md') {
-      height: 60px;
+    @include mix.media-down("md") {
+      height: 35px;
     }
 
-    @include mix.media-down('sm') {
-      height: 50px;
+    @include mix.media-down("sm") {
+      height: 35px;
     }
   }
-} 
+}

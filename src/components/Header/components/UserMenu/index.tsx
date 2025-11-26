@@ -1,12 +1,12 @@
-import { Button } from 'antd';
-import { UserOutlined, PhoneOutlined } from '@ant-design/icons';
-import { useAuthModal } from '@/stores/modals/hooks';
-import { useAuth } from '@/stores/auth/hooks';
-import { useNavigate } from 'react-router-dom';
-import styles from './UserMenu.module.scss';
-import { AuthModal } from '@/components/AuthModal';
-import { useContacts } from '@/stores/contacts/hooks';
-import { observer } from 'mobx-react-lite';
+import { Button } from "antd";
+import { UserOutlined, PhoneOutlined } from "@ant-design/icons";
+import { useAuthModal } from "@/stores/modals/hooks";
+import { useAuth } from "@/stores/auth/hooks";
+import { useNavigate } from "react-router-dom";
+import styles from "./UserMenu.module.scss";
+import { AuthModal } from "@/components/AuthModal";
+import { useContacts } from "@/stores/contacts/hooks";
+import { observer } from "mobx-react-lite";
 
 interface UserMenuProps {
   isMobile?: boolean;
@@ -16,16 +16,17 @@ interface UserMenuProps {
 export const UserMenu = observer(({ isMobile, onClose }: UserMenuProps) => {
   const { openAuthModal } = useAuthModal();
   const { contacts } = useContacts();
-  
+
   const { isAuth } = useAuth();
   const navigate = useNavigate();
 
-  const commonPhone = contacts?.phones.find(phone => phone.is_common)?.phones[0].value;
-  
+  const commonPhone = contacts?.phones.find((phone) => phone.is_common)
+    ?.phones[0].value;
+
   const handleCabinetClick = () => {
     if (isAuth) {
       onClose?.();
-      navigate('/account');
+      navigate("/account");
     } else {
       openAuthModal();
     }
@@ -35,17 +36,17 @@ export const UserMenu = observer(({ isMobile, onClose }: UserMenuProps) => {
     return (
       <div className={styles.mobileMenu}>
         {commonPhone && (
-        <Button 
-        type="text" 
-        icon={<PhoneOutlined />}
-        href={`tel:${commonPhone}`}
-        >
-          {commonPhone}
-        </Button>
+          <Button
+            type="text"
+            icon={<PhoneOutlined />}
+            href={`tel:${commonPhone}`}
+          >
+            {commonPhone}
+          </Button>
         )}
-        
-        <Button 
-          type="primary" 
+
+        <Button
+          type="primary"
           block
           icon={<UserOutlined />}
           onClick={handleCabinetClick}
@@ -61,7 +62,7 @@ export const UserMenu = observer(({ isMobile, onClose }: UserMenuProps) => {
 
   return (
     <div className={styles.menu}>
-      {commonPhone && (
+      {/* {commonPhone && (
       <Button 
         type="text" 
         icon={<PhoneOutlined />}
@@ -69,9 +70,9 @@ export const UserMenu = observer(({ isMobile, onClose }: UserMenuProps) => {
       >
         {commonPhone}
       </Button>
-      )}
-      <Button 
-        type="primary" 
+      )} */}
+      <Button
+        type="primary"
         icon={<UserOutlined />}
         onClick={handleCabinetClick}
       >
@@ -81,4 +82,4 @@ export const UserMenu = observer(({ isMobile, onClose }: UserMenuProps) => {
       <AuthModal />
     </div>
   );
-}); 
+});

@@ -1,12 +1,11 @@
-import { authStore } from '@/stores';
-import { Card, Button, Row, Col, Spin, Table, Grid } from 'antd';
-import { observer } from 'mobx-react-lite';
-import { useEffect, useState } from 'react';
-import styles from './styles.module.scss';
-import { AnalysisModal } from './components/AnalysisModal';
-import { SubmitReadingModal } from './components/SubmitReadingModal';
-
-const { useBreakpoint } = Grid;
+import { authStore } from "@/stores";
+import { Card, Button, Row, Col, Spin, Table, Space, Pagination } from "antd";
+import { observer } from "mobx-react-lite";
+import { useEffect, useState } from "react";
+import styles from "./styles.module.scss";
+import { AnalysisModal } from "./components/AnalysisModal";
+import { SubmitReadingModal } from "./components/SubmitReadingModal";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 // Интерфейс для точки данных таблицы
 interface MeterHistoryRecord {
@@ -19,25 +18,29 @@ interface MeterHistoryRecord {
 }
 
 const getDate = (date: string) => {
-  const [day, month, year] = date.split(' ')[0].split('.');
+  const [day, month, year] = date.split(" ")[0].split(".");
   return new Date(Number(year), Number(month) - 1, Number(day));
-}
+};
 
 export const MetersSection = observer(() => {
-  const [selectedCounterId, setSelectedCounterId] = useState<number | null>(null);
-  const [selectedCounter, setSelectedCounter] = useState<string>('');
+  const [selectedCounterId, setSelectedCounterId] = useState<number | null>(
+    null
+  );
+  const [selectedCounter, setSelectedCounter] = useState<string>("");
   const [isHistoryLoading, setIsHistoryLoading] = useState(false);
   const [isAnalysisModalVisible, setIsAnalysisModalVisible] = useState(false);
-  const [isSubmitReadingModalVisible, setIsSubmitReadingModalVisible] = useState(false);
+  const [isSubmitReadingModalVisible, setIsSubmitReadingModalVisible] =
+    useState(false);
   const [submitReadingCounter, setSubmitReadingCounter] = useState<{
     id: number;
     name: string;
     currentValue: number;
     recTypeStr: string;
   } | null>(null);
+  const [mobilePage, setMobilePage] = useState(1);
+  const [mobilePageSize, setMobilePageSize] = useState(5);
 
-  const screens = useBreakpoint();
-  const isMobile = !screens.md;
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     authStore.getIPU();
@@ -47,8 +50,9 @@ export const MetersSection = observer(() => {
     setSelectedCounterId(counterId);
     setSelectedCounter(serviceName);
     setIsHistoryLoading(true);
-    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-    
+    setMobilePage(1); // Сбрасываем страницу при загрузке новой истории
+    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+
     try {
       await authStore.getIPUHistory(counterId);
     } finally {
@@ -59,17 +63,17 @@ export const MetersSection = observer(() => {
   // Форматируем данные для таблицы
   const getTableData = (): MeterHistoryRecord[] => {
     if (!authStore.ipuHistory.length) return [];
-    
+
     return authStore.ipuHistory.map((item, index) => {
       const prevItem = index > 0 ? authStore.ipuHistory[index - 1] : null;
-      
+
       return {
         key: `history_${index}`,
-        date: item.DATE1.split(' ')[0],
+        date: item.DATE1.split(" ")[0],
         currentValue: item.COUNTER_VALUE,
         prevValue: prevItem ? prevItem.COUNTER_VALUE : null,
         volume: item.VOLUME,
-        source: item.DATA_SOURCE_NAME
+        source: item.DATA_SOURCE_NAME,
       };
     });
   };
@@ -77,47 +81,108 @@ export const MetersSection = observer(() => {
   // Определяем колонки таблицы
   const columns = [
     {
-      title: 'Дата',
-      dataIndex: 'date',
-      key: 'date',
+      title: "Дата",
+      dataIndex: "date",
+      key: "date",
       sorter: (a: MeterHistoryRecord, b: MeterHistoryRecord) => {
         const dateA = getDate(a.date);
         const dateB = getDate(b.date);
         return dateA.getTime() - dateB.getTime();
-      }
+      },
     },
     {
-      title: 'Текущее показание',
-      dataIndex: 'currentValue',
-      key: 'currentValue',
-      sorter: (a: MeterHistoryRecord, b: MeterHistoryRecord) => a.currentValue - b.currentValue
+      title: "Текущее показание",
+      dataIndex: "currentValue",
+      key: "currentValue",
+      sorter: (a: MeterHistoryRecord, b: MeterHistoryRecord) =>
+        a.currentValue - b.currentValue,
     },
     {
-      title: 'Предыдущее показание',
-      dataIndex: 'prevValue',
-      key: 'prevValue',
-      render: (value: number | null) => value !== null ? value : 'Нет данных'
+      title: "Предыдущее показание",
+      dataIndex: "prevValue",
+      key: "prevValue",
+      render: (value: number | null) => (value !== null ? value : "Нет данных"),
     },
     {
-      title: 'Потребление',
-      dataIndex: 'volume',
-      key: 'volume',
-      sorter: (a: MeterHistoryRecord, b: MeterHistoryRecord) => a.volume - b.volume,
-      className: styles.volume
+      title: "Потребление",
+      dataIndex: "volume",
+      key: "volume",
+      sorter: (a: MeterHistoryRecord, b: MeterHistoryRecord) =>
+        a.volume - b.volume,
+      className: styles.volume,
     },
     {
-      title: 'Источник',
-      dataIndex: 'source',
-      key: 'source'
-    }
+      title: "Источник",
+      dataIndex: "source",
+      key: "source",
+    },
   ];
 
-  const mobileColumns = [
-    columns[0],
-    columns[1],
-    columns[2],
-    columns[3]
-  ];
+  // Рендер карточек для мобильной версии истории показаний
+  const renderMobileHistoryCards = () => {
+    const tableData = getTableData();
+
+    if (tableData.length === 0) {
+      return (
+        <div className={styles.emptyDataContainer}>
+          История показаний отсутствует
+        </div>
+      );
+    }
+
+    // Вычисляем данные для текущей страницы
+    const startIndex = (mobilePage - 1) * mobilePageSize;
+    const endIndex = startIndex + mobilePageSize;
+    const paginatedData = tableData.slice(startIndex, endIndex);
+
+    return (
+      <>
+        <Space direction="vertical" style={{ width: "100%" }}>
+          {paginatedData.map((record) => (
+            <Card key={record.key} className={styles.historyCard}>
+              <div className={styles.historyCardTitle}>{record.date}</div>
+              <div className={styles.historyCardContent}>
+                <div className={styles.historyCardRow}>
+                  <span>Текущее показание:</span>
+                  <span>{record.currentValue}</span>
+                </div>
+                <div className={styles.historyCardRow}>
+                  <span>Предыдущее показание:</span>
+                  <span>
+                    {record.prevValue !== null
+                      ? record.prevValue
+                      : "Нет данных"}
+                  </span>
+                </div>
+                <div className={styles.historyCardRow}>
+                  <span>Потребление:</span>
+                  <span className={styles.volumeValue}>{record.volume}</span>
+                </div>
+                <div className={styles.historyCardRow}>
+                  <span>Источник:</span>
+                  <span>{record.source}</span>
+                </div>
+              </div>
+            </Card>
+          ))}
+        </Space>
+        <div className={styles.mobilePagination}>
+          <Pagination
+            current={mobilePage}
+            pageSize={mobilePageSize}
+            total={tableData.length}
+            onChange={(page, pageSize) => {
+              setMobilePage(page);
+              setMobilePageSize(pageSize);
+            }}
+            showSizeChanger={false}
+            showTotal={(total) => `Всего ${total} записей`}
+            size="small"
+          />
+        </div>
+      </>
+    );
+  };
 
   // const showAnalysisModal = () => {
   //   setIsAnalysisModalVisible(true);
@@ -129,7 +194,7 @@ export const MetersSection = observer(() => {
 
   // const copyAnalysisToClipboard = () => {
   //   const analysisText = authStore.analysisData[selectedCounterId!]?.response || '';
-    
+
   //   navigator.clipboard.writeText(analysisText)
   //     .then(() => {
   //       messageApi.success('Скопировано!');
@@ -172,37 +237,56 @@ export const MetersSection = observer(() => {
       <Row gutter={[16, 16]}>
         {authStore.ipuData?.counters.map((counter) => (
           <Col xs={24} sm={24} md={24} lg={12} key={counter.COUNTER_ID}>
-            <Card 
-              title={counter.SERVICE_NAME} 
+            <Card
+              title={counter.SERVICE_NAME}
               className={styles.meterCard}
               hoverable
             >
               <div className={styles.cardContent}>
-                <p><strong>Дата поверки:</strong> {counter.REPAIR_DATE?.split(' ')[0] || 'Не указана'}</p>
-                <p><strong>Начальное значение:</strong> {counter.FIRST_VALUE} {counter.REC_TYPE_STR}</p>
-                <p><strong>Текущее значение:</strong> {counter.COUNTER_VALUE} {counter.REC_TYPE_STR}</p>
-                <p><strong>Дата последней передачи:</strong> {counter.LAST_STAMP?.split(' ')[0]}</p>
-                <p><strong>Серийный номер:</strong> {counter.SERIYA || 'Не указан'}</p>
+                <p>
+                  <strong>Дата поверки:</strong>{" "}
+                  {counter.REPAIR_DATE?.split(" ")[0] || "Не указана"}
+                </p>
+                <p>
+                  <strong>Начальное значение:</strong> {counter.FIRST_VALUE}{" "}
+                  {counter.REC_TYPE_STR}
+                </p>
+                <p>
+                  <strong>Текущее значение:</strong> {counter.COUNTER_VALUE}{" "}
+                  {counter.REC_TYPE_STR}
+                </p>
+                <p>
+                  <strong>Дата последней передачи:</strong>{" "}
+                  {counter.LAST_STAMP?.split(" ")[0]}
+                </p>
+                <p>
+                  <strong>Серийный номер:</strong>{" "}
+                  {counter.SERIYA || "Не указан"}
+                </p>
               </div>
-              
+
               <div className={styles.buttonGroup}>
-                <Button 
-                  type="default" 
-                  onClick={() => handleViewHistory(counter.COUNTER_ID, counter.SERVICE_NAME)}
+                <Button
+                  type="default"
+                  onClick={() =>
+                    handleViewHistory(counter.COUNTER_ID, counter.SERVICE_NAME)
+                  }
                   className={styles.historyButton}
                 >
                   Смотреть историю показаний
                 </Button>
-                
+
                 {counter.IS_DIRECT_CONTRACT && (
-                  <Button 
-                    type="primary" 
-                    onClick={() => showSubmitReadingModal({
-                      id: counter.COUNTER_ID,
-                      name: counter.SERVICE_NAME,
-                      currentValue: counter.COUNTER_VALUE,
-                      recTypeStr: counter.REC_TYPE_STR
-                    })}
+                  <Button
+                    type="primary"
+                    onClick={() =>
+                      showSubmitReadingModal({
+                        id: counter.COUNTER_ID,
+                        name: counter.SERVICE_NAME,
+                        currentValue: counter.COUNTER_VALUE,
+                        recTypeStr: counter.REC_TYPE_STR,
+                      })
+                    }
                     className={styles.submitButton}
                   >
                     Передать показания
@@ -213,7 +297,7 @@ export const MetersSection = observer(() => {
           </Col>
         ))}
       </Row>
-      
+
       {!authStore.ipuData?.counters.length && !authStore.isIPULoading && (
         <div className={styles.noData}>
           <p>Нет данных о счетчиках</p>
@@ -226,12 +310,13 @@ export const MetersSection = observer(() => {
             <div className={styles.tableLoader}>
               <Spin size="large" />
             </div>
-          ) : (
-            authStore.ipuHistory.length > 0 ? (
-              <div className={styles.tableWrapper}>
-                <h2 className={styles.tableTitle}>{`История показаний: ${selectedCounter}`}</h2>
+          ) : authStore.ipuHistory.length > 0 ? (
+            <div className={styles.tableWrapper}>
+              <h2
+                className={styles.tableTitle}
+              >{`История показаний: ${selectedCounter}`}</h2>
 
-                {/* {authStore.analysisData[selectedCounterId]?.loading ? (
+              {/* {authStore.analysisData[selectedCounterId]?.loading ? (
                   <div className={styles.analysisResultLoader}>
                     <Spin size="large" />
                     <Text className={styles.analysisText} style={{ marginLeft: 16 }}>
@@ -281,33 +366,36 @@ export const MetersSection = observer(() => {
                   // </Space>
                 )} */}
 
-                <Table 
-                  dataSource={getTableData()} 
-                  columns={isMobile ? mobileColumns : columns}
-                  pagination={{ 
-                    pageSize: isMobile ? 5 : 10,
+              {isMobile ? (
+                renderMobileHistoryCards()
+              ) : (
+                <Table
+                  dataSource={getTableData()}
+                  columns={columns}
+                  pagination={{
+                    pageSize: 10,
                     total: authStore.ipuHistory.length,
-                    showSizeChanger: !isMobile,
-                    showTotal: (total) => `Всего ${total} записей`
+                    showSizeChanger: true,
+                    showTotal: (total) => `Всего ${total} записей`,
                   }}
-                  size={isMobile ? 'small' : 'middle'}
+                  size="middle"
                   bordered
                   loading={isHistoryLoading}
                   className={styles.historyTable}
-                  scroll={isMobile ? { x: true } : { x: 'max-content' }}
+                  scroll={{ x: "max-content" }}
                 />
+              )}
 
-                <AnalysisModal 
-                  isVisible={isAnalysisModalVisible}
-                  onCancel={hideAnalysisModal}
-                  chooseCounterId={selectedCounterId}
-                />
-              </div>
-            ) : (
-              <div className={styles.noData}>
-                <p>История показаний отсутствует</p>
-              </div>
-            )
+              <AnalysisModal
+                isVisible={isAnalysisModalVisible}
+                onCancel={hideAnalysisModal}
+                chooseCounterId={selectedCounterId}
+              />
+            </div>
+          ) : (
+            <div className={styles.noData}>
+              <p>История показаний отсутствует</p>
+            </div>
           )}
         </div>
       )}
@@ -323,7 +411,7 @@ export const MetersSection = observer(() => {
           onSuccess={() => {
             // Перезагружаем список счетчиков с обновленными данными
             authStore.getIPU();
-            
+
             // Перезагружаем историю показаний после успешной передачи
             if (selectedCounterId) {
               authStore.getIPUHistory(selectedCounterId);
@@ -333,4 +421,4 @@ export const MetersSection = observer(() => {
       )}
     </div>
   );
-}); 
+});

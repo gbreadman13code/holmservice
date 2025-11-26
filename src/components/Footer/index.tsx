@@ -1,31 +1,26 @@
-import { Layout, Typography, Skeleton } from 'antd';
-import { Link } from 'react-router-dom';
-import { Container } from '@/components/Container';
-import styles from './Footer.module.scss';
-import { useContacts } from '@/stores/contacts/hooks';
-import { observer } from 'mobx-react-lite';
-import { VkIcon, TelegramIcon } from '@/components/Icons';
-
+import { Layout, Typography, Skeleton } from "antd";
+import { Link } from "react-router-dom";
+import { Container } from "@/components/Container";
+import styles from "./Footer.module.scss";
+import { useContacts } from "@/stores/contacts/hooks";
+import { observer } from "mobx-react-lite";
+import { Socials } from "../Socials";
 
 const { Footer: AntFooter } = Layout;
 const { Title, Text } = Typography;
 
 const navigationLinks = [
-  { to: '/', label: 'Главная' },
-  { to: '/news', label: 'Новости' },
-  { to: '/documents', label: 'Документы' },
-  { to: '/about', label: 'О нас' },
-  { to: '/contacts', label: 'Контакты' },
-];
-
-const socialLinks = [
-  { icon: <TelegramIcon width={32} height={32} color="currentColor" />, href: 'https://t.me/holmservice', label: 'Telegram' },
-  { icon: <VkIcon width={32} height={32} color="currentColor" />, href: 'https://vk.com/holmservice', label: 'Вконтакте' },
+  { to: "/", label: "Главная" },
+  { to: "/news", label: "Новости" },
+  { to: "/paid-services", label: "Платные услуги" },
+  { to: "/documents", label: "Документы" },
+  { to: "/about", label: "О нас" },
+  { to: "/contacts", label: "Контакты" },
 ];
 
 export const Footer = observer(() => {
   const { contacts, isLoading } = useContacts();
-  const commonPhone = contacts?.phones.find(phone => phone.is_common);
+  const commonPhone = contacts?.phones.find((phone) => phone.is_common);
   const commonPhones = commonPhone?.phones || [];
 
   return (
@@ -34,14 +29,14 @@ export const Footer = observer(() => {
         <div className={styles.top}>
           <div className={styles.column}>
             {isLoading ? (
-              <Skeleton.Input 
-                active 
-                block 
-                style={{ 
+              <Skeleton.Input
+                active
+                block
+                style={{
                   width: 280,
                   height: 32,
-                  marginBottom: 24
-                }} 
+                  marginBottom: 24,
+                }}
               />
             ) : (
               <Title level={4}>{commonPhone?.info}</Title>
@@ -65,15 +60,18 @@ export const Footer = observer(() => {
           <div className={styles.column}>
             <Title level={4}>Навигация</Title>
             <nav className={styles.navigation}>
-              {navigationLinks.map(link => (
-                <Link key={link.to} to={link.to}>{link.label}</Link>
+              {navigationLinks.map((link) => (
+                <Link key={link.to} to={link.to}>
+                  {link.label}
+                </Link>
               ))}
             </nav>
           </div>
 
           <div className={styles.column}>
             <Title level={4}>Социальные сети</Title>
-            <div className={styles.social}>
+            <Socials />
+            {/* <div className={styles.social}>
               {socialLinks.map(link => (
                 <a 
                   key={link.label} 
@@ -85,7 +83,7 @@ export const Footer = observer(() => {
                   {link.icon}
                 </a>
               ))}
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -98,4 +96,4 @@ export const Footer = observer(() => {
       </Container>
     </AntFooter>
   );
-}); 
+});

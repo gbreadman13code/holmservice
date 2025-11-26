@@ -30,7 +30,7 @@ export const routes = [
       { path: 'documents/templates', element: <TemplatesPage /> },
       { path: 'documents/terms', element: <TermsPage /> },
       { path: 'documents/details', element: <DetailsPage /> },
-      { path: 'documents/paid-services', element: <PaidServicesPage /> },
+      { path: 'paid-services', element: <PaidServicesPage /> },
       { path: 'contacts', element: <ContactsPage /> },
       { path: 'my-home', element: <MyHomePage /> },
       { path: 'login', element: <LoginPage /> },

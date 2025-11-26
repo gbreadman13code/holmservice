@@ -1,0 +1,50 @@
+import styles from "./SocialsSection.module.scss";
+import { Typography } from "antd";
+import { Container } from "@/components/Container";
+
+const { Title, Paragraph } = Typography;
+
+export const SocialsSection = () => {
+  const handleTelegramClick = () => {
+    window.open("https://t.me/holmservis/", "_blank");
+  };
+
+  const handleVkClick = () => {
+    window.open("https://vk.com/holmservis", "_blank");
+  };
+
+  return (
+    <section className={styles.promo}>
+      <Container>
+        <div className={styles.content}>
+          <div className={styles.image}>
+            <img
+              src="src/assets/illustrations/tg_screen.png"
+              alt="Telegram"
+              onClick={handleTelegramClick}
+            />
+          </div>
+
+          <div className={styles.image}>
+            <img
+              src="src/assets/illustrations/vk_screen.png"
+              alt="Вконтакте"
+              onClick={handleVkClick}
+            />
+          </div>
+
+          <div className={styles.info}>
+            <Title level={2} className={styles.title}>
+              Присоединяйтесь к нам в&nbsp;социальных сетях
+            </Title>
+            <Paragraph className={styles.description}>
+              Следите за новостями и обновлениями наших сервисов, общайтесь
+              и&nbsp;получайте полезную информацию прямо в любимых социальных
+              сетях и&nbsp;мессенджерах.
+            </Paragraph>
+          </div>
+        </div>
+      </Container>
+    </section>
+  );
+};
