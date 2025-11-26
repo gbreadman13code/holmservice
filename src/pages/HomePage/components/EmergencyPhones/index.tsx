@@ -52,7 +52,7 @@ export const EmergencyPhones = observer(() => {
                 <div className={styles.phones}>
                   {commonPhones.map((phone, index) => (
                     <a key={index} href={`tel:${phone.value}`}>
-                      {phone.value}
+                      {phone.value} {index !== commonPhones.length - 1 && ', '}
                     </a>
                   ))}
                 </div>

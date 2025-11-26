@@ -1,24 +1,32 @@
-import { Card } from 'antd';
-import { Container } from '@/components/Container';
-import { FileTextOutlined, FileProtectOutlined, BankOutlined, DollarOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
-import styles from './DocumentsPage.module.scss';
-import HeroSection from '@/components/HeroSection';
+import { Card } from "antd";
+import { Container } from "@/components/Container";
+import {
+  FileTextOutlined,
+  FileProtectOutlined,
+  BankOutlined,
+  DollarOutlined,
+} from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
+import styles from "./DocumentsPage.module.scss";
+import HeroSection from "@/components/HeroSection";
 
 export const DocumentsPage = () => {
   const navigate = useNavigate();
 
   return (
     <div className={styles.page}>
-      <HeroSection title="Документы" subtitle="Нормативные документы, шаблоны и другая документация" />
-      
+      <HeroSection
+        title="Документы"
+        subtitle="Нормативные документы, шаблоны и другая документация"
+      />
+
       <section className={styles.content}>
         <Container>
           <div className={styles.grid}>
             <div className={styles.gridItem}>
-              <Card 
+              <Card
                 className={styles.navCard}
-                onClick={() => navigate('/documents/templates')}
+                onClick={() => navigate("/documents/templates")}
                 hoverable
               >
                 <div className={styles.cardContent}>
@@ -31,9 +39,9 @@ export const DocumentsPage = () => {
               </Card>
             </div>
             <div className={styles.gridItem}>
-              <Card 
+              <Card
                 className={styles.navCard}
-                onClick={() => navigate('/documents/terms')}
+                onClick={() => navigate("/documents/terms")}
                 hoverable
               >
                 <div className={styles.cardContent}>
@@ -46,9 +54,9 @@ export const DocumentsPage = () => {
               </Card>
             </div>
             <div className={styles.gridItem}>
-              <Card 
+              <Card
                 className={styles.navCard}
-                onClick={() => navigate('/documents/details')}
+                onClick={() => navigate("/documents/details")}
                 hoverable
               >
                 <div className={styles.cardContent}>
@@ -61,9 +69,9 @@ export const DocumentsPage = () => {
               </Card>
             </div>
             <div className={styles.gridItem}>
-              <Card 
+              <Card
                 className={styles.navCard}
-                onClick={() => navigate('/documents/paid-services')}
+                onClick={() => navigate("/paid-services")}
                 hoverable
               >
                 <div className={styles.cardContent}>
@@ -80,4 +88,4 @@ export const DocumentsPage = () => {
       </section>
     </div>
   );
-}; 
+};

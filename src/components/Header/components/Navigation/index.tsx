@@ -35,10 +35,10 @@ export const Navigation = ({ onItemClick }: NavigationProps) => {
             key: '/documents/details',
             label: <Link to="/documents/details" onClick={onItemClick}>Реквизиты компании</Link>
           },
-          {
-            key: '/documents/paid-services',
-            label: <Link to="/documents/paid-services" onClick={onItemClick}>Платные услуги</Link>
-          }
+          // {
+          //   key: '/documents/paid-services',
+          //   label: <Link to="/documents/paid-services" onClick={onItemClick}>Платные услуги</Link>
+          // }
         ]
       };
     }

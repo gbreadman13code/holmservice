@@ -4,6 +4,7 @@ import { NewsSection } from './components/NewsSection';
 import { PromoSection } from './components/PromoSection';
 import { GosuslugiPromoSection } from './components/GosuslugiPromoSection';
 import styles from './HomePage.module.scss';
+import { SocialsSection } from './components/SocialsSection';
 
 export const HomePage = () => {
   
@@ -12,6 +13,7 @@ export const HomePage = () => {
       <HeroSection />
       <WarningSection />
       <NewsSection />
+      <SocialsSection />
       <PromoSection />
       <GosuslugiPromoSection />
     </div>

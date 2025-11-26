@@ -1,20 +1,19 @@
-import { Button, Drawer } from 'antd';
-import { MenuOutlined } from '@ant-design/icons';
-import { observer } from 'mobx-react-lite';
-import { Container } from '@/components/Container';
-import { useIsMobile } from '@/hooks/useIsMobile';
-import { Logo } from '../Logo';
-import { Navigation } from './components/Navigation';
-import { UserMenu } from './components/UserMenu';
-import styles from './Header.module.scss';
-import { useState } from 'react';
+import { Button, Drawer } from "antd";
+import { MenuOutlined } from "@ant-design/icons";
+import { observer } from "mobx-react-lite";
+import { Container } from "@/components/Container";
+import { useIsMobile } from "@/hooks/useIsMobile";
+import { Logo } from "../Logo";
+import { Navigation } from "./components/Navigation";
+import { UserMenu } from "./components/UserMenu";
+import styles from "./Header.module.scss";
+import { useState } from "react";
+import { Socials } from "../Socials";
 
 export const Header = observer(() => {
   // const { isAuth } = useAuth();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const isMobile = useIsMobile();
-
-  
 
   return (
     <>
@@ -22,13 +21,14 @@ export const Header = observer(() => {
       {!isMobile && (
         <header className={styles.header}>
           {/* <Container> */}
-            <div className={styles.content}>
-              <Logo />
-              <div className={styles.desktopOnly}>
-                <Navigation />
-                <UserMenu />
-              </div>
+          <div className={styles.content}>
+            <Logo />
+            <div className={styles.desktopOnly}>
+              <Navigation />
+              <UserMenu />
+              <Socials />
             </div>
+          </div>
           {/* </Container> */}
         </header>
       )}
@@ -61,8 +61,8 @@ export const Header = observer(() => {
       >
         <div className={styles.mobileMenuHeader}>
           <Logo />
-          <Button 
-            type="text" 
+          <Button
+            type="text"
             onClick={() => setIsMobileMenuOpen(false)}
             className={styles.closeButton}
           >
@@ -71,9 +71,9 @@ export const Header = observer(() => {
         </div>
         <div className={styles.mobileMenuContent}>
           <Navigation onItemClick={() => setIsMobileMenuOpen(false)} />
-          <UserMenu isMobile onClose={() => setIsMobileMenuOpen(false)} />          
+          <UserMenu isMobile onClose={() => setIsMobileMenuOpen(false)} />
         </div>
       </Drawer>
     </>
   );
-}); 
+});

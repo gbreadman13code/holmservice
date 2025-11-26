@@ -59,4 +59,35 @@
       background: rgba(2, 115, 51, 0.02);
     }
   }
+}
+
+// Стили для мобильных карточек
+.tariffCard {
+  margin-bottom: 12px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.cardTitle {
+  font-weight: 500;
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cardRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.emptyDataContainer {
+  text-align: center;
+  padding: 24px 0;
+  color: rgba(0, 0, 0, 0.45);
 } 
