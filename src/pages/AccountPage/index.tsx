@@ -18,7 +18,7 @@ import { PaymentsSection } from './components/PaymentsSection';
 import { PaymentMethodsSection } from './components/PaymentMethodsSection';
 import { FeedbackSection } from './components/FeedbackSection';
 import { Navigate, useLocation } from 'react-router-dom';
-import accountIllustration from '@/assets/illustrations/account-img.svg';
+import accountIllustration from '@/assets/illustrations/account-img.svg?url';
 import Title from 'antd/es/typography/Title';
 import { authStore } from '@/stores';
 import { HiddenText } from '@/components/HiddenText';

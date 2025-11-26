@@ -3,7 +3,7 @@ import { Container } from '@/components/Container';
 import { EmergencyPhones } from '../EmergencyPhones';
 import styles from './HeroSection.module.scss';
 import { LoginForm } from '@/components/LoginForm';
-import teamWorkIllustration from '@/assets/illustrations/team-work.svg';
+import teamWorkIllustration from '@/assets/illustrations/team-work.svg?url';
 import { authStore } from '@/stores';
 import { observer } from 'mobx-react-lite';
 
