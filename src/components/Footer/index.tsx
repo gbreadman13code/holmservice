@@ -12,7 +12,7 @@ const { Title, Text } = Typography;
 const navigationLinks = [
   { to: "/", label: "Главная" },
   { to: "/news", label: "Новости" },
-  { to: "/paid-services", label: "Платные услуги" },
+  { to: "/paid-services", label: "Услуги" },
   { to: "/documents", label: "Документы" },
   { to: "/about", label: "О нас" },
   { to: "/contacts", label: "Контакты" },
