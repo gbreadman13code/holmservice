@@ -1,15 +1,15 @@
-import { Footer } from '@/components/Footer';
-import { Outlet } from 'react-router-dom';
-import styles from './MainLayout.module.scss';
-import { Header } from '@/components/Header';
-import { authStore } from '@/stores';
-import { contactsStore } from '@/stores/contacts/contacts.store';
-import { useEffect } from 'react';
-import { warningsStore } from '@/stores/warnings/warnings.store';
-import { observer } from 'mobx-react-lite';
-import { Spin } from 'antd';
-import { Logo } from '@/components/Logo';
-import { myHomeStore } from '@/stores/my-home/store';
+import { Footer } from "@/components/Footer";
+import { Outlet, useLocation } from "react-router-dom";
+import styles from "./MainLayout.module.scss";
+import { Header } from "@/components/Header";
+import { authStore } from "@/stores";
+import { contactsStore } from "@/stores/contacts/contacts.store";
+import { useEffect } from "react";
+import { warningsStore } from "@/stores/warnings/warnings.store";
+import { observer } from "mobx-react-lite";
+import { Spin } from "antd";
+import { Logo } from "@/components/Logo";
+import { myHomeStore } from "@/stores/my-home/store";
 
 const LoadScreen = () => {
   return (
@@ -26,8 +26,13 @@ export const MainLayout = observer(() => {
     contactsStore.fetchContacts();
     warningsStore.fetchWarnings();
     myHomeStore.loadStreets();
-
   }, []);
+
+  const pathname = useLocation().pathname;
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   useEffect(() => {
     if (authStore.isAuthenticated) {
@@ -50,4 +55,4 @@ export const MainLayout = observer(() => {
       )}
     </div>
   );
-}); 
+});
