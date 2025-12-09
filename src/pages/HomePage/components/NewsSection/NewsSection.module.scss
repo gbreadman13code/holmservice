@@ -1,4 +1,4 @@
-@use '@/styles/mixins' as mix;
+@use "@/styles/mixins" as mix;
 
 .news {
   padding: 48px 0;
@@ -32,12 +32,12 @@
   min-height: 200px;
   position: relative;
 
-  @include mix.media-down('lg') {
+  @include mix.media-down("xl") {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  @include mix.media-down('sm') {
-    grid-template-columns: 1fr;
+  @include mix.media-down("sm") {
+    grid-template-columns: repeat(1, 1fr);
   }
 }
 
@@ -48,12 +48,6 @@
   transform: translate(-50%, -50%);
 }
 
-@media (max-width: 1200px) {
-  .grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
 @media (max-width: 576px) {
   .header {
     flex-direction: column;
@@ -61,8 +55,4 @@
     gap: 16px;
     text-align: center;
   }
-
-  .grid {
-    grid-template-columns: 1fr;
-  }
-} 
+}
