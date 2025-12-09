@@ -1,6 +1,6 @@
-@use '@/styles/mixins' as mix;
-@use '@/styles/variables' as vars;
-@use 'sass:map';
+@use "@/styles/mixins" as mix;
+@use "@/styles/variables" as vars;
+@use "sass:map";
 
 .hero {
   display: flex;
@@ -8,7 +8,7 @@
 }
 
 .mainHero {
-  background-color: #2E7D32;
+  background-color: #2e7d32;
   padding: 96px 0;
   position: relative;
   z-index: 1;
@@ -16,7 +16,7 @@
   height: auto;
   display: block;
 
-  @include mix.media-down('md') {
+  @include mix.media-down("md") {
     padding: 40px 0;
   }
 }
@@ -27,12 +27,12 @@
   align-items: center;
   justify-content: space-between;
 
-  @include mix.media-down('lg') {
+  @include mix.media-down("xl") {
     flex-direction: column;
     text-align: center;
   }
 
-  @include mix.media-down('md') {
+  @include mix.media-down("md") {
     gap: 0px;
   }
 }
@@ -44,11 +44,11 @@
   width: 100%;
   max-width: 400px;
 
-  @include mix.media-down('lg') {
+  @include mix.media-down("lg") {
     margin: 0 auto;
   }
 
-  @include mix.media-down('md') {
+  @include mix.media-down("md") {
     display: none;
   }
 
@@ -67,7 +67,7 @@
 
 .info {
   flex: 1;
-  
+
   h1 {
     color: white;
     margin-bottom: 16px;
@@ -77,7 +77,7 @@
     font-family: vars.$font-family;
     font-weight: 900; // Gogh Black
 
-    @include mix.media-down('md') {
+    @include mix.media-down("md") {
       font-size: 32px;
     }
   }
@@ -88,7 +88,7 @@
   font-size: 24px;
   max-width: 600px;
 
-  @include mix.media-down('md') {
+  @include mix.media-down("md") {
     font-size: 18px;
   }
 }
@@ -96,7 +96,7 @@
 .illustration {
   max-width: 400px;
   margin: 0 auto;
-  
+
   img {
     width: 100%;
     height: auto;
@@ -138,9 +138,21 @@
   }
 }
 
+@media (max-width: 1600px) {
+  .illustration {
+    display: none;
+  }
+}
+
+@media (max-width: 1400px) {
+  .illustration {
+    display: block;
+  }
+}
+
 @media (max-width: 992px) {
   .illustration {
     max-width: 300px;
     margin: 32px auto;
   }
-} 
+}

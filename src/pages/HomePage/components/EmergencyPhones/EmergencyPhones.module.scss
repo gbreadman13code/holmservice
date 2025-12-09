@@ -1,4 +1,4 @@
-@use '@/styles/mixins' as mix;
+@use "@/styles/mixins" as mix;
 
 .emergency {
   background: rgba(2, 115, 51, 0.05);
@@ -10,8 +10,6 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 48px;
-
-
 }
 
 .column {
@@ -28,7 +26,7 @@
   display: flex;
   gap: 16px;
 
-  @include mix.media-down('lg') {
+  @include mix.media-down("xl") {
     flex-direction: column;
     align-items: center;
   }
@@ -55,11 +53,11 @@
     text-decoration: none;
     transition: text-decoration 0.2s;
 
-    @include mix.media-down('xl') {
+    @include mix.media-down("xl") {
       font-size: 24px;
     }
 
-    @include mix.media-down('lg') {
+    @include mix.media-down("lg") {
       font-size: 20px;
     }
 
@@ -68,7 +66,7 @@
     }
   }
 
-  @include mix.media-down('lg') {
+  @include mix.media-down("xl") {
     flex-direction: column;
     align-items: center;
   }
@@ -102,6 +100,4 @@
     flex-direction: column;
     gap: 16px;
   }
-
-  
-} 
+}
