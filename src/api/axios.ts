@@ -1,11 +1,11 @@
-import axios from 'axios';
+import axios from "axios";
 
 export const api = axios.create({
-  baseURL: 'https://holmservice.in-arthurs-apps.space/api/v1/',
+  baseURL: "https://holmservis.ru/api/v1/",
   headers: {
-    'Content-Type': 'application/json'
+    "Content-Type": "application/json",
   },
-  withCredentials: true
+  withCredentials: true,
 });
 
 api.interceptors.request.use((config) => {
@@ -13,5 +13,4 @@ api.interceptors.request.use((config) => {
 });
 
 // Добавляем перехватчик ответов для отладки
-api.interceptors.response.use(
-); 
+api.interceptors.response.use();
