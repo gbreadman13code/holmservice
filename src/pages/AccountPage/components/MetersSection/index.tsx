@@ -70,9 +70,9 @@ export const MetersSection = observer(() => {
       return {
         key: `history_${index}`,
         date: item.DATE1.split(" ")[0],
-        currentValue: item.COUNTER_VALUE,
-        prevValue: prevItem ? prevItem.COUNTER_VALUE : null,
-        volume: item.VOLUME,
+        currentValue: Number(item.COUNTER_VALUE.toFixed(2)),
+        prevValue: prevItem ? Number(prevItem.COUNTER_VALUE.toFixed(2)) : null,
+        volume: Number(item.VOLUME.toFixed(2)),
         source: item.DATA_SOURCE_NAME,
       };
     });
@@ -283,7 +283,7 @@ export const MetersSection = observer(() => {
                       showSubmitReadingModal({
                         id: counter.COUNTER_ID,
                         name: counter.SERVICE_NAME,
-                        currentValue: counter.COUNTER_VALUE,
+                        currentValue: Number(counter.COUNTER_VALUE.toFixed(2)),
                         recTypeStr: counter.REC_TYPE_STR,
                       })
                     }

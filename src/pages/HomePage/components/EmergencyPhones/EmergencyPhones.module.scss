@@ -46,6 +46,12 @@
   align-items: flex-start;
   gap: 16px;
 
+  &.multiple {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
   a {
     color: var(--primary-color);
     font-size: 28px;
