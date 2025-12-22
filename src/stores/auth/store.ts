@@ -189,6 +189,9 @@ export class AuthStore {
 
   analysisData: AnalysisData = {};
 
+  receiptUrl: string | null = null;
+  isReceiptLoading = false;
+
   constructor() {
     makeAutoObservable(this, {}, { deep: true });
   }
@@ -275,6 +278,49 @@ export class AuthStore {
       runInAction(() => {
         this.isChargesLoading = false;
       });
+    }
+  }
+
+  async getReceipt(periodId: string) {
+    try {
+      this.isReceiptLoading = true;
+      this.receiptUrl = null;
+
+      const response = await api.get<Blob>(
+        `paymant/bill/?period_id=${periodId}`,
+        {
+          responseType: "blob",
+        }
+      );
+
+      const url = URL.createObjectURL(response.data);
+
+      runInAction(() => {
+        this.receiptUrl = url;
+        this.isReceiptLoading = false;
+      });
+
+      return url;
+    } catch (error) {
+      console.error("Ошибка при получении квитанции:", error);
+      runInAction(() => {
+        this.receiptUrl = null;
+        this.isReceiptLoading = false;
+      });
+      return null;
+    }
+  }
+
+  openReceipt() {
+    if (this.receiptUrl) {
+      window.open(this.receiptUrl, "_blank");
+    }
+  }
+
+  clearReceipt() {
+    if (this.receiptUrl) {
+      URL.revokeObjectURL(this.receiptUrl);
+      this.receiptUrl = null;
     }
   }
 

@@ -1,8 +1,8 @@
-import { Menu, Typography } from 'antd';
-import { Container } from '@/components/Container';
-import { useAuth } from '@/stores/auth/hooks';
-import styles from './AccountPage.module.scss';
-import { useState, useEffect } from 'react';
+import { Menu, Typography } from "antd";
+import { Container } from "@/components/Container";
+import { useAuth } from "@/stores/auth/hooks";
+import styles from "./AccountPage.module.scss";
+import { useState, useEffect } from "react";
 import {
   DashboardOutlined,
   CalculatorOutlined,
@@ -11,80 +11,89 @@ import {
   MessageOutlined,
   HomeOutlined,
   LogoutOutlined,
-} from '@ant-design/icons';
-import { MetersSection } from './components/MetersSection';
-import { ChargesSection } from './components/ChargesSection';
-import { PaymentsSection } from './components/PaymentsSection';
-import { PaymentMethodsSection } from './components/PaymentMethodsSection';
-import { FeedbackSection } from './components/FeedbackSection';
-import { Navigate, useLocation } from 'react-router-dom';
-import accountIllustration from '@/assets/illustrations/account-img.svg?url';
-import Title from 'antd/es/typography/Title';
-import { authStore } from '@/stores';
-import { HiddenText } from '@/components/HiddenText';
+  FileOutlined,
+} from "@ant-design/icons";
+import { MetersSection } from "./components/MetersSection";
+import { ChargesSection } from "./components/ChargesSection";
+import { PaymentsSection } from "./components/PaymentsSection";
+import { PaymentMethodsSection } from "./components/PaymentMethodsSection";
+import { FeedbackSection } from "./components/FeedbackSection";
+import { ReceiptSection } from "./components/ReceiptSection";
+import { Navigate, useLocation } from "react-router-dom";
+import accountIllustration from "@/assets/illustrations/account-img.svg?url";
+import Title from "antd/es/typography/Title";
+import { authStore } from "@/stores";
+import { HiddenText } from "@/components/HiddenText";
 
 const menuItems = [
   {
-    key: 'meters',
+    key: "meters",
     icon: <DashboardOutlined />,
-    label: 'Показания счетчиков'
+    label: "Показания счетчиков",
   },
   {
-    key: 'charges',
+    key: "receipt",
+    icon: <FileOutlined />,
+    label: "Квитанции",
+  },
+  {
+    key: "charges",
     icon: <CalculatorOutlined />,
-    label: 'Начисления'
+    label: "Начисления",
   },
   {
-    key: 'payments',
+    key: "payments",
     icon: <CreditCardOutlined />,
-    label: 'Мои платежи'
+    label: "Мои платежи",
   },
   {
-    key: 'payment-methods',
+    key: "payment-methods",
     icon: <WalletOutlined />,
-    label: 'Способы оплаты'
+    label: "Способы оплаты",
   },
   {
-    key: 'feedback',
+    key: "feedback",
     icon: <MessageOutlined />,
-    label: 'Обратная связь'
+    label: "Обратная связь",
   },
   {
-    key: 'logout',
+    key: "logout",
     icon: <LogoutOutlined />,
-    label: 'Выйти'
+    label: "Выйти",
   },
 ];
 
 export const AccountPage = () => {
   const { user } = useAuth();
-  const [selectedMenuItem, setSelectedMenuItem] = useState('meters');
+  const [selectedMenuItem, setSelectedMenuItem] = useState("meters");
   const location = useLocation();
 
   useEffect(() => {
     // Проверяем наличие якоря в URL и устанавливаем соответствующий пункт меню
-    if (location.hash === '#feedback') {
-      setSelectedMenuItem('feedback');
+    if (location.hash === "#feedback") {
+      setSelectedMenuItem("feedback");
 
-      window.history.pushState(null, '', location.pathname);
+      window.history.pushState(null, "", location.pathname);
     }
   }, [location]);
-    
+
   if (!user) return null;
 
   const renderContent = () => {
     switch (selectedMenuItem) {
-      case 'meters':
+      case "meters":
         return <MetersSection />;
-      case 'charges':
+      case "receipt":
+        return <ReceiptSection />;
+      case "charges":
         return <ChargesSection />;
-      case 'payments':
+      case "payments":
         return <PaymentsSection />;
-      case 'payment-methods':
+      case "payment-methods":
         return <PaymentMethodsSection />;
-      case 'feedback':
+      case "feedback":
         return <FeedbackSection />;
-      case 'logout':
+      case "logout":
         authStore.logout();
         return <Navigate to="/" />;
       default:
@@ -97,22 +106,22 @@ export const AccountPage = () => {
       <section className={styles.hero}>
         <Container>
           <div className={styles.heroContent}>
-                  <div className={styles.heroInfo}>
-                    <Title level={1}>{user.name_kvartir}</Title>
-                    <div className={styles.debtInfo}>
-                      <HiddenText 
-                        value={user.cur_balance}
-                        prefix="Текущая задолженность: "
-                        suffix=" рублей"
-                      />
-                    </div>
-                    <div className={styles.addressTextWrapper}>
-                      <Typography.Text strong className={styles.addressText}>
-                        <HomeOutlined style={{ marginRight: 8 }} />
-                        {`${user.address}`}
-                      </Typography.Text>
-                    </div>
-                  </div>
+            <div className={styles.heroInfo}>
+              <Title level={1}>{user.name_kvartir}</Title>
+              <div className={styles.debtInfo}>
+                <HiddenText
+                  value={user.cur_balance}
+                  prefix="Текущая задолженность: "
+                  suffix=" рублей"
+                />
+              </div>
+              <div className={styles.addressTextWrapper}>
+                <Typography.Text strong className={styles.addressText}>
+                  <HomeOutlined style={{ marginRight: 8 }} />
+                  {`${user.address}`}
+                </Typography.Text>
+              </div>
+            </div>
             <div className={styles.heroImage}>
               <img src={accountIllustration} alt="Личный кабинет" />
             </div>
@@ -123,19 +132,17 @@ export const AccountPage = () => {
       <section className={styles.content}>
         <Container>
           <div className={styles.grid}>
-             <Menu
+            <Menu
               className={styles.menu}
               selectedKeys={[selectedMenuItem]}
               items={menuItems}
               onClick={({ key }) => setSelectedMenuItem(key)}
               mode={"vertical"}
-            /> 
-            <div className={styles.contentArea}>
-              {renderContent()}
-            </div>
+            />
+            <div className={styles.contentArea}>{renderContent()}</div>
           </div>
         </Container>
       </section>
     </div>
   );
-}; 
+};
