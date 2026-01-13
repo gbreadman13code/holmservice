@@ -3,6 +3,7 @@ import { Typography } from "antd";
 import { Container } from "@/components/Container";
 import tgScreen from "@/assets/illustrations/tg_screen.png";
 import vkScreen from "@/assets/illustrations/vk_screen.png";
+import maxScreen from "@/assets/illustrations/max_screen.png";
 
 const { Title, Paragraph } = Typography;
 
@@ -15,16 +16,30 @@ export const SocialsSection = () => {
     window.open("https://vk.com/holmservis", "_blank");
   };
 
+  const handleMaxClick = () => {
+    window.open("https://max.ru/id2465095908_biz", "_blank");
+  };
+
   return (
     <section className={styles.promo}>
       <Container>
         <div className={styles.content}>
-          <div className={styles.image}>
-            <img src={tgScreen} alt="Telegram" onClick={handleTelegramClick} />
-          </div>
+          <div className={styles.imagesWrapper}>
+            <div className={styles.image}>
+              <img
+                src={tgScreen}
+                alt="Telegram"
+                onClick={handleTelegramClick}
+              />
+            </div>
 
-          <div className={styles.image}>
-            <img src={vkScreen} alt="Вконтакте" onClick={handleVkClick} />
+            <div className={styles.image}>
+              <img src={vkScreen} alt="Вконтакте" onClick={handleVkClick} />
+            </div>
+
+            <div className={styles.image}>
+              <img src={maxScreen} alt="MAX" onClick={handleMaxClick} />
+            </div>
           </div>
 
           <div className={styles.info}>
