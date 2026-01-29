@@ -17,11 +17,7 @@ const NewsItemSkeleton = () => (
       title={{ width: '80%', style: { height: 48, marginBottom: 24 } }}
       paragraph={{ rows: 1, width: ['30%'] }}
     />
-    <Skeleton
-      active
-      paragraph={{ rows: 8 }}
-      className={styles.content}
-    />
+    <Skeleton active paragraph={{ rows: 8 }} className={styles.content} />
   </div>
 );
 
@@ -49,8 +45,6 @@ export const NewsItemPage = observer(() => {
     void message.success('Ссылка скопирована');
   };
 
-  
-
   if (loading) {
     return <NewsItemSkeleton />;
   }
@@ -63,22 +57,16 @@ export const NewsItemPage = observer(() => {
     );
   }
 
-  const images = [
-    currentNews.cover,
-    ...currentNews.photos.map((photo) => photo.photo),
-  ].filter(Boolean) as string[]
+  const images = [currentNews.cover, ...currentNews.photos.map((photo) => photo.photo)].filter(Boolean) as string[];
 
   return (
     <Container>
       <article className={styles.article}>
         <div className={styles.narrow}>
-          <button 
-            className={styles.backLink} 
-            onClick={handleBackClick}
-          >
+          <button className={styles.backLink} onClick={handleBackClick}>
             <ArrowLeftOutlined /> Все новости
           </button>
-          
+
           <Title level={1} className={styles.title}>
             {currentNews.title}
           </Title>
@@ -89,34 +77,34 @@ export const NewsItemPage = observer(() => {
               <span className={styles.separator}>•</span>
               <Text>{Math.ceil(currentNews.content.length / (180 * 5))} мин</Text>
             </div>
-            <Button 
-              type="text" 
-              icon={<LinkOutlined />}
-              onClick={handleCopyLink}
-              className={styles.copyLink}
-            >
+            <Button type="text" icon={<LinkOutlined />} onClick={handleCopyLink} className={styles.copyLink}>
               Скопировать ссылку
             </Button>
           </div>
         </div>
 
         <div className={styles.content}>
-          {images.length && <div className={styles.videoSlider}>
+          {images.length && (
+            <div className={styles.videoSlider}>
               <Carousel autoplay={false} dots={true}>
                 {images.map((image, index) => (
                   <div key={index} className={styles.imageWrapper}>
-                    <Image 
-                      src={image} 
-                      alt={currentNews.title}
-                    />
+                    <Image src={image} alt={currentNews.title} />
                   </div>
                 ))}
               </Carousel>
-            </div>}
-          
+            </div>
+          )}
+
           {currentNews.vk_video_link && (
             <div className={styles.videoSlider}>
-                <iframe src={currentNews.vk_video_link} width="100%" height="500" frameBorder="0" allowFullScreen={true} allow="autoplay; encrypted-media; fullscreen; picture-in-picture"></iframe>
+              <iframe
+                src={currentNews.vk_video_link}
+                width="100%"
+                height="500"
+                frameBorder="0"
+                allowFullScreen={true}
+                allow="autoplay; encrypted-media; fullscreen; picture-in-picture"></iframe>
             </div>
           )}
           <HtmlContent content={currentNews.content} className={styles.text} />
@@ -124,4 +112,4 @@ export const NewsItemPage = observer(() => {
       </article>
     </Container>
   );
-}); 
+});

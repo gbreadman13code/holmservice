@@ -2,6 +2,7 @@ import { makeAutoObservable, runInAction } from 'mobx';
 import { NewsItem } from './types';
 import { BaseResponse } from '@/api/types';
 import { api } from '@/api/axios';
+import { mapNewsItem } from './mapping';
 
 export class NewsStore {
   news: NewsItem[] = [];
@@ -28,8 +29,8 @@ export class NewsStore {
       const response = await api.get<BaseResponse<NewsItem>>('news/', {
         params: {
           limit: this.pageSize,
-          offset
-        }
+          offset,
+        },
       });
 
       runInAction(() => {
@@ -50,27 +51,13 @@ export class NewsStore {
       const response = await api.get<BaseResponse<NewsItem>>('news/', {
         params: {
           limit: count,
-          offset: 0
-        }
+          offset: 0,
+        },
       });
 
       runInAction(() => {
         this.news = response.data.results;
       });
-    } finally {
-      runInAction(() => {
-        this.loading = false;
-      });
-    }
-  }
-
-  async fetchNewsById(id: number): Promise<NewsItem | null> {
-    this.loading = true;
-    this.currentNews = null;
-
-    try {
-      const response = await api.get<BaseResponse<NewsItem>>(`news/${id}/`);
-      return response.data.results[0] || null;
     } finally {
       runInAction(() => {
         this.loading = false;
@@ -84,7 +71,7 @@ export class NewsStore {
 
     try {
       const response = await api.get<NewsItem>(`news/${slug}/`);
-      this.currentNews = response.data;
+      this.currentNews = mapNewsItem(response.data);
     } finally {
       runInAction(() => {
         this.loading = false;
@@ -93,4 +80,4 @@ export class NewsStore {
   }
 }
 
-export const newsStore = new NewsStore(); 
+export const newsStore = new NewsStore();
