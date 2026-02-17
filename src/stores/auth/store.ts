@@ -1,8 +1,8 @@
-import { api } from "@/api/axios";
-import { BaseResponse } from "@/api/types";
-import { makeAutoObservable, action, runInAction } from "mobx";
-import { AnalysisFormValues } from "@/pages/AccountPage/components/MetersSection/components/AnalysisModal/types";
-import axios from "axios";
+import { api } from '@/api/axios';
+import { BaseResponse } from '@/api/types';
+import { makeAutoObservable, action, runInAction } from 'mobx';
+import { AnalysisFormValues } from '@/pages/AccountPage/components/MetersSection/components/AnalysisModal/types';
+import axios from 'axios';
 
 interface UserInfo {
   name_kvartir: string; // Номер квартиры
@@ -123,7 +123,7 @@ export interface IPUHistoryResponse {
   dolg: IPUHistoryItem[];
 }
 
-const MISTRAL_API_KEY = "x0IzyZVwJtLVnOcHs3ORdfhDvsAOXsHI";
+const MISTRAL_API_KEY = 'x0IzyZVwJtLVnOcHs3ORdfhDvsAOXsHI';
 
 interface AuthResponse {
   account_num: number;
@@ -131,16 +131,16 @@ interface AuthResponse {
 }
 
 export enum FeedbackStatus {
-  SENT = "sent",
-  DELIVERED = "delivered",
+  SENT = 'sent',
+  DELIVERED = 'delivered',
 }
 
 export enum FeedbackTopic {
-  RECALCULATION = "recalculation",
-  METERS = "meters",
-  MAINTENANCE = "maintenance",
-  REPAIR = "repair",
-  OTHER = "other",
+  RECALCULATION = 'recalculation',
+  METERS = 'meters',
+  MAINTENANCE = 'maintenance',
+  REPAIR = 'repair',
+  OTHER = 'other',
 }
 
 export interface Feedback {
@@ -233,12 +233,12 @@ export class AuthStore {
 
       const modifiedResponse: UserInfo = {
         ...response.data,
-        name_kvartir: response.data.name_kvartir.split(" ").slice(1).join(" "),
+        name_kvartir: response.data.name_kvartir?.split(' ').slice(1).join(' '),
       };
 
       this.setAuth(modifiedResponse);
     } catch (error) {
-      console.error("Ошибка при получении данных пользователя:", error);
+      console.error('Ошибка при получении данных пользователя:', error);
     }
   }
 
@@ -254,7 +254,7 @@ export class AuthStore {
 
       return response.data.period;
     } catch (error) {
-      console.error("Ошибка при получении периодов:", error);
+      console.error('Ошибка при получении периодов:', error);
       runInAction(() => {
         this.isPeriodsLoading = false;
       });
@@ -265,16 +265,14 @@ export class AuthStore {
   async getCharges(date: string) {
     try {
       this.isChargesLoading = true;
-      const response = await api.get<ChargesData>(
-        `paymant/nach/?period_id=${date}`
-      );
+      const response = await api.get<ChargesData>(`paymant/nach/?period_id=${date}`);
 
       runInAction(() => {
         this.charges = response.data;
         this.isChargesLoading = false;
       });
     } catch (error) {
-      console.error("Ошибка при получении начислений:", error);
+      console.error('Ошибка при получении начислений:', error);
       runInAction(() => {
         this.isChargesLoading = false;
       });
@@ -286,12 +284,9 @@ export class AuthStore {
       this.isReceiptLoading = true;
       this.receiptUrl = null;
 
-      const response = await api.get<Blob>(
-        `paymant/bill/?period_id=${periodId}`,
-        {
-          responseType: "blob",
-        }
-      );
+      const response = await api.get<Blob>(`paymant/bill/?period_id=${periodId}`, {
+        responseType: 'blob',
+      });
 
       const url = URL.createObjectURL(response.data);
 
@@ -302,7 +297,7 @@ export class AuthStore {
 
       return url;
     } catch (error) {
-      console.error("Ошибка при получении квитанции:", error);
+      console.error('Ошибка при получении квитанции:', error);
       runInAction(() => {
         this.receiptUrl = null;
         this.isReceiptLoading = false;
@@ -313,7 +308,7 @@ export class AuthStore {
 
   openReceipt() {
     if (this.receiptUrl) {
-      window.open(this.receiptUrl, "_blank");
+      window.open(this.receiptUrl, '_blank');
     }
   }
 
@@ -327,16 +322,14 @@ export class AuthStore {
   async getPayments(limit: number, offset: number) {
     try {
       this.isPaymentsLoading = true;
-      const response = await api.get<PaysData>(
-        `paymant/pays/?limit=${limit}&offset=${offset}`
-      );
+      const response = await api.get<PaysData>(`paymant/pays/?limit=${limit}&offset=${offset}`);
 
       runInAction(() => {
         this.payments = response.data;
         this.isPaymentsLoading = false;
       });
     } catch (error) {
-      console.error("Ошибка при получении платежей:", error);
+      console.error('Ошибка при получении платежей:', error);
       runInAction(() => {
         this.isPaymentsLoading = false;
       });
@@ -348,22 +341,20 @@ export class AuthStore {
     this.setError(null);
 
     try {
-      await api.post<BaseResponse<AuthResponse>>("auth/", {
+      await api.post<BaseResponse<AuthResponse>>('auth/', {
         account_num: +account,
         password: password,
       });
 
       // Сбрасываем флаг логаута при успешном входе
-      localStorage.removeItem("user_logged_out");
+      localStorage.removeItem('user_logged_out');
 
       this.setAccountNumber(+account);
 
       await this.getUser();
     } catch (error) {
       runInAction(() => {
-        this.setError(
-          error instanceof Error ? error.message : "Ошибка при входе"
-        );
+        this.setError(error instanceof Error ? error.message : 'Ошибка при входе');
       });
       throw error;
     } finally {
@@ -376,30 +367,28 @@ export class AuthStore {
   async getIPU() {
     try {
       this.setIPULoading(true);
-      const response = await api.get<IPUResponse>(
-        `meter-readings/get-counter/`
-      );
+      const response = await api.get<IPUResponse>(`meter-readings/get-counter/`);
 
       runInAction(() => {
         this.ipuData = {
           ...response.data,
           counters: response.data.counters.map((counter) => {
-            if (counter.SERVICE_NAME === "Электричество") {
+            if (counter.SERVICE_NAME === 'Электричество') {
               return {
                 ...counter,
-                REC_TYPE_STR: "кВт·ч",
+                REC_TYPE_STR: 'кВт·ч',
               };
             }
-            if (counter.SERVICE_NAME === "Горячая вода") {
+            if (counter.SERVICE_NAME === 'Горячая вода') {
               return {
                 ...counter,
-                REC_TYPE_STR: "м³",
+                REC_TYPE_STR: 'м³',
               };
             }
-            if (counter.SERVICE_NAME === "Холодная вода") {
+            if (counter.SERVICE_NAME === 'Холодная вода') {
               return {
                 ...counter,
-                REC_TYPE_STR: "м³",
+                REC_TYPE_STR: 'м³',
               };
             }
             return counter;
@@ -410,7 +399,7 @@ export class AuthStore {
 
       return response.data;
     } catch (error) {
-      console.error("Ошибка при получении данных ИПУ:", error);
+      console.error('Ошибка при получении данных ИПУ:', error);
       runInAction(() => {
         this.isIPULoading = false;
       });
@@ -421,9 +410,7 @@ export class AuthStore {
   async getIPUHistory(counterId: number) {
     try {
       this.setIPUHistoryLoading(true);
-      const response = await api.get<IPUHistoryResponse>(
-        `meter-readings/get-counter-data/?counter_id=${counterId}`
-      );
+      const response = await api.get<IPUHistoryResponse>(`meter-readings/get-counter-data/?counter_id=${counterId}`);
 
       runInAction(() => {
         this.ipuHistory = response.data.dolg || [];
@@ -432,7 +419,7 @@ export class AuthStore {
 
       return response.data.dolg || [];
     } catch (error) {
-      console.error("Ошибка при получении истории показаний ИПУ:", error);
+      console.error('Ошибка при получении истории показаний ИПУ:', error);
       runInAction(() => {
         this.ipuHistory = [];
         this.isIPUHistoryLoading = false;
@@ -443,13 +430,10 @@ export class AuthStore {
 
   async submitCounterReading(counterId: number, counterValue: number) {
     try {
-      const response = await api.post<{ message: string | null }>(
-        "meter-readings/set-counter-data/",
-        {
-          counter_id: counterId,
-          counter_value: counterValue,
-        }
-      );
+      const response = await api.post<{ message: string | null }>('meter-readings/set-counter-data/', {
+        counter_id: counterId,
+        counter_value: counterValue,
+      });
 
       // Если message не null, значит есть ошибка
       if (response.data.message) {
@@ -458,18 +442,16 @@ export class AuthStore {
 
       return { success: true };
     } catch (error) {
-      console.error("Ошибка при передаче показаний счетчика:", error);
-      return { success: false, errorMessage: "Не удалось передать показания" };
+      console.error('Ошибка при передаче показаний счетчика:', error);
+      return { success: false, errorMessage: 'Не удалось передать показания' };
     }
   }
 
   async analysisIPU(counterId: number, data: AnalysisFormValues) {
-    const counterName = this.ipuData?.counters.find(
-      (counter) => counter.COUNTER_ID === counterId
-    )?.SERVICE_NAME;
+    const counterName = this.ipuData?.counters.find((counter) => counter.COUNTER_ID === counterId)?.SERVICE_NAME;
 
     this.analysisData[counterId] = {
-      response: "",
+      response: '',
       loading: true,
     };
 
@@ -487,7 +469,7 @@ export class AuthStore {
     // Формируем запрос
     try {
       const mistralResponse = await axios.post(
-        "https://api.mistral.ai/v1/chat/completions",
+        'https://api.mistral.ai/v1/chat/completions',
         // {
         //   model: "mistral-large-latest",
         //   messages: [
@@ -531,10 +513,10 @@ export class AuthStore {
         //   ]
         // },
         {
-          model: "mistral-large-latest",
+          model: 'mistral-large-latest',
           messages: [
             {
-              role: "user",
+              role: 'user',
               content: `
                 Проведи детальный аналитический разбор показаний счетчика "${counterName}" за последние 12-18 месяцев, с элементами прогнозирования будущего потребления, учитывая особенности жилья и состав семьи. Используй следующие данные:
         
@@ -549,9 +531,7 @@ export class AuthStore {
                 2. Вместо перечисления всех месяцев, представь данные в виде сезонных трендов и значимых периодов, выделяя ключевые изменения.
                 3. Определи 2-3 периода аномального потребления и предположи их возможные причины, связывая с количеством жильцов (${
                   data.residents
-                } чел.) и наличием детей (${
-                data.children === "yes" ? "есть" : "нет"
-              }).
+                } чел.) и наличием детей (${data.children === 'yes' ? 'есть' : 'нет'}).
                 4. Сравни текущие показатели с аналогичными сезонными периодами прошлого года в процентах.
                 5. Проанализируй общий тренд за последний год и сделай прогноз на следующие 3 месяца с учетом типа жилья (${
                   data.rooms
@@ -563,13 +543,13 @@ export class AuthStore {
                    - Количество комнат: ${data.rooms}
                    - Количество жильцов: ${data.residents}
                    - Тип санузла: ${
-                     data.bathroom === "bath"
-                       ? "только ванна"
-                       : data.bathroom === "shower"
-                       ? "только душ"
-                       : "и ванна, и душ"
+                     data.bathroom === 'bath'
+                       ? 'только ванна'
+                       : data.bathroom === 'shower'
+                         ? 'только душ'
+                         : 'и ванна, и душ'
                    }
-                   - Наличие детей: ${data.children === "yes" ? "есть" : "нет"}
+                   - Наличие детей: ${data.children === 'yes' ? 'есть' : 'нет'}
         
                 **Формат ответа:**
                 - Ответ должен использовать Markdown разметку для лучшей читаемости.
@@ -597,30 +577,28 @@ export class AuthStore {
         },
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${MISTRAL_API_KEY}`,
           },
-        }
+        },
       );
 
       // Сохраняем результат анализа
       runInAction(() => {
-        this.analysisData[counterId].response =
-          mistralResponse.data.choices[0].message.content;
+        this.analysisData[counterId].response = mistralResponse.data.choices[0].message.content;
         this.analysisData[counterId].loading = false;
       });
 
       return mistralResponse.data.choices[0].message.content;
     } catch (error) {
-      console.error("Ошибка при запросе к Mistral API:", error);
+      console.error('Ошибка при запросе к Mistral API:', error);
 
       // Устанавливаем сообщение об ошибке
       runInAction(() => {
-        this.analysisData[counterId].response =
-          "Не удалось выполнить анализ данных. Пожалуйста, попробуйте позже.";
+        this.analysisData[counterId].response = 'Не удалось выполнить анализ данных. Пожалуйста, попробуйте позже.';
       });
 
-      return "Не удалось выполнить анализ данных. Пожалуйста, попробуйте позже.";
+      return 'Не удалось выполнить анализ данных. Пожалуйста, попробуйте позже.';
     } finally {
       runInAction(() => {
         this.analysisData[counterId].loading = false;
@@ -630,10 +608,10 @@ export class AuthStore {
 
   logout = async () => {
     try {
-      await api.post("logout/");
+      await api.post('logout/');
 
       // Устанавливаем флаг в localStorage, что пользователь разлогинился
-      localStorage.setItem("user_logged_out", "true");
+      localStorage.setItem('user_logged_out', 'true');
 
       runInAction(() => {
         this.setAuth(null);
@@ -641,7 +619,7 @@ export class AuthStore {
         this.setAccountNumber(null);
       });
     } catch (error) {
-      console.error("Ошибка при выходе из системы:", error);
+      console.error('Ошибка при выходе из системы:', error);
     }
   };
 
@@ -657,12 +635,12 @@ export class AuthStore {
     this.setFeedbackSending(true);
 
     try {
-      await api.post("feedback/", data as SendFeedbackData);
+      await api.post('feedback/', data as SendFeedbackData);
 
       this.getFeedbacks();
     } catch (error: unknown) {
       console.error(error);
-      throw new Error("Ошибка при отправке обращения");
+      throw new Error('Ошибка при отправке обращения');
     } finally {
       this.setFeedbackSending(false);
     }
@@ -670,10 +648,10 @@ export class AuthStore {
 
   async getFeedbacks() {
     try {
-      const response = await api.get<FeedbackResponse[]>("feedback/");
+      const response = await api.get<FeedbackResponse[]>('feedback/');
       this.feedbacks = response.data;
     } catch (error) {
-      console.error("Ошибка при получении обращений:", error);
+      console.error('Ошибка при получении обращений:', error);
     }
   }
 
@@ -682,7 +660,7 @@ export class AuthStore {
       this.setLoading(true);
 
       // Проверяем флаг логаута в localStorage
-      const loggedOut = localStorage.getItem("user_logged_out") === "true";
+      const loggedOut = localStorage.getItem('user_logged_out') === 'true';
 
       // Если пользователь разлогинился ранее, не делаем автоматическую авторизацию
       if (loggedOut) {
@@ -691,8 +669,8 @@ export class AuthStore {
 
       await this.getUser();
     } catch (error) {
-      console.error("Ошибка при инициализации авторизации:", error);
-      this.setError("Ошибка при автоматическом входе");
+      console.error('Ошибка при инициализации авторизации:', error);
+      this.setError('Ошибка при автоматическом входе');
     } finally {
       this.setLoading(false);
     }
