@@ -3,8 +3,6 @@ import { BaseResponse } from '@/api/types';
 import { makeAutoObservable } from 'mobx';
 import { Document } from './types';
 
-
-
 export interface TermsSection {
   id: number;
   title: string;
@@ -38,9 +36,12 @@ class DocumentsStore {
   async getTemplateDocuments() {
     this.setLoading(true);
     try {
-      const response = await api.get<BaseResponse<Document>>('template-documents/');
+      const response = await api.get<BaseResponse<Document>>('template-documents/', {
+        params: {
+          limit: 1000,
+        },
+      });
       this.templateDocuments = response.data.results;
-      
     } finally {
       this.setLoading(false);
     }
@@ -59,4 +60,4 @@ class DocumentsStore {
   }
 }
 
-export const documentsStore = new DocumentsStore(); 
+export const documentsStore = new DocumentsStore();
