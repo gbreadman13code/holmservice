@@ -1,12 +1,11 @@
 @use '@/styles/mixins' as mix;
 
-
 .page {
   .content {
     padding: 60px 0;
 
     .documents {
-      max-width: 1200px;
+      // max-width: 1200px;
       margin: 0 auto;
     }
   }
@@ -74,4 +73,4 @@
     flex-direction: column;
     gap: 8px;
   }
-} 
+}
